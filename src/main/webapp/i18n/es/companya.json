@@ -1,0 +1,23 @@
+{
+  "iFisioApp": {
+    "companya": {
+      "home": {
+        "title": "Companyas",
+        "createLabel": "Crear nuevo Companya",
+        "createOrEditLabel": "Crear o editar Companya",
+        "notFound": "Ningún Companyas encontrado"
+      },
+      "created": "Un nuevo Companya ha sido creado con el identificador {{ param }}",
+      "updated": "Un Companya ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Companya ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Companya {{ id }}?"
+      },
+      "detail": {
+        "title": "Companya"
+      },
+      "nombre": "Nombre",
+      "numDoc": "Num Doc"
+    }
+  }
+}

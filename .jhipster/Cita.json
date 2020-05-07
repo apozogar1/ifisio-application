@@ -1,0 +1,29 @@
+{
+    "name": "Cita",
+    "fields": [
+        {
+            "fieldName": "fechaHoraCita",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "tratamientoCliente",
+            "otherEntityRelationshipName": "cita",
+            "relationshipName": "tratamientoCliente",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200507162400",
+    "entityTableName": "cita",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,118 @@
+package com.wellandsword.ifisio.web.rest;
+
+import com.wellandsword.ifisio.domain.TratamientoCliente;
+import com.wellandsword.ifisio.repository.TratamientoClienteRepository;
+import com.wellandsword.ifisio.web.rest.errors.BadRequestAlertException;
+
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * REST controller for managing {@link com.wellandsword.ifisio.domain.TratamientoCliente}.
+ */
+@RestController
+@RequestMapping("/api")
+@Transactional
+public class TratamientoClienteResource {
+
+    private final Logger log = LoggerFactory.getLogger(TratamientoClienteResource.class);
+
+    private static final String ENTITY_NAME = "tratamientoCliente";
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
+    private final TratamientoClienteRepository tratamientoClienteRepository;
+
+    public TratamientoClienteResource(TratamientoClienteRepository tratamientoClienteRepository) {
+        this.tratamientoClienteRepository = tratamientoClienteRepository;
+    }
+
+    /**
+     * {@code POST  /tratamiento-clientes} : Create a new tratamientoCliente.
+     *
+     * @param tratamientoCliente the tratamientoCliente to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new tratamientoCliente, or with status {@code 400 (Bad Request)} if the tratamientoCliente has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/tratamiento-clientes")
+    public ResponseEntity<TratamientoCliente> createTratamientoCliente(@RequestBody TratamientoCliente tratamientoCliente) throws URISyntaxException {
+        log.debug("REST request to save TratamientoCliente : {}", tratamientoCliente);
+        if (tratamientoCliente.getId() != null) {
+            throw new BadRequestAlertException("A new tratamientoCliente cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        TratamientoCliente result = tratamientoClienteRepository.save(tratamientoCliente);
+        return ResponseEntity.created(new URI("/api/tratamiento-clientes/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code PUT  /tratamiento-clientes} : Updates an existing tratamientoCliente.
+     *
+     * @param tratamientoCliente the tratamientoCliente to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated tratamientoCliente,
+     * or with status {@code 400 (Bad Request)} if the tratamientoCliente is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the tratamientoCliente couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/tratamiento-clientes")
+    public ResponseEntity<TratamientoCliente> updateTratamientoCliente(@RequestBody TratamientoCliente tratamientoCliente) throws URISyntaxException {
+        log.debug("REST request to update TratamientoCliente : {}", tratamientoCliente);
+        if (tratamientoCliente.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        TratamientoCliente result = tratamientoClienteRepository.save(tratamientoCliente);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, tratamientoCliente.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code GET  /tratamiento-clientes} : get all the tratamientoClientes.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tratamientoClientes in body.
+     */
+    @GetMapping("/tratamiento-clientes")
+    public List<TratamientoCliente> getAllTratamientoClientes() {
+        log.debug("REST request to get all TratamientoClientes");
+        return tratamientoClienteRepository.findAll();
+    }
+
+    /**
+     * {@code GET  /tratamiento-clientes/:id} : get the "id" tratamientoCliente.
+     *
+     * @param id the id of the tratamientoCliente to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tratamientoCliente, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/tratamiento-clientes/{id}")
+    public ResponseEntity<TratamientoCliente> getTratamientoCliente(@PathVariable Long id) {
+        log.debug("REST request to get TratamientoCliente : {}", id);
+        Optional<TratamientoCliente> tratamientoCliente = tratamientoClienteRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(tratamientoCliente);
+    }
+
+    /**
+     * {@code DELETE  /tratamiento-clientes/:id} : delete the "id" tratamientoCliente.
+     *
+     * @param id the id of the tratamientoCliente to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/tratamiento-clientes/{id}")
+    public ResponseEntity<Void> deleteTratamientoCliente(@PathVariable Long id) {
+        log.debug("REST request to delete TratamientoCliente : {}", id);
+        tratamientoClienteRepository.deleteById(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+}

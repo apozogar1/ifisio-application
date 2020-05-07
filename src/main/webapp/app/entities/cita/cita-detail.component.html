@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="cita">
+            <h2><span jhiTranslate="iFisioApp.cita.detail.title">Cita</span> {{ cita.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iFisioApp.cita.fechaHoraCita">Fecha Hora Cita</span></dt>
+                <dd>
+                    <span>{{ cita.fechaHoraCita }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.cita.tratamientoCliente">Tratamiento Cliente</span></dt>
+                <dd>
+                    <div *ngIf="cita.tratamientoCliente">
+                        <a [routerLink]="['/tratamiento-cliente', cita.tratamientoCliente?.id, 'view']">{{ cita.tratamientoCliente?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/cita', cita.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

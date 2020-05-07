@@ -1,0 +1,28 @@
+{
+    "name": "Companya",
+    "fields": [
+        {
+            "fieldName": "nombre",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "numDoc",
+            "otherEntityRelationshipName": "companya",
+            "relationshipName": "numDoc"
+        }
+    ],
+    "changelogDate": "20200507162300",
+    "entityTableName": "companya",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

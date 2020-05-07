@@ -1,0 +1,46 @@
+{
+    "name": "Cliente",
+    "fields": [
+        {
+            "fieldName": "nombre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "apellidos",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "telefono",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fechaNacimiento",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "medicion",
+            "otherEntityRelationshipName": "cliente",
+            "relationshipName": "medicion"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "numDoc",
+            "otherEntityRelationshipName": "cliente",
+            "relationshipName": "numDoc"
+        }
+    ],
+    "changelogDate": "20200507162100",
+    "entityTableName": "cliente",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

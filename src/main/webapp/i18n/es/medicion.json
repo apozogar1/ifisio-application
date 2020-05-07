@@ -1,0 +1,26 @@
+{
+  "iFisioApp": {
+    "medicion": {
+      "home": {
+        "title": "Medicions",
+        "createLabel": "Crear nuevo Medicion",
+        "createOrEditLabel": "Crear o editar Medicion",
+        "notFound": "Ningún Medicions encontrado"
+      },
+      "created": "Un nuevo Medicion ha sido creado con el identificador {{ param }}",
+      "updated": "Un Medicion ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Medicion ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Medicion {{ id }}?"
+      },
+      "detail": {
+        "title": "Medicion"
+      },
+      "peso": "Peso",
+      "altura": "Altura",
+      "imc": "Imc",
+      "fechaMedicion": "Fecha Medicion",
+      "cliente": "Cliente"
+    }
+  }
+}

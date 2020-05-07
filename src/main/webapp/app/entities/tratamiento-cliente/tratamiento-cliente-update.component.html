@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-tratamiento-cliente-heading" jhiTranslate="iFisioApp.tratamientoCliente.home.createOrEditLabel">Create or edit a Tratamiento Cliente</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iFisioApp.tratamientoCliente.nombre" for="field_nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="field_nombre"
+                           formControlName="nombre"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iFisioApp.tratamientoCliente.numSesiones" for="field_numSesiones">Num Sesiones</label>
+                    <input type="number" class="form-control" name="numSesiones" id="field_numSesiones"
+                           formControlName="numSesiones"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iFisioApp.tratamientoCliente.diagnostico" for="field_diagnostico">Diagnostico</label>
+                    <input type="text" class="form-control" name="diagnostico" id="field_diagnostico"
+                           formControlName="diagnostico"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iFisioApp.tratamientoCliente.tratamiento" for="field_tratamiento">Tratamiento</label>
+                    <select class="form-control" id="field_tratamiento" name="tratamiento" formControlName="tratamiento">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="tratamientoOption.id === editForm.get('tratamiento')!.value?.id ? editForm.get('tratamiento')!.value : tratamientoOption" *ngFor="let tratamientoOption of tratamientos; trackBy: trackById">{{ tratamientoOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iFisioApp.tratamientoCliente.numDoc" for="field_numDoc">Num Doc</label>
+                    <select class="form-control" id="field_numDoc" name="numDoc" formControlName="numDoc">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="numDocOption.id === editForm.get('numDoc')!.value?.id ? editForm.get('numDoc')!.value : numDocOption" *ngFor="let numDocOption of numdocs; trackBy: trackById">{{ numDocOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

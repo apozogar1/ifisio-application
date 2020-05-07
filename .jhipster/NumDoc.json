@@ -1,0 +1,46 @@
+{
+    "name": "NumDoc",
+    "fields": [
+        {
+            "fieldName": "companyia",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numDoc",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "tratamientoCliente",
+            "otherEntityRelationshipName": "numDoc",
+            "relationshipName": "tratamientoCliente"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "companya",
+            "otherEntityRelationshipName": "numDoc",
+            "relationshipName": "companya",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "cliente",
+            "otherEntityRelationshipName": "numDoc",
+            "relationshipName": "cliente",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200507162200",
+    "entityTableName": "num_doc",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

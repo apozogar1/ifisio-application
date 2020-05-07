@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="medicion">
+            <h2><span jhiTranslate="iFisioApp.medicion.detail.title">Medicion</span> {{ medicion.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iFisioApp.medicion.peso">Peso</span></dt>
+                <dd>
+                    <span>{{ medicion.peso }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.medicion.altura">Altura</span></dt>
+                <dd>
+                    <span>{{ medicion.altura }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.medicion.imc">Imc</span></dt>
+                <dd>
+                    <span>{{ medicion.imc }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.medicion.fechaMedicion">Fecha Medicion</span></dt>
+                <dd>
+                    <span>{{ medicion.fechaMedicion }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.medicion.cliente">Cliente</span></dt>
+                <dd>
+                    <div *ngIf="medicion.cliente">
+                        <a [routerLink]="['/cliente', medicion.cliente?.id, 'view']">{{ medicion.cliente?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/medicion', medicion.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

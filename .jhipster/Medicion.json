@@ -1,0 +1,41 @@
+{
+    "name": "Medicion",
+    "fields": [
+        {
+            "fieldName": "peso",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "altura",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "imc",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "fechaMedicion",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "cliente",
+            "otherEntityRelationshipName": "medicion",
+            "relationshipName": "cliente",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200507162000",
+    "entityTableName": "medicion",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

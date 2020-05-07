@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="tratamientoCliente">
+            <h2><span jhiTranslate="iFisioApp.tratamientoCliente.detail.title">Tratamiento Cliente</span> {{ tratamientoCliente.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.nombre">Nombre</span></dt>
+                <dd>
+                    <span>{{ tratamientoCliente.nombre }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.numSesiones">Num Sesiones</span></dt>
+                <dd>
+                    <span>{{ tratamientoCliente.numSesiones }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.diagnostico">Diagnostico</span></dt>
+                <dd>
+                    <span>{{ tratamientoCliente.diagnostico }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.tratamiento">Tratamiento</span></dt>
+                <dd>
+                    <div *ngIf="tratamientoCliente.tratamiento">
+                        <a [routerLink]="['/tratamiento', tratamientoCliente.tratamiento?.id, 'view']">{{ tratamientoCliente.tratamiento?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.numDoc">Num Doc</span></dt>
+                <dd>
+                    <div *ngIf="tratamientoCliente.numDoc">
+                        <a [routerLink]="['/num-doc', tratamientoCliente.numDoc?.id, 'view']">{{ tratamientoCliente.numDoc?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tratamiento-cliente', tratamientoCliente.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

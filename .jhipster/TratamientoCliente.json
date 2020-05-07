@@ -1,0 +1,50 @@
+{
+    "name": "TratamientoCliente",
+    "fields": [
+        {
+            "fieldName": "nombre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numSesiones",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "diagnostico",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "cita",
+            "otherEntityRelationshipName": "tratamientoCliente",
+            "relationshipName": "cita"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "tratamiento",
+            "otherEntityRelationshipName": "tratamientoCliente",
+            "relationshipName": "tratamiento",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "numDoc",
+            "otherEntityRelationshipName": "tratamientoCliente",
+            "relationshipName": "numDoc",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200507162500",
+    "entityTableName": "tratamiento_cliente",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

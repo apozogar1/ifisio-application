@@ -1,0 +1,27 @@
+{
+  "iFisioApp": {
+    "tratamientoCliente": {
+      "home": {
+        "title": "Tratamiento Clientes",
+        "createLabel": "Crear nuevo Tratamiento Cliente",
+        "createOrEditLabel": "Crear o editar Tratamiento Cliente",
+        "notFound": "Ningún Tratamiento Clientes encontrado"
+      },
+      "created": "Un nuevo Tratamiento Cliente ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tratamiento Cliente ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tratamiento Cliente ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tratamiento Cliente {{ id }}?"
+      },
+      "detail": {
+        "title": "Tratamiento Cliente"
+      },
+      "nombre": "Nombre",
+      "numSesiones": "Num Sesiones",
+      "diagnostico": "Diagnostico",
+      "cita": "Cita",
+      "tratamiento": "Tratamiento",
+      "numDoc": "Num Doc"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="numDoc">
+            <h2><span jhiTranslate="iFisioApp.numDoc.detail.title">Num Doc</span> {{ numDoc.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="iFisioApp.numDoc.companyia">Companyia</span></dt>
+                <dd>
+                    <span>{{ numDoc.companyia }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.numDoc.numDoc">Num Doc</span></dt>
+                <dd>
+                    <span>{{ numDoc.numDoc }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.numDoc.companya">Companya</span></dt>
+                <dd>
+                    <div *ngIf="numDoc.companya">
+                        <a [routerLink]="['/companya', numDoc.companya?.id, 'view']">{{ numDoc.companya?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.numDoc.cliente">Cliente</span></dt>
+                <dd>
+                    <div *ngIf="numDoc.cliente">
+                        <a [routerLink]="['/cliente', numDoc.cliente?.id, 'view']">{{ numDoc.cliente?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/num-doc', numDoc.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

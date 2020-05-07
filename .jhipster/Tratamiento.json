@@ -1,0 +1,32 @@
+{
+    "name": "Tratamiento",
+    "fields": [
+        {
+            "fieldName": "nombre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numSesiones",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "tratamientoCliente",
+            "otherEntityRelationshipName": "tratamiento",
+            "relationshipName": "tratamientoCliente"
+        }
+    ],
+    "changelogDate": "20200507162600",
+    "entityTableName": "tratamiento",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}
