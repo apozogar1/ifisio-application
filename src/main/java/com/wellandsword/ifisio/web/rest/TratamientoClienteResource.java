@@ -5,10 +5,16 @@ import com.wellandsword.ifisio.repository.TratamientoClienteRepository;
 import com.wellandsword.ifisio.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -82,12 +88,15 @@ public class TratamientoClienteResource {
     /**
      * {@code GET  /tratamiento-clientes} : get all the tratamientoClientes.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tratamientoClientes in body.
      */
     @GetMapping("/tratamiento-clientes")
-    public List<TratamientoCliente> getAllTratamientoClientes() {
-        log.debug("REST request to get all TratamientoClientes");
-        return tratamientoClienteRepository.findAll();
+    public ResponseEntity<List<TratamientoCliente>> getAllTratamientoClientes(Pageable pageable) {
+        log.debug("REST request to get a page of TratamientoClientes");
+        Page<TratamientoCliente> page = tratamientoClienteRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

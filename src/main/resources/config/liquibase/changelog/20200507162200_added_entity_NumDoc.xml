@@ -16,10 +16,10 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="companyia" type="varchar(255)">
+            <column name="num_doc" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="num_doc" type="bigint">
+            <column name="fecha_alta" type="datetime">
                 <constraints nullable="true" />
             </column>
             <column name="companya_id" type="bigint">
@@ -30,6 +30,7 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="num_doc" columnName="fecha_alta" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20200507162200-1-relations" author="jhipster">
@@ -51,8 +52,8 @@
                   separator=";"
                   tableName="num_doc">
             <column name="id" type="numeric"/>
-            <column name="companyia" type="string"/>
             <column name="num_doc" type="numeric"/>
+            <column name="fecha_alta" type="datetime"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

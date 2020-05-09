@@ -4,6 +4,8 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { INumDoc, NumDoc } from 'app/shared/model/num-doc.model';
 import { NumDocService } from './num-doc.service';
@@ -25,8 +27,8 @@ export class NumDocUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    companyia: [],
     numDoc: [],
+    fechaAlta: [],
     companya: [],
     cliente: []
   });
@@ -41,6 +43,11 @@ export class NumDocUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ numDoc }) => {
+      if (!numDoc.id) {
+        const today = moment().startOf('day');
+        numDoc.fechaAlta = today;
+      }
+
       this.updateForm(numDoc);
 
       this.companyaService.query().subscribe((res: HttpResponse<ICompanya[]>) => (this.companyas = res.body || []));
@@ -52,8 +59,8 @@ export class NumDocUpdateComponent implements OnInit {
   updateForm(numDoc: INumDoc): void {
     this.editForm.patchValue({
       id: numDoc.id,
-      companyia: numDoc.companyia,
       numDoc: numDoc.numDoc,
+      fechaAlta: numDoc.fechaAlta ? numDoc.fechaAlta.format(DATE_TIME_FORMAT) : null,
       companya: numDoc.companya,
       cliente: numDoc.cliente
     });
@@ -77,8 +84,8 @@ export class NumDocUpdateComponent implements OnInit {
     return {
       ...new NumDoc(),
       id: this.editForm.get(['id'])!.value,
-      companyia: this.editForm.get(['companyia'])!.value,
       numDoc: this.editForm.get(['numDoc'])!.value,
+      fechaAlta: this.editForm.get(['fechaAlta'])!.value ? moment(this.editForm.get(['fechaAlta'])!.value, DATE_TIME_FORMAT) : undefined,
       companya: this.editForm.get(['companya'])!.value,
       cliente: this.editForm.get(['cliente'])!.value
     };

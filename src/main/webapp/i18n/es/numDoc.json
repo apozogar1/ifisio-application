@@ -16,8 +16,8 @@
       "detail": {
         "title": "Num Doc"
       },
-      "companyia": "Companyia",
       "numDoc": "Num Doc",
+      "fechaAlta": "Fecha Alta",
       "tratamientoCliente": "Tratamiento Cliente",
       "companya": "Companya",
       "cliente": "Cliente"

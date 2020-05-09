@@ -21,7 +21,7 @@
     "changelogDate": "20200507162600",
     "entityTableName": "tratamiento",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "infinite-scroll",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,

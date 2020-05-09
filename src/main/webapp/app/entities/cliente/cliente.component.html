@@ -21,16 +21,16 @@
     <div class="table-responsive" id="entities" *ngIf="clientes?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.cliente.nombre">Nombre</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.cliente.apellidos">Apellidos</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.cliente.telefono">Telefono</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.cliente.fechaNacimiento">Fecha Nacimiento</span></th>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nombre"><span jhiTranslate="iFisioApp.cliente.nombre">Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="apellidos"><span jhiTranslate="iFisioApp.cliente.apellidos">Apellidos</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="telefono"><span jhiTranslate="iFisioApp.cliente.telefono">Telefono</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fechaNacimiento"><span jhiTranslate="iFisioApp.cliente.fechaNacimiento">Fecha Nacimiento</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let cliente of clientes ;trackBy: trackId">
                     <td><a [routerLink]="['/cliente', cliente.id, 'view']">{{ cliente.id }}</a></td>
                     <td>{{ cliente.nombre }}</td>

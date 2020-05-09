@@ -21,17 +21,17 @@
     <div class="table-responsive" id="entities" *ngIf="medicions?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.medicion.peso">Peso</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.medicion.altura">Altura</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.medicion.imc">Imc</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.medicion.fechaMedicion">Fecha Medicion</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.medicion.cliente">Cliente</span></th>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="peso"><span jhiTranslate="iFisioApp.medicion.peso">Peso</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="altura"><span jhiTranslate="iFisioApp.medicion.altura">Altura</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="imc"><span jhiTranslate="iFisioApp.medicion.imc">Imc</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fechaMedicion"><span jhiTranslate="iFisioApp.medicion.fechaMedicion">Fecha Medicion</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cliente.id"><span jhiTranslate="iFisioApp.medicion.cliente">Cliente</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let medicion of medicions ;trackBy: trackId">
                     <td><a [routerLink]="['/medicion', medicion.id, 'view']">{{ medicion.id }}</a></td>
                     <td>{{ medicion.peso }}</td>

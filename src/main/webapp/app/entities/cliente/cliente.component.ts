@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ICliente } from 'app/shared/model/cliente.model';
+
+import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ClienteService } from './cliente.service';
 import { ClienteDeleteDialogComponent } from './cliente-delete-dialog.component';
 
@@ -13,13 +15,49 @@ import { ClienteDeleteDialogComponent } from './cliente-delete-dialog.component'
   templateUrl: './cliente.component.html'
 })
 export class ClienteComponent implements OnInit, OnDestroy {
-  clientes?: ICliente[];
+  clientes: ICliente[];
   eventSubscriber?: Subscription;
+  itemsPerPage: number;
+  links: any;
+  page: number;
+  predicate: string;
+  ascending: boolean;
 
-  constructor(protected clienteService: ClienteService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
+  constructor(
+    protected clienteService: ClienteService,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal,
+    protected parseLinks: JhiParseLinks
+  ) {
+    this.clientes = [];
+    this.itemsPerPage = ITEMS_PER_PAGE;
+    this.page = 0;
+    this.links = {
+      last: 0
+    };
+    this.predicate = 'id';
+    this.ascending = true;
+  }
 
   loadAll(): void {
-    this.clienteService.query().subscribe((res: HttpResponse<ICliente[]>) => (this.clientes = res.body || []));
+    this.clienteService
+      .query({
+        page: this.page,
+        size: this.itemsPerPage,
+        sort: this.sort()
+      })
+      .subscribe((res: HttpResponse<ICliente[]>) => this.paginateClientes(res.body, res.headers));
+  }
+
+  reset(): void {
+    this.page = 0;
+    this.clientes = [];
+    this.loadAll();
+  }
+
+  loadPage(page: number): void {
+    this.page = page;
+    this.loadAll();
   }
 
   ngOnInit(): void {
@@ -39,11 +77,29 @@ export class ClienteComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInClientes(): void {
-    this.eventSubscriber = this.eventManager.subscribe('clienteListModification', () => this.loadAll());
+    this.eventSubscriber = this.eventManager.subscribe('clienteListModification', () => this.reset());
   }
 
   delete(cliente: ICliente): void {
     const modalRef = this.modalService.open(ClienteDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.cliente = cliente;
+  }
+
+  sort(): string[] {
+    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+    if (this.predicate !== 'id') {
+      result.push('id');
+    }
+    return result;
+  }
+
+  protected paginateClientes(data: ICliente[] | null, headers: HttpHeaders): void {
+    const headersLink = headers.get('link');
+    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
+    if (data) {
+      for (let i = 0; i < data.length; i++) {
+        this.clientes.push(data[i]);
+      }
+    }
   }
 }

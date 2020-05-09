@@ -2,12 +2,12 @@
     "name": "NumDoc",
     "fields": [
         {
-            "fieldName": "companyia",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "numDoc",
             "fieldType": "Long"
+        },
+        {
+            "fieldName": "fechaAlta",
+            "fieldType": "Instant"
         }
     ],
     "relationships": [
@@ -35,7 +35,7 @@
     "changelogDate": "20200507162200",
     "entityTableName": "num_doc",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "infinite-scroll",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,

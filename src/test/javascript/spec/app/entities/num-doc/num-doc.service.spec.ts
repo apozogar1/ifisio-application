@@ -1,5 +1,7 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { NumDocService } from 'app/entities/num-doc/num-doc.service';
 import { INumDoc, NumDoc } from 'app/shared/model/num-doc.model';
 
@@ -10,6 +12,7 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: INumDoc;
     let expectedResult: INumDoc | INumDoc[] | boolean | null;
+    let currentDate: moment.Moment;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -19,13 +22,19 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(NumDocService);
       httpMock = injector.get(HttpTestingController);
+      currentDate = moment();
 
-      elemDefault = new NumDoc(0, 'AAAAAAA', 0);
+      elemDefault = new NumDoc(0, 0, currentDate);
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
-        const returnedFromService = Object.assign({}, elemDefault);
+        const returnedFromService = Object.assign(
+          {
+            fechaAlta: currentDate.format(DATE_TIME_FORMAT)
+          },
+          elemDefault
+        );
 
         service.find(123).subscribe(resp => (expectedResult = resp.body));
 
@@ -37,12 +46,18 @@ describe('Service Tests', () => {
       it('should create a NumDoc', () => {
         const returnedFromService = Object.assign(
           {
-            id: 0
+            id: 0,
+            fechaAlta: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            fechaAlta: currentDate
+          },
+          returnedFromService
+        );
 
         service.create(new NumDoc()).subscribe(resp => (expectedResult = resp.body));
 
@@ -54,13 +69,18 @@ describe('Service Tests', () => {
       it('should update a NumDoc', () => {
         const returnedFromService = Object.assign(
           {
-            companyia: 'BBBBBB',
-            numDoc: 1
+            numDoc: 1,
+            fechaAlta: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            fechaAlta: currentDate
+          },
+          returnedFromService
+        );
 
         service.update(expected).subscribe(resp => (expectedResult = resp.body));
 
@@ -72,13 +92,18 @@ describe('Service Tests', () => {
       it('should return a list of NumDoc', () => {
         const returnedFromService = Object.assign(
           {
-            companyia: 'BBBBBB',
-            numDoc: 1
+            numDoc: 1,
+            fechaAlta: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
 
-        const expected = Object.assign({}, returnedFromService);
+        const expected = Object.assign(
+          {
+            fechaAlta: currentDate
+          },
+          returnedFromService
+        );
 
         service.query().subscribe(resp => (expectedResult = resp.body));
 

@@ -12,15 +12,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.companyia" for="field_companyia">Companyia</label>
-                    <input type="text" class="form-control" name="companyia" id="field_companyia"
-                           formControlName="companyia"/>
-                </div>
-
-                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.numDoc" for="field_numDoc">Num Doc</label>
                     <input type="number" class="form-control" name="numDoc" id="field_numDoc"
                            formControlName="numDoc"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.fechaAlta" for="field_fechaAlta">Fecha Alta</label>
+                    <div class="d-flex">
+                        <input id="field_fechaAlta" type="datetime-local" class="form-control" name="fechaAlta" formControlName="fechaAlta" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
                 </div>
 
                 <div class="form-group">

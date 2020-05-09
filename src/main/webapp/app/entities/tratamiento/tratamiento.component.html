@@ -21,14 +21,14 @@
     <div class="table-responsive" id="entities" *ngIf="tratamientos?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.tratamiento.nombre">Nombre</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.tratamiento.numSesiones">Num Sesiones</span></th>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="nombre"><span jhiTranslate="iFisioApp.tratamiento.nombre">Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numSesiones"><span jhiTranslate="iFisioApp.tratamiento.numSesiones">Num Sesiones</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let tratamiento of tratamientos ;trackBy: trackId">
                     <td><a [routerLink]="['/tratamiento', tratamiento.id, 'view']">{{ tratamiento.id }}</a></td>
                     <td>{{ tratamiento.nombre }}</td>

@@ -14,8 +14,8 @@ entity Cliente {
 }
 
 entity NumDoc {
-	companyia String,
-    numDoc Long
+    numDoc Long,
+    fechaAlta Instant
 }
 
 entity Companya {
@@ -27,7 +27,6 @@ entity Cita {
 }
 
 entity TratamientoCliente {
-	nombre String,
     numSesiones Long,
     diagnostico String
 }
@@ -47,3 +46,4 @@ relationship OneToMany {
     
 }
 
+paginate * with infinite-scroll

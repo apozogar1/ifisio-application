@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,11 +23,11 @@ public class NumDoc implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "companyia")
-    private String companyia;
-
     @Column(name = "num_doc")
     private Long numDoc;
+
+    @Column(name = "fecha_alta")
+    private Instant fechaAlta;
 
     @OneToMany(mappedBy = "numDoc")
     private Set<TratamientoCliente> tratamientoClientes = new HashSet<>();
@@ -48,19 +49,6 @@ public class NumDoc implements Serializable {
         this.id = id;
     }
 
-    public String getCompanyia() {
-        return companyia;
-    }
-
-    public NumDoc companyia(String companyia) {
-        this.companyia = companyia;
-        return this;
-    }
-
-    public void setCompanyia(String companyia) {
-        this.companyia = companyia;
-    }
-
     public Long getNumDoc() {
         return numDoc;
     }
@@ -72,6 +60,19 @@ public class NumDoc implements Serializable {
 
     public void setNumDoc(Long numDoc) {
         this.numDoc = numDoc;
+    }
+
+    public Instant getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public NumDoc fechaAlta(Instant fechaAlta) {
+        this.fechaAlta = fechaAlta;
+        return this;
+    }
+
+    public void setFechaAlta(Instant fechaAlta) {
+        this.fechaAlta = fechaAlta;
     }
 
     public Set<TratamientoCliente> getTratamientoClientes() {
@@ -146,8 +147,8 @@ public class NumDoc implements Serializable {
     public String toString() {
         return "NumDoc{" +
             "id=" + getId() +
-            ", companyia='" + getCompanyia() + "'" +
             ", numDoc=" + getNumDoc() +
+            ", fechaAlta='" + getFechaAlta() + "'" +
             "}";
     }
 }

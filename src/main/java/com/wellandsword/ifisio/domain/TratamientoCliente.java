@@ -22,9 +22,6 @@ public class TratamientoCliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre")
-    private String nombre;
-
     @Column(name = "num_sesiones")
     private Long numSesiones;
 
@@ -49,19 +46,6 @@ public class TratamientoCliente implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public TratamientoCliente nombre(String nombre) {
-        this.nombre = nombre;
-        return this;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public Long getNumSesiones() {
@@ -162,7 +146,6 @@ public class TratamientoCliente implements Serializable {
     public String toString() {
         return "TratamientoCliente{" +
             "id=" + getId() +
-            ", nombre='" + getNombre() + "'" +
             ", numSesiones=" + getNumSesiones() +
             ", diagnostico='" + getDiagnostico() + "'" +
             "}";

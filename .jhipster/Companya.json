@@ -17,7 +17,7 @@
     "changelogDate": "20200507162300",
     "entityTableName": "companya",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "infinite-scroll",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,

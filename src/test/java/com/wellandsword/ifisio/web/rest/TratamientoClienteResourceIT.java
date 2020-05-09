@@ -30,9 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser
 public class TratamientoClienteResourceIT {
 
-    private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
-    private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
-
     private static final Long DEFAULT_NUM_SESIONES = 1L;
     private static final Long UPDATED_NUM_SESIONES = 2L;
 
@@ -58,7 +55,6 @@ public class TratamientoClienteResourceIT {
      */
     public static TratamientoCliente createEntity(EntityManager em) {
         TratamientoCliente tratamientoCliente = new TratamientoCliente()
-            .nombre(DEFAULT_NOMBRE)
             .numSesiones(DEFAULT_NUM_SESIONES)
             .diagnostico(DEFAULT_DIAGNOSTICO);
         return tratamientoCliente;
@@ -71,7 +67,6 @@ public class TratamientoClienteResourceIT {
      */
     public static TratamientoCliente createUpdatedEntity(EntityManager em) {
         TratamientoCliente tratamientoCliente = new TratamientoCliente()
-            .nombre(UPDATED_NOMBRE)
             .numSesiones(UPDATED_NUM_SESIONES)
             .diagnostico(UPDATED_DIAGNOSTICO);
         return tratamientoCliente;
@@ -97,7 +92,6 @@ public class TratamientoClienteResourceIT {
         List<TratamientoCliente> tratamientoClienteList = tratamientoClienteRepository.findAll();
         assertThat(tratamientoClienteList).hasSize(databaseSizeBeforeCreate + 1);
         TratamientoCliente testTratamientoCliente = tratamientoClienteList.get(tratamientoClienteList.size() - 1);
-        assertThat(testTratamientoCliente.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testTratamientoCliente.getNumSesiones()).isEqualTo(DEFAULT_NUM_SESIONES);
         assertThat(testTratamientoCliente.getDiagnostico()).isEqualTo(DEFAULT_DIAGNOSTICO);
     }
@@ -133,7 +127,6 @@ public class TratamientoClienteResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tratamientoCliente.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].numSesiones").value(hasItem(DEFAULT_NUM_SESIONES.intValue())))
             .andExpect(jsonPath("$.[*].diagnostico").value(hasItem(DEFAULT_DIAGNOSTICO)));
     }
@@ -149,7 +142,6 @@ public class TratamientoClienteResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(tratamientoCliente.getId().intValue()))
-            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.numSesiones").value(DEFAULT_NUM_SESIONES.intValue()))
             .andExpect(jsonPath("$.diagnostico").value(DEFAULT_DIAGNOSTICO));
     }
@@ -175,7 +167,6 @@ public class TratamientoClienteResourceIT {
         // Disconnect from session so that the updates on updatedTratamientoCliente are not directly saved in db
         em.detach(updatedTratamientoCliente);
         updatedTratamientoCliente
-            .nombre(UPDATED_NOMBRE)
             .numSesiones(UPDATED_NUM_SESIONES)
             .diagnostico(UPDATED_DIAGNOSTICO);
 
@@ -188,7 +179,6 @@ public class TratamientoClienteResourceIT {
         List<TratamientoCliente> tratamientoClienteList = tratamientoClienteRepository.findAll();
         assertThat(tratamientoClienteList).hasSize(databaseSizeBeforeUpdate);
         TratamientoCliente testTratamientoCliente = tratamientoClienteList.get(tratamientoClienteList.size() - 1);
-        assertThat(testTratamientoCliente.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testTratamientoCliente.getNumSesiones()).isEqualTo(UPDATED_NUM_SESIONES);
         assertThat(testTratamientoCliente.getDiagnostico()).isEqualTo(UPDATED_DIAGNOSTICO);
     }

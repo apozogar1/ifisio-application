@@ -2,10 +2,6 @@
     "name": "TratamientoCliente",
     "fields": [
         {
-            "fieldName": "nombre",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "numSesiones",
             "fieldType": "Long"
         },
@@ -39,7 +35,7 @@
     "changelogDate": "20200507162500",
     "entityTableName": "tratamiento_cliente",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "infinite-scroll",
     "service": "no",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,

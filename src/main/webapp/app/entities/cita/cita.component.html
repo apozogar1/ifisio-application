@@ -21,14 +21,14 @@
     <div class="table-responsive" id="entities" *ngIf="citas?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.cita.fechaHoraCita">Fecha Hora Cita</span></th>
-                    <th scope="col" ><span jhiTranslate="iFisioApp.cita.tratamientoCliente">Tratamiento Cliente</span></th>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fechaHoraCita"><span jhiTranslate="iFisioApp.cita.fechaHoraCita">Fecha Hora Cita</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="tratamientoCliente.id"><span jhiTranslate="iFisioApp.cita.tratamientoCliente">Tratamiento Cliente</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let cita of citas ;trackBy: trackId">
                     <td><a [routerLink]="['/cita', cita.id, 'view']">{{ cita.id }}</a></td>
                     <td>{{ cita.fechaHoraCita | date:'medium' }}</td>
