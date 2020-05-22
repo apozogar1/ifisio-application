@@ -1,0 +1,57 @@
+<div>
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="clientes?.length === 0">
+        <span jhiTranslate="iFisioApp.cliente.home.notFound">No clientes found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="clientes?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="nombre"><span jhiTranslate="iFisioApp.tablaCliente.nombre">Nombre</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="apellidos"><span
+                            jhiTranslate="iFisioApp.tablaCliente.apellidos">Apellidos</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col">
+                        <span jhiTranslate="iFisioApp.tablaCliente.companyia">Compañia</span>
+                    </th>
+                    <th scope="col">
+                        <span jhiTranslate="iFisioApp.tablaCliente.activo">
+                            Activo
+                        </span>
+                        <input type="checkbox" />
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']"
+                [infiniteScrollDistance]="0">
+                <tr *ngFor="let cliente of clientes ;trackBy: trackId">
+                    <td><a [routerLink]="['/cliente', cliente.id, 'view']">{{ cliente.id }}</a></td>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.apellidos }}</td>
+                    <td>
+                        <span *ngFor="let numDoc of cliente.numDocs"
+                            style="margin-left: 2px; border: 1px solid; background-color: red;">
+                            {{numDoc.companya.nombre}}
+                        </span>
+                    </td>
+                    <td></td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

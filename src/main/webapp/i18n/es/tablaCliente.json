@@ -1,0 +1,10 @@
+{
+  "iFisioApp": {
+    "tablaCliente": {
+      "nombre": "Nombre",
+      "apellidos": "Apellidos",
+      "companyia": "Compañia",
+      "activo": "Activo"
+    }
+  }
+}
