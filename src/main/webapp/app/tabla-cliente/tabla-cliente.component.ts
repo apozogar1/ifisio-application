@@ -40,7 +40,7 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
     };
     this.predicate = 'id';
     this.ascending = true;
-    this.filtro = "";
+    this.filtro = '';
   }
 
   loadAll(): void {
@@ -109,10 +109,11 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
   }
 
   filtroCliente(): void {
-    const tablaFiltrada = this.clientesNoFilter.filter(cliente =>
-      // this.compareFilter(cliente.nombre, this.filtro) ||
-      this.compareFilter(cliente.apellidos, this.filtro) ||
-      cliente.numDocs?.find(numDoc => this.compareFilter(numDoc.companya?.nombre, this.filtro))
+    const tablaFiltrada = this.clientesNoFilter.filter(
+      cliente =>
+        // this.compareFilter(cliente.nombre, this.filtro) ||
+        this.compareFilter(cliente.apellidos, this.filtro) ||
+        cliente.numDocs?.find(numDoc => this.compareFilter(numDoc.companya?.nombre, this.filtro))
     );
     this.clientes = tablaFiltrada;
   }
@@ -129,12 +130,11 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
     const strAccentsOut = [];
     const strAccentsLen = strAccents.length;
     const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-    const accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+    const accentsOut = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
     for (let y = 0; y < strAccentsLen; y++) {
       if (accents.includes(strAccents[y])) {
         strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
-      } else
-        strAccentsOut[y] = strAccents[y];
+      } else strAccentsOut[y] = strAccents[y];
     }
     return strAccentsOut.join('');
   }

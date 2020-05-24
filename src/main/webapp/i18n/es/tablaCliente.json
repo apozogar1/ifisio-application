@@ -1,11 +1,11 @@
 {
- "iFisioApp": {
+  "iFisioApp": {
     "tablaCliente": {
-        "nombre": "Nombre",
-        "apellidos": "Apellidos",
-        "companyia": "Compañia",
-        "activo": "Activo",
-        "citas": "Citas"
-    } 
+      "nombre": "Nombre",
+      "apellidos": "Apellidos",
+      "companyia": "Compañia",
+      "activo": "Activo",
+      "citas": "Citas"
+    }
   }
 }
