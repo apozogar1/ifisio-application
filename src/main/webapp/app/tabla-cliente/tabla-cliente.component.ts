@@ -8,6 +8,7 @@ import { ICliente } from 'app/shared/model/cliente.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ClienteService } from 'app/entities/cliente/cliente.service';
+import { ClienteDeleteDialogComponent } from 'app/entities/cliente/cliente-delete-dialog.component';
 
 @Component({
   selector: 'jhi-tabla-cliente',
@@ -81,6 +82,11 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
 
   registerChangeInClientes(): void {
     this.eventSubscriber = this.eventManager.subscribe('clienteListModification', () => this.reset());
+  }
+
+  delete(cliente: ICliente): void {
+    const modalRef = this.modalService.open(ClienteDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.cliente = cliente;
   }
 
   sort(): string[] {
