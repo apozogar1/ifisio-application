@@ -31,7 +31,19 @@ export class AgendaComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.changeMode();
+    this.options = {
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      defaultDate: new Date(),
+      defaultView: this.modeSel,
+      duration: { days: +this.dayDuration },
+      header: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      editable: true,
+      dateClick: this.dateClick
+    };
   }
 
   ngOnDestroy(): void {}
@@ -58,23 +70,10 @@ export class AgendaComponent implements OnInit, OnDestroy {
     this.options.weekends = false;
 
     // correct
-    this.options = { ...this.options, weekends: false };
   }
 
   dateClick(e: any): void {}
   changeMode(): void {
-    this.options = {
-      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      defaultDate: new Date(),
-      defaultView: this.modeSel,
-      duration: { days: this.dayDuration },
-      header: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      editable: true,
-      dateClick: this.dateClick
-    };
+    this.options = { ...this.options, duration: { days: +this.dayDuration } };
   }
 }
