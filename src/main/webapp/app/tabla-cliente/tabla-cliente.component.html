@@ -3,6 +3,8 @@
 
     <jhi-alert></jhi-alert>
 
+    <input type="text" [(ngModel)]="filtro" (keyup)="filtroCliente()"/>
+
     <div class="alert alert-warning" id="no-result" *ngIf="clientes?.length === 0">
         <span jhiTranslate="iFisioApp.cliente.home.notFound">No clientes found</span>
     </div>
@@ -11,9 +13,6 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
-                        <fa-icon icon="sort"></fa-icon>
-                    </th>
                     <th scope="col" jhiSortBy="nombre"><span jhiTranslate="iFisioApp.tablaCliente.nombre">Nombre</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
@@ -36,7 +35,6 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']"
                 [infiniteScrollDistance]="0">
                 <tr *ngFor="let cliente of clientes ;trackBy: trackId">
-                    <td><a [routerLink]="['/cliente', cliente.id, 'view']">{{ cliente.id }}</a></td>
                     <td>{{ cliente.nombre }}</td>
                     <td>{{ cliente.apellidos }}</td>
                     <td>

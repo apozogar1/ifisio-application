@@ -15,12 +15,14 @@ import { ClienteService } from 'app/entities/cliente/cliente.service';
 })
 export class TablaClienteComponent implements OnInit, OnDestroy {
   clientes: ICliente[];
+  clientesNoFilter: ICliente[];
   eventSubscriber?: Subscription;
   itemsPerPage: number;
   links: any;
   page: number;
   predicate: string;
   ascending: boolean;
+  filtro: string;
 
   constructor(
     protected clienteService: ClienteService,
@@ -29,6 +31,7 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
     protected parseLinks: JhiParseLinks
   ) {
     this.clientes = [];
+    this.clientesNoFilter = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.page = 0;
     this.links = {
@@ -36,6 +39,7 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
     };
     this.predicate = 'id';
     this.ascending = true;
+    this.filtro = "";
   }
 
   loadAll(): void {
@@ -95,5 +99,37 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
         this.clientes.push(data[i]);
       }
     }
+    this.clientesNoFilter = this.clientes;
+  }
+
+  filtroCliente(): void {
+    const tablaFiltrada = this.clientesNoFilter.filter(cliente =>
+      // this.compareFilter(cliente.nombre, this.filtro) ||
+      this.compareFilter(cliente.apellidos, this.filtro) ||
+      cliente.numDocs?.find(numDoc => this.compareFilter(numDoc.companya?.nombre, this.filtro))
+    );
+    this.clientes = tablaFiltrada;
+  }
+
+  compareFilter(c1: any, c2: any): boolean {
+    const c1ToCompare = this.removeAccents(c1?.toLowerCase());
+    const c2ToCompare = this.removeAccents(c2?.toLowerCase());
+
+    return c1ToCompare.includes(c2ToCompare);
+  }
+
+  removeAccents(str: any): string {
+    const strAccents = str.split('');
+    const strAccentsOut = [];
+    const strAccentsLen = strAccents.length;
+    const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    const accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+    for (let y = 0; y < strAccentsLen; y++) {
+      if (accents.includes(strAccents[y])) {
+        strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
+      } else
+        strAccentsOut[y] = strAccents[y];
+    }
+    return strAccentsOut.join('');
   }
 }
