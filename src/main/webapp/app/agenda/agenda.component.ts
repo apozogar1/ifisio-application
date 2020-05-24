@@ -14,6 +14,10 @@ export class AgendaComponent implements OnInit, OnDestroy {
 
   options: any;
 
+  modeSel: String = 'timeGrid';
+  dayDuration: Number = 1;
+  mode: String[] = ['dayGridWeek', 'timeGridWeek', 'timeGrid', 'month'];
+
   constructor(private citaService: CitaService) {}
 
   ngOnInit(): void {
@@ -27,29 +31,20 @@ export class AgendaComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.options = {
-      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      defaultDate: new Date(),
-      header: {
-        left: 'prev,next',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      dateClick: this.dateClick
-    };
+    this.changeMode();
   }
 
   ngOnDestroy(): void {}
 
   update(): void {
-    //incorrect
+    // incorrect
     this.events.push({
       title: 'Conference',
       start: '2016-01-11',
       end: '2016-01-13'
     });
 
-    //correct
+    // correct
     this.events = [
       ...this.events,
       {
@@ -59,14 +54,27 @@ export class AgendaComponent implements OnInit, OnDestroy {
       }
     ];
 
-    //incorrect
+    // incorrect
     this.options.weekends = false;
 
-    //correct
+    // correct
     this.options = { ...this.options, weekends: false };
   }
 
-  dateClick(e: any): void {
-    // console.log(e);
+  dateClick(e: any): void {}
+  changeMode(): void {
+    this.options = {
+      plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      defaultDate: new Date(),
+      defaultView: this.modeSel,
+      duration: { days: this.dayDuration },
+      header: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      editable: true,
+      dateClick: this.dateClick
+    };
   }
 }

@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FullCalendarModule } from 'primeng/fullcalendar';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
   exports: [
@@ -16,6 +17,7 @@ import { FullCalendarModule } from 'primeng/fullcalendar';
     NgJhipsterModule,
     InfiniteScrollModule,
     FullCalendarModule,
+    SelectButtonModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     TranslateModule

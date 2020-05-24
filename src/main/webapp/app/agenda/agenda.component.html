@@ -3,6 +3,9 @@
 
     <jhi-alert></jhi-alert>
 
+    <!-- <p-selectButton [options]="mode" [(ngModel)]="modeSel" (change)="changeMode"></p-selectButton> -->
+    <input type="text" [(ngModel)]="dayDuration" (keyup)="changeMode()" />
+
 
     <p-fullCalendar [events]="events" [options]="options"></p-fullCalendar>
 
