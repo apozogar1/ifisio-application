@@ -28,7 +28,7 @@
                     <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.companya" for="field_companya">Companya</label>
                     <select class="form-control" id="field_companya" name="companya" formControlName="companya">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="companyaOption.id === editForm.get('companya')!.value?.id ? editForm.get('companya')!.value : companyaOption" *ngFor="let companyaOption of companyas; trackBy: trackById">{{ companyaOption.id }}</option>
+                        <option [ngValue]="companyaOption.id === editForm.get('companya')!.value?.id ? editForm.get('companya')!.value : companyaOption" *ngFor="let companyaOption of companyas; trackBy: trackById">{{ companyaOption.nombre }}</option>
                     </select>
                 </div>
 
@@ -36,7 +36,7 @@
                     <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.cliente" for="field_cliente">Cliente</label>
                     <select class="form-control" id="field_cliente" name="cliente" formControlName="cliente">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="clienteOption.id === editForm.get('cliente')!.value?.id ? editForm.get('cliente')!.value : clienteOption" *ngFor="let clienteOption of clientes; trackBy: trackById">{{ clienteOption.id }}</option>
+                        <option [ngValue]="clienteOption.id === editForm.get('cliente')!.value?.id ? editForm.get('cliente')!.value : clienteOption" *ngFor="let clienteOption of clientes; trackBy: trackById">{{ clienteOption.nombre }} {{  clienteOption.apellidos }}</option>
                     </select>
                 </div>
             </div>
