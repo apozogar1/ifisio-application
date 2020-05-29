@@ -1,13 +1,13 @@
-import { Routes, Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Authority } from 'app/shared/constants/authority.constants';
-import { AgendaComponent } from './agenda.component';
-import { Injectable } from '@angular/core';
-import { ICliente, Cliente } from 'app/shared/model/cliente.model';
-import { ClienteService } from 'app/entities/cliente/cliente.service';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { ClienteService } from 'app/entities/cliente/cliente.service';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { Cliente, ICliente } from 'app/shared/model/cliente.model';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+import { AgendaComponent } from './agenda.component';
 
 @Injectable({ providedIn: 'root' })
 export class AgendaResolve implements Resolve<ICliente> {
@@ -37,7 +37,19 @@ export const AgendaRoute: Routes = [
     component: AgendaComponent,
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'iFisioApp.agenda.home.title'
+      pageTitle: 'iFisioApp.agenda.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'agenda/:id',
+    component: AgendaComponent,
+    resolve: {
+      cita: AgendaResolve
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'iFisioApp.agenda.title'
     },
     canActivate: [UserRouteAccessService]
   }

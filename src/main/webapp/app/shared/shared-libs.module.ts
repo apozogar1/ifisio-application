@@ -8,6 +8,8 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { ButtonModule } from 'primeng/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   exports: [
@@ -18,6 +20,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     InfiniteScrollModule,
     FullCalendarModule,
     SelectButtonModule,
+    BrowserAnimationsModule,
+    ButtonModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     TranslateModule
