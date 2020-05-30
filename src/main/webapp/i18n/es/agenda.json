@@ -4,7 +4,7 @@
       "title": "Agenda",
       "cliente": "Agenda cliente",
       "modo": "Modo",
-      "numDias": "Numero días"
+      "numDias": "Numero citas pendientes"
     }
   }
 }
