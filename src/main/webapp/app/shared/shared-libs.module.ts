@@ -6,6 +6,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
@@ -18,6 +21,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     InfiniteScrollModule,
     FullCalendarModule,
     SelectButtonModule,
+    DropdownModule,
+    DialogModule,
+    ButtonModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     TranslateModule

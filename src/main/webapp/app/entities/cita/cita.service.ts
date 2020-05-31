@@ -37,6 +37,12 @@ export class CitaService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findByCliente(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<ICita>(`${this.resourceUrl}/cliente/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
