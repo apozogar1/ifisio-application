@@ -9,6 +9,10 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { ICliente, Cliente } from 'app/shared/model/cliente.model';
 import { ClienteService } from './cliente.service';
+import { INumDoc, NumDoc } from 'app/shared/model/num-doc.model';
+import { CompanyaService } from '../companya/companya.service';
+import { NumDocService } from '../num-doc/num-doc.service';
+import { ICompanya } from 'app/shared/model/companya.model';
 
 @Component({
   selector: 'jhi-cliente-update',
@@ -16,16 +20,22 @@ import { ClienteService } from './cliente.service';
 })
 export class ClienteUpdateComponent implements OnInit {
   isSaving = false;
+  companyas: ICompanya[] = [];
+  clientes: ICliente[] = [];
 
   editForm = this.fb.group({
     id: [],
     nombre: [],
     apellidos: [],
     telefono: [],
-    fechaNacimiento: []
+    fechaNacimiento: [],
+    idNum: [],
+    numDoc: [],
+    fechaAlta: [],
+    companya: []
   });
 
-  constructor(protected clienteService: ClienteService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(protected clienteService: ClienteService, protected companyaService: CompanyaService, protected numDocService: NumDocService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ cliente }) => {
@@ -35,6 +45,19 @@ export class ClienteUpdateComponent implements OnInit {
       }
 
       this.updateForm(cliente);
+    });
+
+    this.activatedRoute.data.subscribe(({ numDoc }) => {
+      if (!numDoc.idNum) {
+        const today = moment().startOf('day');
+        numDoc.fechaAlta = today;
+      }
+
+      this.updateFormNumDoc(numDoc);
+
+      this.companyaService.query().subscribe((res: HttpResponse<ICompanya[]>) => (this.companyas = res.body || []));
+
+      this.clienteService.query().subscribe((res: HttpResponse<ICliente[]>) => (this.clientes = res.body || []));
     });
   }
 
@@ -48,6 +71,16 @@ export class ClienteUpdateComponent implements OnInit {
     });
   }
 
+  updateFormNumDoc(numDoc: INumDoc): void {
+    this.editForm.patchValue({
+      idNum: numDoc.id,
+      numDoc: numDoc.numDoc,
+      fechaAlta: numDoc.fechaAlta ? numDoc.fechaAlta.format(DATE_TIME_FORMAT) : null,
+      companya: numDoc.companya,
+      cliente: numDoc.cliente
+    });
+  }
+
   previousState(): void {
     window.history.back();
   }
@@ -55,10 +88,17 @@ export class ClienteUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const cliente = this.createFromForm();
+    const numDoc = this.createFromFormNumDoc();
     if (cliente.id !== undefined) {
       this.subscribeToSaveResponse(this.clienteService.update(cliente));
     } else {
       this.subscribeToSaveResponse(this.clienteService.create(cliente));
+    }
+
+    if (numDoc.id !== undefined) {
+      this.subscribeToSaveResponse(this.numDocService.update(numDoc));
+    } else {
+      this.subscribeToSaveResponse(this.numDocService.create(numDoc));
     }
   }
 
@@ -72,6 +112,17 @@ export class ClienteUpdateComponent implements OnInit {
       fechaNacimiento: this.editForm.get(['fechaNacimiento'])!.value
         ? moment(this.editForm.get(['fechaNacimiento'])!.value, DATE_TIME_FORMAT)
         : undefined
+    };
+  }
+
+  private createFromFormNumDoc(): INumDoc {
+    return {
+      ...new NumDoc(),
+      id: this.editForm.get(['id'])!.value,
+      numDoc: this.editForm.get(['numDoc'])!.value,
+      fechaAlta: this.editForm.get(['fechaAlta'])!.value ? moment(this.editForm.get(['fechaAlta'])!.value, DATE_TIME_FORMAT) : undefined,
+      companya: this.editForm.get(['companya'])!.value,
+      cliente: this.editForm.get(['cliente'])!.value
     };
   }
 
