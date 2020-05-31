@@ -5,6 +5,7 @@ import { INumDoc } from 'app/shared/model/num-doc.model';
 export interface ITratamientoCliente {
   id?: number;
   numSesiones?: number;
+  numSesionesDisfrutadas?: number;
   diagnostico?: string;
   citas?: ICita[];
   tratamiento?: ITratamiento;
@@ -15,6 +16,7 @@ export class TratamientoCliente implements ITratamientoCliente {
   constructor(
     public id?: number,
     public numSesiones?: number,
+    public numSesionesDisfrutadas?: number,
     public diagnostico?: string,
     public citas?: ICita[],
     public tratamiento?: ITratamiento,

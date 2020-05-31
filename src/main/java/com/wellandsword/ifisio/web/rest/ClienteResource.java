@@ -1,28 +1,38 @@
 package com.wellandsword.ifisio.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.wellandsword.ifisio.domain.Cliente;
+import com.wellandsword.ifisio.domain.NumDoc;
 import com.wellandsword.ifisio.repository.ClienteRepository;
+import com.wellandsword.ifisio.repository.NumDocRepository;
 import com.wellandsword.ifisio.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.wellandsword.ifisio.domain.Cliente}.
@@ -39,11 +49,11 @@ public class ClienteResource {
 	@Value("${jhipster.clientApp.name}")
 	private String applicationName;
 
-	private final ClienteRepository clienteRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
 
-	public ClienteResource(ClienteRepository clienteRepository) {
-		this.clienteRepository = clienteRepository;
-	}
+	@Autowired
+	private NumDocRepository numDocRepository;
 
 	/**
 	 * {@code POST  /clientes} : Create a new cliente.
@@ -102,7 +112,11 @@ public class ClienteResource {
 		log.debug("REST request to get a page of Clientes");
 		Page<Cliente> page = clienteRepository.findAll(pageable);
 		for (Cliente cliente : page) {
-			cliente.getNumDocs().forEach(p -> p.getCompanya());
+			cliente.getNumDocs().forEach(p -> {
+				p.getTratamientoClientes().stream()
+						.forEach(tratamientos -> tratamientos.getCitas().stream().forEach(cita -> cita.getId()));
+				p.getCompanya();
+			});
 		}
 		HttpHeaders headers = PaginationUtil
 				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -132,6 +146,7 @@ public class ClienteResource {
 	@DeleteMapping("/clientes/{id}")
 	public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
 		log.debug("REST request to delete Cliente : {}", id);
+		numDocRepository.findByClienteId(id).stream().forEach(numDoc -> numDocRepository.delete(numDoc));
 		clienteRepository.deleteById(id);
 		return ResponseEntity.noContent()
 				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

@@ -1,27 +1,26 @@
-<span class="ui-float-label">
-    <input id="float-input" type="text" size="30" pInputText> 
-    <label for="float-input">Username</label>
-</span>
-
 <div>
 
     <h2 id="page-heading">
-        <span jhiTranslate="iFisioApp.cliente.home.title">Clientes</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cliente"
-            [routerLink]="['/cliente/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span jhiTranslate="iFisioApp.cliente.home.createLabel">
-                Create a new Cliente
-            </span>
-        </button>
+        <span class="ui-float-label">
+            <input id="float-input" type="text" [(ngModel)]="filtro" (keyup)="filtroCliente()" pInputText>
+            <label for="float-input">Username</label>
+
+
+            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cliente"
+                [routerLink]="['/cliente/new']">
+                <fa-icon icon="plus"></fa-icon>
+                <span jhiTranslate="iFisioApp.cliente.home.createLabel">
+                    Create a new Cliente
+                </span>
+            </button>
+
+        </span>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
-
-    <input type="text" [(ngModel)]="filtro" (keyup)="filtroCliente()" />
 
     <div class="alert alert-warning" id="no-result" *ngIf="clientes?.length === 0">
         <span jhiTranslate="iFisioApp.cliente.home.notFound">No clientes found</span>
@@ -58,27 +57,35 @@
                     <td>
                         <span *ngFor="let numDoc of cliente.numDocs"
                             style="margin-left: 2px; border: 1px solid; background-color: red;">
-                            {{numDoc.companya.nombre}}
+                            {{numDoc.companya?.nombre}}
                         </span>
                     </td>
-                    <td></td>
+                    <td>
+                        <span *ngFor="let numDocs of cliente.numDocs">
+                            <span *ngFor="let tratamientoClientes of numDocs.tratamientoClientes">
+                                {{tratamientoClientes?.numSesionesDisfrutadas}}/{{tratamientoClientes?.numSesiones}}
+                            </span>
+                        </span>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
 
-                            <button type="submit"
-                                    [routerLink]="['/agenda', cliente.id]"
-                                    class="btn btn-info btn-sm">
+                            <button type="submit" [routerLink]="['/agenda', cliente.id]" class="btn btn-info btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="iFisioApp.tablaCliente.citas">Citas</span>
+                                <span class="d-none d-md-inline"
+                                    jhiTranslate="iFisioApp.tablaCliente.citas">Citas</span>
                             </button>
 
-                            <button type="submit"
-                                    [routerLink]="['/cliente', cliente.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
+                            <button type="submit" [routerLink]="['/cliente', cliente.id, 'edit']"
+                                class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
 
+                            <button type="submit" (click)="delete(cliente)" class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
 
                         </div>
                     </td>

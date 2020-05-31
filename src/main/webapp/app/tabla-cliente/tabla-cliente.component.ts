@@ -9,6 +9,7 @@ import { ICliente } from 'app/shared/model/cliente.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ClienteService } from 'app/entities/cliente/cliente.service';
 import { ClienteDeleteDialogComponent } from 'app/entities/cliente/cliente-delete-dialog.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-tabla-cliente',
@@ -102,7 +103,16 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headersLink ? headersLink : '');
     if (data) {
       for (let i = 0; i < data.length; i++) {
-        this.clientes.push(data[i]);
+        const cliente = data[i];
+        cliente.numDocs?.forEach(numDoc => numDoc.tratamientoClientes?.forEach(tratamientosCLientes => {
+          tratamientosCLientes.numSesionesDisfrutadas = 0;
+          tratamientosCLientes.citas?.forEach(cita => {
+            if (moment(new Date()).isAfter(cita.fechaHoraCita) && tratamientosCLientes.numSesionesDisfrutadas != null) {
+              tratamientosCLientes.numSesionesDisfrutadas++;
+            }
+          });
+        }));
+        this.clientes.push(cliente);
       }
     }
     this.clientesNoFilter = this.clientes;

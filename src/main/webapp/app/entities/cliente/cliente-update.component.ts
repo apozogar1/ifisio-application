@@ -12,7 +12,7 @@ import { ClienteService } from './cliente.service';
 import { INumDoc, NumDoc } from 'app/shared/model/num-doc.model';
 import { CompanyaService } from '../companya/companya.service';
 import { NumDocService } from '../num-doc/num-doc.service';
-import { ICompanya } from 'app/shared/model/companya.model';
+import { ICompanya, Companya } from 'app/shared/model/companya.model';
 
 @Component({
   selector: 'jhi-cliente-update',
@@ -35,7 +35,7 @@ export class ClienteUpdateComponent implements OnInit {
     companya: []
   });
 
-  constructor(protected clienteService: ClienteService, protected companyaService: CompanyaService, protected numDocService: NumDocService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(protected clienteService: ClienteService, protected companyaService: CompanyaService, protected numDocService: NumDocService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ cliente }) => {
@@ -87,13 +87,7 @@ export class ClienteUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const cliente = this.createFromForm();
     const numDoc = this.createFromFormNumDoc();
-    if (cliente.id !== undefined) {
-      this.subscribeToSaveResponse(this.clienteService.update(cliente));
-    } else {
-      this.subscribeToSaveResponse(this.clienteService.create(cliente));
-    }
 
     if (numDoc.id !== undefined) {
       this.subscribeToSaveResponse(this.numDocService.update(numDoc));
@@ -102,7 +96,7 @@ export class ClienteUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): ICliente {
+  private createFromFormCliente(): ICliente {
     return {
       ...new Cliente(),
       id: this.editForm.get(['id'])!.value,
@@ -121,8 +115,15 @@ export class ClienteUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       numDoc: this.editForm.get(['numDoc'])!.value,
       fechaAlta: this.editForm.get(['fechaAlta'])!.value ? moment(this.editForm.get(['fechaAlta'])!.value, DATE_TIME_FORMAT) : undefined,
-      companya: this.editForm.get(['companya'])!.value,
-      cliente: this.editForm.get(['cliente'])!.value
+      companya: this.createFromFormCompanya(),
+      cliente: this.createFromFormCliente()
+    };
+  }
+
+  private createFromFormCompanya(): ICompanya {
+    return {
+      ...new Companya(),
+      id: this.editForm.get(['companya'])!.value
     };
   }
 
