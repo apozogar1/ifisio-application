@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CitaService } from 'app/entities/cita/cita.service';
 import { TratamientoClienteService } from 'app/entities/tratamiento-cliente/tratamiento-cliente.service';
 import { ICita } from 'app/shared/model/cita.model';
@@ -10,6 +11,7 @@ import { ICliente } from 'app/shared/model/cliente.model';
 import { ITratamientoCliente } from 'app/shared/model/tratamiento-cliente.model';
 import * as moment from 'moment';
 import { SelectItem } from 'primeng/api/selectitem';
+import { CitaDeleteDialogComponent } from 'app/entities/cita/cita-delete-dialog.component';
 
 @Component({
   selector: 'jhi-agenda',
@@ -17,6 +19,7 @@ import { SelectItem } from 'primeng/api/selectitem';
 })
 export class AgendaComponent implements OnInit, OnDestroy {
   events: any[] = [];
+  citas: ICita[] = [];
 
   options: any;
   cliente: ICliente;
@@ -36,6 +39,7 @@ export class AgendaComponent implements OnInit, OnDestroy {
   constructor(
     private citaService: CitaService,
     private tratamientoClienteService: TratamientoClienteService,
+    protected modalService: NgbModal,
     protected activatedRoute: ActivatedRoute
   ) {
     this.cliente = {};
@@ -56,6 +60,7 @@ export class AgendaComponent implements OnInit, OnDestroy {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       defaultDate: new Date(),
       defaultView: this.modeSel,
+      droppable: true,
       aspectRatio: 3,
       header: {
         left: 'prev,next',
@@ -63,24 +68,42 @@ export class AgendaComponent implements OnInit, OnDestroy {
         right: 'dayGridMonth,timeGridWeek,timeGrid'
       },
       editable: true,
-      dateClick: (e: any) => {
-        if (this.tratamientoSel != null && this.tratamientoSel.id != null) {
-          const cita = { fechaHoraCita: moment(e.date), tratamientoCliente: this.tratamientoSel };
-          this.citaService.create(cita).subscribe((response: any) => {
-            const citaNew = response.body;
-            this.events = [
-              ...this.events,
-              {
-                id: citaNew.id,
-                title: citaNew.tratamientoCliente?.numDoc?.cliente?.nombre + ' ' + citaNew.tratamientoCliente?.numDoc?.cliente?.apellidos,
-                start: citaNew.fechaHoraCita instanceof moment ? citaNew.fechaHoraCita.format() : citaNew.fechaHoraCita
-              }
-            ];
-          });
-        }
-        // this.modalCita = true;
-      }
+      dateClick: this.handleDateClick.bind(this),
+      eventClick: this.handleEventClick.bind(this),
+      eventDrop: this.handleEventDragStop.bind(this)
+      // eventData: this.handleEventDragStop.bind(this)
     };
+  }
+
+  handleDateClick(e: any): void {
+    if (this.tratamientoSel != null && this.tratamientoSel.id != null) {
+      const cita = { fechaHoraCita: moment(e.date), tratamientoCliente: this.tratamientoSel };
+      this.citaService.create(cita).subscribe((response: any) => {
+        const citaNew = response.body;
+        this.events = [
+          ...this.events,
+          {
+            id: citaNew.id,
+            title: citaNew.tratamientoCliente?.numDoc?.cliente?.nombre + ' ' + citaNew.tratamientoCliente?.numDoc?.cliente?.apellidos,
+            start: citaNew.fechaHoraCita instanceof moment ? citaNew.fechaHoraCita.format() : citaNew.fechaHoraCita
+          }
+        ];
+      });
+    }
+  }
+
+  handleEventDragStop(info: any): void {
+    const cita = this.citas.find((citaAux: ICita) => citaAux.id === +info.event.id);
+    if (cita != null) {
+      cita.fechaHoraCita = moment(info.event.start);
+      this.citaService.update(cita).subscribe(p => {});
+    }
+  }
+
+  handleEventClick(e: any): void {
+    const element = this.events.find(citaAux => citaAux.id === +e.event.id);
+    const modalRef = this.modalService.open(CitaDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.cita = element;
   }
 
   loadTratamientos(elements: ICita[]): void {
@@ -95,6 +118,7 @@ export class AgendaComponent implements OnInit, OnDestroy {
   }
 
   loadCita(elements: ICita[]): void {
+    this.citas = elements;
     this.events = elements.map((cita: ICita) => {
       return {
         id: cita.id,

@@ -15,10 +15,12 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { IFisioTablaClienteModule } from './tabla-cliente/tabla-cliente.module';
 import './vendor';
 import { IFisioAgendaModule } from './agenda/agenda.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IFisioSharedModule,
     IFisioCoreModule,
     IFisioHomeModule,
