@@ -11,6 +11,7 @@ import { medicionRoute } from './medicion.route';
 @NgModule({
   imports: [IFisioSharedModule, RouterModule.forChild(medicionRoute)],
   declarations: [MedicionComponent, MedicionDetailComponent, MedicionUpdateComponent, MedicionDeleteDialogComponent],
-  entryComponents: [MedicionDeleteDialogComponent]
+  entryComponents: [MedicionDeleteDialogComponent],
+  exports: [MedicionComponent, MedicionDetailComponent, MedicionUpdateComponent, MedicionDeleteDialogComponent]
 })
 export class IFisioMedicionModule {}

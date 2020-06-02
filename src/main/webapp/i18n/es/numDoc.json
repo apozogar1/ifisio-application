@@ -2,10 +2,10 @@
   "iFisioApp": {
     "numDoc": {
       "home": {
-        "title": "Num Docs",
-        "createLabel": "Crear nuevo Num Doc",
-        "createOrEditLabel": "Crear o editar Num Doc",
-        "notFound": "Ningún Num Docs encontrado"
+        "title": "Documentos",
+        "createLabel": "Crear nuevo Documentos",
+        "createOrEditLabel": "Crear o editar Documentos",
+        "notFound": "Ningún Documentos encontrado"
       },
       "created": "Un nuevo Num Doc ha sido creado con el identificador {{ param }}",
       "updated": "Un Num Doc ha sido actualizado con el identificador {{ param }}",

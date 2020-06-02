@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IMedicion } from 'app/shared/model/medicion.model';
+import { ICliente } from 'app/shared/model/cliente.model';
 
 type EntityResponseType = HttpResponse<IMedicion>;
 type EntityArrayResponseType = HttpResponse<IMedicion[]>;
@@ -35,6 +36,13 @@ export class MedicionService {
     return this.http
       .get<IMedicion>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  findByCliente(id: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IMedicion[]>(`${this.resourceUrl}/cliente/${id}`, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

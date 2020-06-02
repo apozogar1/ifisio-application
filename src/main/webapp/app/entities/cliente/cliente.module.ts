@@ -7,9 +7,10 @@ import { ClienteDetailComponent } from './cliente-detail.component';
 import { ClienteUpdateComponent } from './cliente-update.component';
 import { ClienteComponent } from './cliente.component';
 import { clienteRoute } from './cliente.route';
+import { IFisioMedicionModule } from '../medicion/medicion.module';
 
 @NgModule({
-  imports: [IFisioSharedModule, IFisioNumDocModule, RouterModule.forChild(clienteRoute)],
+  imports: [IFisioSharedModule, IFisioNumDocModule, IFisioMedicionModule, RouterModule.forChild(clienteRoute)],
   declarations: [ClienteComponent, ClienteDetailComponent, ClienteUpdateComponent, ClienteDeleteDialogComponent],
   entryComponents: [ClienteDeleteDialogComponent]
 })

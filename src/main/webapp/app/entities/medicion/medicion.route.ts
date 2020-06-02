@@ -11,6 +11,8 @@ import { MedicionService } from './medicion.service';
 import { MedicionComponent } from './medicion.component';
 import { MedicionDetailComponent } from './medicion-detail.component';
 import { MedicionUpdateComponent } from './medicion-update.component';
+import { ICliente, Cliente } from 'app/shared/model/cliente.model';
+import { ClienteService } from '../cliente/cliente.service';
 
 @Injectable({ providedIn: 'root' })
 export class MedicionResolve implements Resolve<IMedicion> {
@@ -34,9 +36,34 @@ export class MedicionResolve implements Resolve<IMedicion> {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+export class ClienteResolve implements Resolve<ICliente> {
+  constructor(private service: ClienteService, private router: Router) {}
+
+  resolve(route: ActivatedRouteSnapshot): Observable<ICliente> | Observable<never> {
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        flatMap((cliente: HttpResponse<Cliente>) => {
+          if (cliente.body) {
+            return of(cliente.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
+    }
+    return of(new Cliente());
+  }
+}
+
 export const medicionRoute: Routes = [
   {
-    path: '',
+    path: '/medicion/:id',
+    resolve: {
+      cliente: ClienteResolve
+    },
     component: MedicionComponent,
     data: {
       authorities: [Authority.USER],
@@ -45,7 +72,7 @@ export const medicionRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/view',
+    path: '/medicion/:id/view',
     component: MedicionDetailComponent,
     resolve: {
       medicion: MedicionResolve
@@ -57,7 +84,7 @@ export const medicionRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
+    path: '/medicion/new',
     component: MedicionUpdateComponent,
     resolve: {
       medicion: MedicionResolve
@@ -69,7 +96,7 @@ export const medicionRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: '/medicion/:id/edit',
     component: MedicionUpdateComponent,
     resolve: {
       medicion: MedicionResolve

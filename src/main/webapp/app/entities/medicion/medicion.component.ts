@@ -9,6 +9,7 @@ import { IMedicion } from 'app/shared/model/medicion.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { MedicionService } from './medicion.service';
 import { MedicionDeleteDialogComponent } from './medicion-delete-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'jhi-medicion',
@@ -27,7 +28,8 @@ export class MedicionComponent implements OnInit, OnDestroy {
     protected medicionService: MedicionService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+    protected parseLinks: JhiParseLinks,
+    protected activatedRoute: ActivatedRoute
   ) {
     this.medicions = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -40,13 +42,15 @@ export class MedicionComponent implements OnInit, OnDestroy {
   }
 
   loadAll(): void {
-    this.medicionService
-      .query({
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe((res: HttpResponse<IMedicion[]>) => this.paginateMedicions(res.body, res.headers));
+    this.activatedRoute.data.subscribe(({ cliente }) => {
+      this.medicionService
+        .findByCliente(cliente.id, {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe((res: HttpResponse<IMedicion[]>) => this.paginateMedicions(res.body, res.headers));
+    });
   }
 
   reset(): void {
