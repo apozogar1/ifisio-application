@@ -22,36 +22,21 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="peso"><span jhiTranslate="iFisioApp.medicion.peso">Peso</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="altura"><span jhiTranslate="iFisioApp.medicion.altura">Altura</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="imc"><span jhiTranslate="iFisioApp.medicion.imc">Imc</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="fechaMedicion"><span jhiTranslate="iFisioApp.medicion.fechaMedicion">Fecha Medicion</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="cliente.id"><span jhiTranslate="iFisioApp.medicion.cliente">Cliente</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let medicion of medicions ;trackBy: trackId">
-                    <td><a [routerLink]="['/medicion', medicion.id, 'view']">{{ medicion.id }}</a></td>
                     <td>{{ medicion.peso }}</td>
                     <td>{{ medicion.altura }}</td>
-                    <td>{{ medicion.imc }}</td>
-                    <td>{{ medicion.fechaMedicion | date:'medium' }}</td>
-                    <td>
-                        <div *ngIf="medicion.cliente">
-                            <a [routerLink]="['/cliente', medicion.cliente?.id, 'view']" >{{ medicion.cliente?.id }}</a>
-                        </div>
-                    </td>
+                    <td>{{ medicion.peso / ((medicion.altura/100) * (medicion.altura/100)) | number:'0.2-2'}}</td>
+                    <td>{{ medicion.fechaMedicion | date:'mediumDate' }}</td>
                     <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/medicion', medicion.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
-
+                        <div class="btn-group">                            
                             <button type="submit"
                                     [routerLink]="['/medicion', medicion.id, 'edit']"
                                     class="btn btn-primary btn-sm">

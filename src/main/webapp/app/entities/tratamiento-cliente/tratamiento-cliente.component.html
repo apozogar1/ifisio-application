@@ -22,38 +22,23 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="numSesiones"><span jhiTranslate="iFisioApp.tratamientoCliente.numSesiones">Num Sesiones</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="diagnostico"><span jhiTranslate="iFisioApp.tratamientoCliente.diagnostico">Diagnostico</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="tratamiento.id"><span jhiTranslate="iFisioApp.tratamientoCliente.tratamiento">Tratamiento</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="numDoc.id"><span jhiTranslate="iFisioApp.tratamientoCliente.numDoc">Num Doc</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let tratamientoCliente of tratamientoClientes ;trackBy: trackId">
-                    <td><a [routerLink]="['/tratamiento-cliente', tratamientoCliente.id, 'view']">{{ tratamientoCliente.id }}</a></td>
                     <td>{{ tratamientoCliente.numSesiones }}</td>
                     <td>{{ tratamientoCliente.diagnostico }}</td>
                     <td>
                         <div *ngIf="tratamientoCliente.tratamiento">
-                            <a [routerLink]="['/tratamiento', tratamientoCliente.tratamiento?.id, 'view']" >{{ tratamientoCliente.tratamiento?.id }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="tratamientoCliente.numDoc">
-                            <a [routerLink]="['/num-doc', tratamientoCliente.numDoc?.id, 'view']" >{{ tratamientoCliente.numDoc?.id }}</a>
+                            <a [routerLink]="['/tratamiento', tratamientoCliente.tratamiento?.id, 'view']" >{{ tratamientoCliente.tratamiento?.nombre }}</a>
                         </div>
                     </td>
                     <td class="text-right">
                         <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/tratamiento-cliente', tratamientoCliente.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
-
                             <button type="submit"
                                     [routerLink]="['/tratamiento-cliente', tratamientoCliente.id, 'edit']"
                                     class="btn btn-primary btn-sm">
