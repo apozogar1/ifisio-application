@@ -36,7 +36,7 @@ export class NumDocResolve implements Resolve<INumDoc> {
 
 export const numDocRoute: Routes = [
   {
-    path: '',
+    path: 'numDoc',
     component: NumDocComponent,
     data: {
       authorities: [Authority.USER],
@@ -45,7 +45,7 @@ export const numDocRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/view',
+    path: 'numDoc/:id/view',
     component: NumDocDetailComponent,
     resolve: {
       numDoc: NumDocResolve
@@ -57,7 +57,7 @@ export const numDocRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
+    path: 'numDoc/new',
     component: NumDocUpdateComponent,
     resolve: {
       numDoc: NumDocResolve
@@ -69,7 +69,7 @@ export const numDocRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: 'numDoc/:id/edit',
     component: NumDocUpdateComponent,
     resolve: {
       numDoc: NumDocResolve

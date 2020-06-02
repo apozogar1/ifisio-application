@@ -1,7 +1,8 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-cliente-heading" jhiTranslate="iFisioApp.cliente.home.createOrEditLabel">Create or edit a Cliente</h2>
+            <h2 id="jhi-cliente-heading" jhiTranslate="iFisioApp.cliente.home.createOrEditLabel">Create or edit a
+                Cliente</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
@@ -12,31 +13,34 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.nombre" for="field_nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" id="field_nombre"
-                           formControlName="nombre"/>
+                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.nombre"
+                        for="field_nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="field_nombre" formControlName="nombre" />
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.apellidos" for="field_apellidos">Apellidos</label>
+                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.apellidos"
+                        for="field_apellidos">Apellidos</label>
                     <input type="text" class="form-control" name="apellidos" id="field_apellidos"
-                           formControlName="apellidos"/>
+                        formControlName="apellidos" />
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.telefono" for="field_telefono">Telefono</label>
+                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.telefono"
+                        for="field_telefono">Telefono</label>
                     <input type="text" class="form-control" name="telefono" id="field_telefono"
-                           formControlName="telefono"/>
+                        formControlName="telefono" />
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.fechaNacimiento" for="field_fechaNacimiento">Fecha Nacimiento</label>
+                    <label class="form-control-label" jhiTranslate="iFisioApp.cliente.fechaNacimiento"
+                        for="field_fechaNacimiento">Fecha Nacimiento</label>
                     <div class="d-flex">
-                        <input id="field_fechaNacimiento" type="datetime-local" class="form-control" name="fechaNacimiento" formControlName="fechaNacimiento" placeholder="YYYY-MM-DD HH:mm"/>
+                        <input id="field_fechaNacimiento" type="datetime-local" class="form-control"
+                            name="fechaNacimiento" formControlName="fechaNacimiento" placeholder="YYYY-MM-DD HH:mm" />
                     </div>
                 </div>
 
-                <!-- <jhi-num-doc></jhi-num-doc> -->
             </div>
 
             <div>
@@ -44,10 +48,12 @@
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                    class="btn btn-primary">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>
+        <jhi-num-doc></jhi-num-doc>
     </div>
 </div>

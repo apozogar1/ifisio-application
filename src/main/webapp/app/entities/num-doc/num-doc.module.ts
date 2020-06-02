@@ -11,6 +11,7 @@ import { numDocRoute } from './num-doc.route';
 @NgModule({
   imports: [IFisioSharedModule, RouterModule.forChild(numDocRoute)],
   declarations: [NumDocComponent, NumDocDetailComponent, NumDocUpdateComponent, NumDocDeleteDialogComponent],
-  entryComponents: [NumDocDeleteDialogComponent]
+  entryComponents: [NumDocDeleteDialogComponent],
+  exports: [NumDocComponent, NumDocDetailComponent, NumDocUpdateComponent, NumDocDeleteDialogComponent]
 })
 export class IFisioNumDocModule {}
