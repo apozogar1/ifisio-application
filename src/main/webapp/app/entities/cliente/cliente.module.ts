@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 import { IFisioSharedModule } from 'app/shared/shared.module';
-import { ClienteComponent } from './cliente.component';
+import { ClienteDeleteDialogComponent } from './cliente-delete-dialog.component';
 import { ClienteDetailComponent } from './cliente-detail.component';
 import { ClienteUpdateComponent } from './cliente-update.component';
-import { ClienteDeleteDialogComponent } from './cliente-delete-dialog.component';
+import { ClienteComponent } from './cliente.component';
 import { clienteRoute } from './cliente.route';
 
 @NgModule({

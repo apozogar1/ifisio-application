@@ -6,7 +6,7 @@
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="true">
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
@@ -32,30 +32,11 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="iFisioApp.cliente.fechaNacimiento" for="field_fechaNacimiento">Fecha Nacimiento</label>
                     <div class="d-flex">
-                        <input id="field_fechaNacimiento" type="date" class="form-control" name="fechaNacimiento" formControlName="fechaNacimiento" placeholder="YYYY-MM-DD"/>
+                        <input id="field_fechaNacimiento" type="datetime-local" class="form-control" name="fechaNacimiento" formControlName="fechaNacimiento" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.numDoc" for="field_numDoc">Num Doc</label>
-                    <input type="number" class="form-control" name="numDoc" id="field_numDoc"
-                           formControlName="numDoc"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.fechaAlta" for="field_fechaAlta">Fecha Alta</label>
-                    <div class="d-flex">
-                        <input id="field_fechaAlta" type="date" class="form-control" name="fechaAlta" formControlName="fechaAlta" placeholder="YYYY-MM-DD"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.companya" for="field_companya">Companya</label>
-                    <select class="form-control" id="field_companya" name="companya" formControlName="companya">
-                        <option [ngValue]="null"></option>
-                        <!-- <option [ngValue]="companyaOption.id === editForm.get('companya')!.value?.id ? editForm.get('companya')!.value : companyaOption" *ngFor="let companyaOption of companyas; trackBy: trackById">{{ companyaOption.nombre }}</option> -->
-                    </select>
-                </div>
+                <!-- <jhi-num-doc></jhi-num-doc> -->
             </div>
 
             <div>
