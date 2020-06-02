@@ -1,13 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SERVER_API_URL } from 'app/app.constants';
+import { IMedicion } from 'app/shared/model/medicion.model';
+import { createRequestOption } from 'app/shared/util/request-util';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
-import { IMedicion } from 'app/shared/model/medicion.model';
-import { ICliente } from 'app/shared/model/cliente.model';
 
 type EntityResponseType = HttpResponse<IMedicion>;
 type EntityArrayResponseType = HttpResponse<IMedicion[]>;
