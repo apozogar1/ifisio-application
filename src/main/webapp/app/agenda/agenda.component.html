@@ -23,7 +23,7 @@
 </div>
 
 <!-- <p-selectButton [options]="mode" [(ngModel)]="modeSel" (ngModelChange)="changeMode()"></p-selectButton> -->
-<p-fullCalendar [events]="events" [options]="options"></p-fullCalendar>
+<p-fullCalendar #fc  [events]="events" [options]="options"></p-fullCalendar>
 
 <p-dialog header="Title" [(visible)]="modalCita" modal="true" [style]="{width: '50vw'}">
     <!-- <jhi-cita-update></jhi-cita-update> -->

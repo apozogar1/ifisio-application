@@ -53,7 +53,7 @@
                     <label class="form-control-label" jhiTranslate="iFisioApp.numDoc.companya" for="field_companya">Companya</label>
                     <select class="form-control" id="field_companya" name="companya" formControlName="companya">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="companyaOption.id === editForm.get('companya')!.value?.id ? editForm.get('companya')!.value : companyaOption" *ngFor="let companyaOption of companyas; trackBy: trackById">{{ companyaOption.nombre }}</option>
+                        <!-- <option [ngValue]="companyaOption.id === editForm.get('companya')!.value?.id ? editForm.get('companya')!.value : companyaOption" *ngFor="let companyaOption of companyas; trackBy: trackById">{{ companyaOption.nombre }}</option> -->
                     </select>
                 </div>
             </div>
