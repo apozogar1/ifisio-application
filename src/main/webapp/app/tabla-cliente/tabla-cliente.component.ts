@@ -25,6 +25,7 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
   predicate: string;
   ascending: boolean;
   filtro: string;
+  estaActivo: boolean;
 
   constructor(
     protected clienteService: ClienteService,
@@ -42,6 +43,7 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
     this.predicate = 'id';
     this.ascending = true;
     this.filtro = '';
+    this.estaActivo = false;
   }
 
   loadAll(): void {
@@ -126,6 +128,22 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
         cliente.numDocs?.find(numDoc => this.compareFilter(numDoc.companya?.nombre, this.filtro))
     );
     this.clientes = tablaFiltrada;
+  }
+
+  filtroActivo(): void {
+    if (this.estaActivo) {
+      this.clientes = this.clientesNoFilter.filter(cliente => {
+        let estaActivo = false;
+        cliente?.numDocs?.forEach(numDoc => numDoc?.tratamientoClientes?.forEach((aux: any) => {
+          if (aux?.numSesiones > aux?.numSesionesDisfrutadas) {
+            estaActivo = true;
+          }
+        }));
+        return estaActivo;
+      });
+    } else {
+      this.clientes = JSON.parse(JSON.stringify(this.clientesNoFilter));
+    }
   }
 
   compareFilter(c1: any, c2: any): boolean {

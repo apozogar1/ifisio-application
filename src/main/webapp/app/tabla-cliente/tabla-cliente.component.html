@@ -44,7 +44,7 @@
                         <span jhiTranslate="iFisioApp.tablaCliente.activo">
                             Activo
                         </span>
-                        <input type="checkbox" />
+                        <input type="checkbox" [(ngModel)]="estaActivo" (ngModelChange)="filtroActivo()"/>
                     </th>
                     <th scope="col"></th>
                 </tr>
