@@ -42,17 +42,20 @@ export const tablaClienteRoute: Routes = [
       pageTitle: 'iFisioApp.cliente.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
-  ,  {
+  },
+  {
     path: 'clientes/cliente/:id',
     component: EdicionClienteComponent,
+    resolve: {
+      cliente: TablaClienteResolve
+    },
     data: {
       authorities: [Authority.USER],
       pageTitle: 'iFisioApp.cliente.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
-  ,  {
+  },
+  {
     path: 'clientes/cliente/new',
     component: EdicionClienteComponent,
     data: {

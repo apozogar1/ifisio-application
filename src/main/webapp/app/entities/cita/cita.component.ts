@@ -1,14 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ICita } from 'app/shared/model/cita.model';
-
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { CitaService } from './cita.service';
+import { ICita } from 'app/shared/model/cita.model';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import { CitaDeleteDialogComponent } from './cita-delete-dialog.component';
+import { CitaService } from './cita.service';
 
 @Component({
   selector: 'jhi-cita',
