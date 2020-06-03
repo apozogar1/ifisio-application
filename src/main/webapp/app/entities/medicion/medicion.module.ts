@@ -9,7 +9,7 @@ import { MedicionDeleteDialogComponent } from './medicion-delete-dialog.componen
 import { medicionRoute } from './medicion.route';
 
 @NgModule({
-  imports: [IFisioSharedModule, RouterModule.forChild(medicionRoute)],
+  imports: [IFisioSharedModule],
   declarations: [MedicionComponent, MedicionDetailComponent, MedicionUpdateComponent, MedicionDeleteDialogComponent],
   entryComponents: [MedicionDeleteDialogComponent],
   exports: [MedicionComponent, MedicionDetailComponent, MedicionUpdateComponent, MedicionDeleteDialogComponent]

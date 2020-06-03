@@ -9,7 +9,7 @@ import { NumDocDeleteDialogComponent } from './num-doc-delete-dialog.component';
 import { numDocRoute } from './num-doc.route';
 
 @NgModule({
-  imports: [IFisioSharedModule, RouterModule.forChild(numDocRoute)],
+  imports: [IFisioSharedModule],
   declarations: [NumDocComponent, NumDocDetailComponent, NumDocUpdateComponent, NumDocDeleteDialogComponent],
   entryComponents: [NumDocDeleteDialogComponent],
   exports: [NumDocComponent, NumDocDetailComponent, NumDocUpdateComponent, NumDocDeleteDialogComponent]

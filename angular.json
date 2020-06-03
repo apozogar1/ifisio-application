@@ -27,13 +27,19 @@
       },
       "prefix": "jhi",
       "architect": {
-        "styles": ["./node_modules/fullcalendar/dist/fullcalendar.min.css"],
-        "scripts": ["./node_modules/moment/min/moment.min.js", "./node_modules/fullcalendar/dist/fullcalendar.min.js"]
+        "styles": [
+          "./node_modules/fullcalendar/dist/fullcalendar.min.css"
+        ],
+        "scripts": [
+          "./node_modules/moment/min/moment.min.js",
+          "./node_modules/fullcalendar/dist/fullcalendar.min.js"
+        ]
       }
     }
   },
   "defaultProject": "i-fisio",
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   }
 }

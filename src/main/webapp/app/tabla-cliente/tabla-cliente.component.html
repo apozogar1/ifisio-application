@@ -8,7 +8,7 @@
 
 
             <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cliente"
-                [routerLink]="['/cliente/new']">
+                [routerLink]="['/clientes/cliente/new']">
                 <fa-icon icon="plus"></fa-icon>
                 <span jhiTranslate="iFisioApp.cliente.home.createLabel">
                     Create a new Cliente
@@ -76,7 +76,7 @@
                                     jhiTranslate="iFisioApp.tablaCliente.citas">Citas</span>
                             </button>
 
-                            <button type="submit" [routerLink]="['/cliente', cliente.id, 'edit']"
+                            <button type="submit" [routerLink]="['/clientes/cliente', cliente.id]"
                                 class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>

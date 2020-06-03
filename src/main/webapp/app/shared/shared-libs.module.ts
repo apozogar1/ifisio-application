@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
+import {TabViewModule} from 'primeng/tabview';
 
 @NgModule({
   exports: [
@@ -21,6 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
     InfiniteScrollModule,
     FullCalendarModule,
     SelectButtonModule,
+    TabViewModule,
     DropdownModule,
     DialogModule,
     ButtonModule,
