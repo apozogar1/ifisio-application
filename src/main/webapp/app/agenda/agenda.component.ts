@@ -162,7 +162,8 @@ export class AgendaComponent implements OnInit, OnDestroy {
 
   registerChangeInCitaDelete(): void {
     this.eventSubscriber = this.eventManager.subscribe('citaListModification', () => {
-      this.options.remove(this.citaSel.id);
+      const filterDel = this.events.filter(citaAux => citaAux.id !== this.citaSel.id);
+      this.events = [...filterDel];
     });
   }
 }

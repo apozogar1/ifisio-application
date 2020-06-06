@@ -5,7 +5,6 @@ import { MedicionDetailComponent } from './medicion-detail.component';
 import { MedicionUpdateComponent } from './medicion-update.component';
 import { MedicionComponent } from './medicion.component';
 
-
 @NgModule({
   imports: [IFisioSharedModule],
   declarations: [MedicionComponent, MedicionDetailComponent, MedicionUpdateComponent, MedicionDeleteDialogComponent],
