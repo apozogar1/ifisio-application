@@ -4,8 +4,6 @@ import { ClienteDeleteDialogComponent } from './cliente-delete-dialog.component'
 import { ClienteDetailComponent } from './cliente-detail.component';
 import { ClienteUpdateComponent } from './cliente-update.component';
 import { ClienteComponent } from './cliente.component';
-import { clienteRoute } from './cliente.route';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [IFisioSharedModule],
