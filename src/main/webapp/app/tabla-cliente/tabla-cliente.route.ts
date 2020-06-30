@@ -17,7 +17,7 @@ export class TablaClienteResolve implements Resolve<ICliente> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<ICliente> | Observable<never> {
     const id = route.params['id'];
-    if (id) {
+    if (id && id !== 'new') {
       return this.service.find(id).pipe(
         flatMap((cliente: HttpResponse<Cliente>) => {
           if (cliente.body) {

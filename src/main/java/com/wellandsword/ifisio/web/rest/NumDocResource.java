@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.wellandsword.ifisio.domain.Cliente;
 import com.wellandsword.ifisio.domain.NumDoc;
 import com.wellandsword.ifisio.repository.ClienteRepository;
 import com.wellandsword.ifisio.repository.CompanyaRepository;
@@ -80,10 +82,8 @@ public class NumDocResource {
 			companyaRepository.save(numDoc.getCompanya());
 		}
 		NumDoc result = numDocRepository.save(numDoc);
-		return ResponseEntity
-				.created(new URI("/api/num-docs/" + result.getId())).headers(HeaderUtil
-						.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-				.body(result);
+		return ResponseEntity.created(new URI("/api/num-docs/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
 	}
 
 	/**
@@ -104,9 +104,8 @@ public class NumDocResource {
 			throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
 		}
 		NumDoc result = numDocRepository.save(numDoc);
-		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, numDoc.getId().toString()))
-				.body(result);
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, numDoc.getId().toString())).body(result);
 	}
 
 	/**
@@ -120,9 +119,26 @@ public class NumDocResource {
 	public ResponseEntity<List<NumDoc>> getAllNumDocs(Pageable pageable) {
 		log.debug("REST request to get a page of NumDocs");
 		Page<NumDoc> page = numDocRepository.findAll(pageable);
-		HttpHeaders headers = PaginationUtil
-				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 		return ResponseEntity.ok().headers(headers).body(page.getContent());
+	}
+
+	/**
+	 * {@code GET  /num-docs} : get all the numDocs.
+	 *
+	 * @param pageable the pagination information.
+	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+	 *         of numDocs in body.
+	 */
+	@GetMapping("/num-docs/cliente/{id}")
+	public ResponseEntity<List<NumDoc>> getAllNumDocsByCliente(@PathVariable Long id) {
+		log.debug("REST request to get a page of NumDocs");
+		NumDoc probe = new NumDoc();
+		Cliente cliente = new Cliente();
+		cliente.setId(id);
+		probe.setCliente(cliente);
+		List<NumDoc> page = numDocRepository.findAll(Example.of(probe));
+		return ResponseEntity.ok().body(page);
 	}
 
 	/**
@@ -149,8 +165,7 @@ public class NumDocResource {
 	public ResponseEntity<Void> deleteNumDoc(@PathVariable Long id) {
 		log.debug("REST request to delete NumDoc : {}", id);
 		numDocRepository.deleteById(id);
-		return ResponseEntity.noContent()
-				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+		return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
 				.build();
 	}
 }
