@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.wellandsword.ifisio.domain.Cliente;
+import com.wellandsword.ifisio.domain.Medicion;
 import com.wellandsword.ifisio.domain.NumDoc;
 import com.wellandsword.ifisio.repository.ClienteRepository;
 import com.wellandsword.ifisio.repository.CompanyaRepository;
@@ -140,16 +141,16 @@ public class NumDocResource {
 	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
 	 *         of numDocs in body.
 	 */
-	@GetMapping("/num-docs/cliente/{id}")
-	public ResponseEntity<List<NumDoc>> getAllNumDocsByCliente(@PathVariable Long id) {
-		log.debug("REST request to get a page of NumDocs");
-		NumDoc probe = new NumDoc();
-		Cliente cliente = new Cliente();
-		cliente.setId(id);
-		probe.setCliente(cliente);
-		List<NumDoc> page = numDocRepository.findAll(Example.of(probe));
-		return ResponseEntity.ok().body(page);
-	}
+//	@GetMapping("/num-docs/cliente/{id}")
+//	public ResponseEntity<List<NumDoc>> getAllNumDocsByCliente(@PathVariable Long id) {
+//		log.debug("REST request to get a page of NumDocs");
+//		NumDoc probe = new NumDoc();
+//		Cliente cliente = new Cliente();
+//		cliente.setId(id);
+//		probe.setCliente(cliente);
+//		List<NumDoc> page = numDocRepository.findAll(Example.of(probe));
+//		return ResponseEntity.ok().body(page);
+//	}
 
 	/**
 	 * {@code GET  /num-docs/:id} : get the "id" numDoc.

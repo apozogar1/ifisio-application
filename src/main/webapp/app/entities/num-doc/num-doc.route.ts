@@ -8,6 +8,8 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { NumDocUpdateComponent } from './num-doc-update.component';
 import { NumDocService } from './num-doc.service';
+import { ICliente, Cliente } from 'app/shared/model/cliente.model';
+import { ClienteService } from '../cliente/cliente.service';
 
 @Injectable({ providedIn: 'root' })
 export class NumDocResolve implements Resolve<INumDoc> {
@@ -31,29 +33,51 @@ export class NumDocResolve implements Resolve<INumDoc> {
   }
 }
 
-export const numDocRoute: Routes = [
-  {
-    path: 'cliente/num-doc/new',
-    component: NumDocUpdateComponent,
-    resolve: {
-      numDoc: NumDocResolve
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'iFisioApp.numDoc.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: 'cliente/num-doc/:id/edit',
-    component: NumDocUpdateComponent,
-    resolve: {
-      numDoc: NumDocResolve
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'iFisioApp.numDoc.home.title'
-    },
-    canActivate: [UserRouteAccessService]
+@Injectable({ providedIn: 'root' })
+export class ClienteResolve implements Resolve<ICliente> {
+  constructor(private service: ClienteService, private router: Router) {}
+
+  resolve(route: ActivatedRouteSnapshot): Observable<ICliente> | Observable<never> {
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        flatMap((cliente: HttpResponse<Cliente>) => {
+          if (cliente.body) {
+            return of(cliente.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
+    }
+    return of(new Cliente());
   }
+}
+
+export const numDocRoute: Routes = [
+  // {
+  //   path: 'cliente/num-doc/new',
+  //   component: NumDocUpdateComponent,
+  //   resolve: {
+  //     numDoc: NumDocResolve
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'iFisioApp.numDoc.home.title'
+  //   },
+  //   canActivate: [UserRouteAccessService]
+  // },
+  // {
+  //   path: 'cliente/num-doc/:id/edit',
+  //   component: NumDocUpdateComponent,
+  //   resolve: {
+  //     numDoc: NumDocResolve
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'iFisioApp.numDoc.home.title'
+  //   },
+  //   canActivate: [UserRouteAccessService]
+  // }
 ];

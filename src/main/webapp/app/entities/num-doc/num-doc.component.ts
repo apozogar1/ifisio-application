@@ -45,11 +45,15 @@ export class NumDocComponent implements OnInit, OnDestroy {
     this.activatedRoute.data.subscribe(({ cliente }) => {
       if (cliente != null && cliente.id != null) {
         this.numDocService
-          .getAllNumDocsByCliente(cliente.id)
-          .subscribe((res: HttpResponse<INumDoc[]>) => this.paginateNumDocs(res.body, res.headers));
-      }
-    });
-  }
+          .findByCliente(cliente.id, {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe((res: HttpResponse<INumDoc[]>) => this.paginateNumDocs(res.body, res.headers));
+    }
+  });
+}
 
   reset(): void {
     this.page = 0;

@@ -37,6 +37,13 @@ export class NumDocService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findByCliente(id: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<INumDoc[]>(`${this.resourceUrl}/cliente/${id}`, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   getAllNumDocsByCliente(id: number): Observable<EntityArrayResponseType> {
     return this.http
       .get<INumDoc[]>(`${this.resourceUrl}/cliente/${id}`, { observe: 'response' })
