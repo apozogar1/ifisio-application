@@ -70,6 +70,7 @@ export class TablaClienteComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadAll();
     this.registerChangeInClientes();
+
   }
 
   ngOnDestroy(): void {

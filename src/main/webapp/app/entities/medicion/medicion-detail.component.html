@@ -24,12 +24,12 @@
                 <dd>
                     <span>{{ medicion.fechaMedicion }}</span>
                 </dd>
-                <dt><span jhiTranslate="iFisioApp.medicion.cliente">Cliente</span></dt>
+                <!-- <dt><span jhiTranslate="iFisioApp.medicion.cliente">Cliente</span></dt>
                 <dd>
                     <div *ngIf="medicion.cliente">
                         <a [routerLink]="['/cliente', medicion.cliente?.id, 'view']">{{ medicion.cliente?.id }}</a>
                     </div>
-                </dd>
+                </dd> -->
             </dl>
 
             <button type="submit"
@@ -38,8 +38,8 @@
                 <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
+            <!-- [routerLink]="['/medicion', medicion.id, 'edit']" -->
             <button type="button"
-                    [routerLink]="['/medicion', medicion.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
