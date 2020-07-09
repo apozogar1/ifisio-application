@@ -17,16 +17,14 @@ logging:
   level:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
+    javax.management.remote.rmi: ERROR
     com.wellandsword.ifisio: DEBUG
-
 eureka:
   instance:
     prefer-ip-address: true
   client:
-    enabled: false # By default, the JHipster Registry is not used in the "dev" profile
     service-url:
       defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
-
 spring:
   profiles:
     active: dev
@@ -51,15 +49,16 @@ spring:
     hikari:
       poolName: Hikari
       auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
   jpa:
-    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
     show-sql: true
     properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: false
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
+      hibernate: 
+        dialect: org.hibernate.dialect.MySQL5Dialect    hibernate:      ddl-auto: update
   mail:
     host: localhost
     port: 25

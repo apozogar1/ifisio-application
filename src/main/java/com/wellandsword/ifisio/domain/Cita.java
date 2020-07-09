@@ -15,76 +15,86 @@ import java.time.Instant;
 @Table(name = "cita")
 public class Cita implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "fecha_hora_cita")
-    private Instant fechaHoraCita;
+	@Column(name = "fecha_hora_cita")
+	private Instant fechaHoraCita;
 
-    @ManyToOne
-    @JsonIgnoreProperties("citas")
-    private TratamientoCliente tratamientoCliente;
+	@Column(name = "comentarios")
+	private String comentarios;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
+	@ManyToOne
+	@JsonIgnoreProperties("citas")
+	private TratamientoCliente tratamientoCliente;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
+	// remove
+	public Long getId() {
+		return id;
+	}
 
-    public Instant getFechaHoraCita() {
-        return fechaHoraCita;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Cita fechaHoraCita(Instant fechaHoraCita) {
-        this.fechaHoraCita = fechaHoraCita;
-        return this;
-    }
+	public Instant getFechaHoraCita() {
+		return fechaHoraCita;
+	}
 
-    public void setFechaHoraCita(Instant fechaHoraCita) {
-        this.fechaHoraCita = fechaHoraCita;
-    }
+	public Cita fechaHoraCita(Instant fechaHoraCita) {
+		this.fechaHoraCita = fechaHoraCita;
+		return this;
+	}
 
-    public TratamientoCliente getTratamientoCliente() {
-        return tratamientoCliente;
-    }
+	public void setFechaHoraCita(Instant fechaHoraCita) {
+		this.fechaHoraCita = fechaHoraCita;
+	}
 
-    public Cita tratamientoCliente(TratamientoCliente tratamientoCliente) {
-        this.tratamientoCliente = tratamientoCliente;
-        return this;
-    }
+	public TratamientoCliente getTratamientoCliente() {
+		return tratamientoCliente;
+	}
 
-    public void setTratamientoCliente(TratamientoCliente tratamientoCliente) {
-        this.tratamientoCliente = tratamientoCliente;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+	public Cita tratamientoCliente(TratamientoCliente tratamientoCliente) {
+		this.tratamientoCliente = tratamientoCliente;
+		return this;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Cita)) {
-            return false;
-        }
-        return id != null && id.equals(((Cita) o).id);
-    }
+	public void setTratamientoCliente(TratamientoCliente tratamientoCliente) {
+		this.tratamientoCliente = tratamientoCliente;
+	}
 
-    @Override
-    public int hashCode() {
-        return 31;
-    }
+	public String getComentarios() {
+		return comentarios;
+	}
 
-    @Override
-    public String toString() {
-        return "Cita{" +
-            "id=" + getId() +
-            ", fechaHoraCita='" + getFechaHoraCita() + "'" +
-            "}";
-    }
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+	// jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+	// setters here, do not remove
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Cita)) {
+			return false;
+		}
+		return id != null && id.equals(((Cita) o).id);
+	}
+
+	@Override
+	public int hashCode() {
+		return 31;
+	}
+
+	@Override
+	public String toString() {
+		return "Cita{" + "id=" + getId() + ", fechaHoraCita='" + getFechaHoraCita() + "'" + "}";
+	}
 }

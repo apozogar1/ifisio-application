@@ -5,7 +5,13 @@
       "cliente": "Agenda cliente",
       "modo": "Modo",
       "tratamiento": "Tratamiento",
-      "numDias": "Numero citas pendientes"
+      "numDias": "Numero citas pendientes",
+      "informacionCita": "Información cita",
+      "nombre": "Nombre",
+      "fecha": "Fecha/Hora",
+      "comentarios": "Comentarios",
+      "eliminar": "Eliminar",
+      "guardar": "Guardar"
     }
   }
 }
