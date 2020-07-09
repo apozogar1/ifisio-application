@@ -122,6 +122,16 @@ public class NumDocResource {
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 		return ResponseEntity.ok().headers(headers).body(page.getContent());
 	}
+	
+	
+	@GetMapping("/num-docs/cliente/{id}")
+	public ResponseEntity<List<NumDoc>> getByClienteNumDoc(@PathVariable Long id, Pageable pageable) {
+		log.debug("REST request to get a page of NumDocs");
+		Page<NumDoc> page = numDocRepository.findByClienteId(id, pageable);
+		HttpHeaders headers = PaginationUtil
+				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+		return ResponseEntity.ok().headers(headers).body(page.getContent());
+	}
 
 	/**
 	 * {@code GET  /num-docs} : get all the numDocs.
