@@ -9,6 +9,7 @@ import { INumDoc } from 'app/shared/model/num-doc.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { NumDocService } from './num-doc.service';
 import { NumDocDeleteDialogComponent } from './num-doc-delete-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'jhi-num-doc',
@@ -27,7 +28,8 @@ export class NumDocComponent implements OnInit, OnDestroy {
     protected numDocService: NumDocService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+    protected parseLinks: JhiParseLinks,
+    protected activatedRoute: ActivatedRoute
   ) {
     this.numDocs = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -40,13 +42,13 @@ export class NumDocComponent implements OnInit, OnDestroy {
   }
 
   loadAll(): void {
-    this.numDocService
-      .query({
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe((res: HttpResponse<INumDoc[]>) => this.paginateNumDocs(res.body, res.headers));
+    this.activatedRoute.data.subscribe(({ cliente }) => {
+      if (cliente != null && cliente.id != null) {
+        this.numDocService
+          .getAllNumDocsByCliente(cliente.id)
+          .subscribe((res: HttpResponse<INumDoc[]>) => this.paginateNumDocs(res.body, res.headers));
+      }
+    });
   }
 
   reset(): void {

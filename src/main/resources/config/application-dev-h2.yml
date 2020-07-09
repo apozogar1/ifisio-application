@@ -45,12 +45,15 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://35.225.83.188:3306/iFisio_dev?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password: 8N6KqEvPovfG9LOy
+    url: jdbc:h2:~/ifisio;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: iFisio
+    password:
     hikari:
       poolName: Hikari
       auto-commit: false
+  h2:
+    console:
+      enabled: false
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedH2Dialect
     show-sql: true
@@ -60,6 +63,9 @@ spring:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
+  liquibase:
+    # Remove 'faker' if you do not want the sample data to be loaded automatically
+    contexts: dev, faker
   mail:
     host: localhost
     port: 25

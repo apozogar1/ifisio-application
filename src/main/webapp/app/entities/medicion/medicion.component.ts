@@ -43,13 +43,15 @@ export class MedicionComponent implements OnInit, OnDestroy {
 
   loadAll(): void {
     this.activatedRoute.data.subscribe(({ cliente }) => {
-      this.medicionService
-        .findByCliente(cliente.id, {
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.sort()
-        })
-        .subscribe((res: HttpResponse<IMedicion[]>) => this.paginateMedicions(res.body, res.headers));
+      if (cliente != null && cliente.id != null) {
+        this.medicionService
+          .findByCliente(cliente.id, {
+            page: this.page,
+            size: this.itemsPerPage,
+            sort: this.sort()
+          })
+          .subscribe((res: HttpResponse<IMedicion[]>) => this.paginateMedicions(res.body, res.headers));
+      }
     });
   }
 

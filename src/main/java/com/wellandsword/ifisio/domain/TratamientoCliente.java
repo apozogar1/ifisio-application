@@ -28,6 +28,9 @@ public class TratamientoCliente implements Serializable {
     @Column(name = "diagnostico")
     private String diagnostico;
 
+//    @Column(name = "precio_sesion")
+//    private Integer precioSesion;
+
     @OneToMany(mappedBy = "tratamientoCliente")
     private Set<Cita> citas = new HashSet<>();
 
@@ -124,9 +127,18 @@ public class TratamientoCliente implements Serializable {
     public void setNumDoc(NumDoc numDoc) {
         this.numDoc = numDoc;
     }
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
+//    public Integer getPrecioSesion() {
+//		return precioSesion;
+//	}
+//
+//	public void setPrecioSesion(Integer precioSesion) {
+//		this.precioSesion = precioSesion;
+//	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
