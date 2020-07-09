@@ -4,7 +4,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CitaDeleteDialogComponent } from 'app/entities/cita/cita-delete-dialog.component';
 import { CitaService } from 'app/entities/cita/cita.service';
 import { TratamientoClienteService } from 'app/entities/tratamiento-cliente/tratamiento-cliente.service';
 import { ICita } from 'app/shared/model/cita.model';
@@ -13,8 +12,9 @@ import { ITratamientoCliente } from 'app/shared/model/tratamiento-cliente.model'
 import * as moment from 'moment';
 import { JhiEventManager } from 'ng-jhipster';
 import { SelectItem } from 'primeng/api/selectitem';
-import { Subscription } from 'rxjs';
 import { FullCalendar } from 'primeng/fullcalendar/public_api';
+import { Subscription } from 'rxjs';
+import { AgendaDialogComponent } from './agenda-dialog.component';
 
 @Component({
   selector: 'jhi-agenda',
@@ -113,8 +113,9 @@ export class AgendaComponent implements OnInit, OnDestroy {
 
   handleEventClick(e: any): void {
     const element = this.events.find(citaAux => citaAux.id === +e.event.id);
-    const modalRef = this.modalService.open(CitaDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.cita = element;
+    const cita = this.citas.find(citaAux => citaAux.id === +e.event.id);
+    const modalRef = this.modalService.open(AgendaDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.cita = cita;
     this.citaSel = element;
   }
 
