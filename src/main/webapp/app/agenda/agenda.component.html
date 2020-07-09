@@ -16,14 +16,14 @@
         <label for="id" jhiTranslate="iFisioApp.agenda.tratamiento">Tratamiento</label>
         <p-dropdown [options]="tratamientosClientes" [(ngModel)]="tratamientoSel"></p-dropdown>
     </div>
-    <div class="p-col">
+    <div class="p-col" *ngIf="tratamientoSel?.id != null">
         <label for="id" jhiTranslate="iFisioApp.agenda.numDias">Numero días</label>
         <input type="text" [(ngModel)]="numDiasPendientes" />
     </div>
 </div>
 
 <!-- <p-selectButton [options]="mode" [(ngModel)]="modeSel" (ngModelChange)="changeMode()"></p-selectButton> -->
-<p-fullCalendar #fc  [events]="events" [options]="options"></p-fullCalendar>
+<p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
 
 <p-dialog header="Title" [(visible)]="modalCita" modal="true" [style]="{width: '50vw'}">
     <!-- <jhi-cita-update></jhi-cita-update> -->
