@@ -1,15 +1,12 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Cliente, ICliente } from 'app/shared/model/cliente.model';
 import { INumDoc, NumDoc } from 'app/shared/model/num-doc.model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
-import { NumDocUpdateComponent } from './num-doc-update.component';
-import { NumDocService } from './num-doc.service';
-import { ICliente, Cliente } from 'app/shared/model/cliente.model';
 import { ClienteService } from '../cliente/cliente.service';
+import { NumDocService } from './num-doc.service';
 
 @Injectable({ providedIn: 'root' })
 export class NumDocResolve implements Resolve<INumDoc> {

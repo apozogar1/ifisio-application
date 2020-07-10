@@ -1,14 +1,15 @@
 <div class="row justify-content-center">
     <div class="col-12">
         <div class="col-12">
-            <h2 id="jhi-cita-heading" jhiTranslate="iFisioApp.agenda.cliente" *ngIf="cliente != null">
-                Cliente {{cliente?.nombre}} {{cliente?.apellidos}}
+            <h2 id="jhi-cita-heading" *ngIf="cliente != null">
+                <span jhiTranslate="iFisioApp.agenda.cliente">Agenda cliente</span>
+                {{cliente?.nombre}} {{cliente?.apellidos}}
             </h2>
             <h2 id="jhi-cita-heading" jhiTranslate="iFisioApp.agenda.title" *ngIf="cliente == null">
                 Agenda
             </h2>
         </div>
-        <jhi-alert-error></jhi-alert-error>
+        <!-- <jhi-alert-error></jhi-alert-error> -->
     </div>
 </div>
 <div class="p-grid" *ngIf="modeSel === 'timeGrid'">
@@ -18,13 +19,10 @@
     </div>
     <div class="p-col" *ngIf="tratamientoSel?.id != null">
         <label for="id" jhiTranslate="iFisioApp.agenda.numDias">Numero días</label>
-        <input type="text" [(ngModel)]="numDiasPendientes" />
+        <span>
+            {{numDiasPendientes}}
+        </span>
     </div>
 </div>
 
-<!-- <p-selectButton [options]="mode" [(ngModel)]="modeSel" (ngModelChange)="changeMode()"></p-selectButton> -->
 <p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
-
-<p-dialog header="Title" [(visible)]="modalCita" modal="true" [style]="{width: '50vw'}">
-    <!-- <jhi-cita-update></jhi-cita-update> -->
-</p-dialog>

@@ -12,6 +12,8 @@ import { FullCalendarModule } from 'primeng/fullcalendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { TabViewModule } from 'primeng/tabview';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   exports: [
@@ -22,7 +24,7 @@ import { TabViewModule } from 'primeng/tabview';
     InfiniteScrollModule,
     FullCalendarModule,
     SelectButtonModule,
-
+    ToastModule,
     TabViewModule,
     DropdownModule,
     DialogModule,
@@ -30,6 +32,6 @@ import { TabViewModule } from 'primeng/tabview';
     FontAwesomeModule,
     ReactiveFormsModule,
     TranslateModule
-  ]
+  ], providers: [MessageService]
 })
-export class IFisioSharedLibsModule {}
+export class IFisioSharedLibsModule { }

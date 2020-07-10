@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+// import esLocale *  from '@fullcalendar/core/locales/';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -9,12 +10,15 @@ import { TratamientoClienteService } from 'app/entities/tratamiento-cliente/trat
 import { ICita } from 'app/shared/model/cita.model';
 import { ICliente } from 'app/shared/model/cliente.model';
 import { ITratamientoCliente } from 'app/shared/model/tratamiento-cliente.model';
+import Utils from 'app/utils/utils';
 import * as moment from 'moment';
 import { JhiEventManager } from 'ng-jhipster';
 import { SelectItem } from 'primeng/api/selectitem';
 import { FullCalendar } from 'primeng/fullcalendar/public_api';
 import { Subscription } from 'rxjs';
 import { AgendaDialogComponent } from './agenda-dialog.component';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'jhi-agenda',
@@ -32,7 +36,7 @@ export class AgendaComponent implements OnInit, OnDestroy {
   modalCita = false;
   numDiasPendientes: Number = 10;
 
-  modeSel: String = 'dayGridMonth';
+  modeSel: String = 'timeGridWeek';
 
   tratamientoSel: ITratamientoCliente = {};
   tratamientosClientes: SelectItem[] = [
@@ -49,17 +53,18 @@ export class AgendaComponent implements OnInit, OnDestroy {
     private tratamientoClienteService: TratamientoClienteService,
     protected modalService: NgbModal,
     protected eventManager: JhiEventManager,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private messageService: MessageService
   ) {
     this.cliente = {};
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ cita }) => {
-      this.cliente = cita;
-      if (cita != null) {
-        this.citaService.findByCliente(cita.id).subscribe((events: any) => this.loadCita(events.body));
-        this.tratamientoClienteService.findByCliente(cita.id).subscribe((events: any) => this.loadTratamientos(events.body));
+    this.activatedRoute.data.subscribe(({ cliente }) => {
+      this.cliente = cliente;
+      if (cliente != null) {
+        this.citaService.findByCliente(cliente.id).subscribe((events: any) => this.loadCita(events.body));
+        this.tratamientoClienteService.findByCliente(cliente.id).subscribe((events: any) => this.loadTratamientos(events.body));
       } else {
         this.citaService.query().subscribe((events: any) => this.loadCita(events.body));
       }
@@ -73,6 +78,8 @@ export class AgendaComponent implements OnInit, OnDestroy {
       defaultView: this.modeSel,
       droppable: true,
       aspectRatio: 3,
+      locale: 'es',
+      firstDay: 1,
       header: {
         left: 'prev,next',
         center: 'title',
@@ -81,14 +88,16 @@ export class AgendaComponent implements OnInit, OnDestroy {
       editable: true,
       dateClick: this.handleDateClick.bind(this),
       eventClick: this.handleEventClick.bind(this),
-      eventDrop: this.handleEventDragStop.bind(this)
-      // eventData: this.handleEventDragStop.bind(this)
+      eventDrop: this.handleEventDragStop.bind(this),
+      eventResize: this.handleEventResize.bind(this)
     };
   }
 
   handleDateClick(e: any): void {
-    if (this.tratamientoSel != null && this.tratamientoSel.id != null) {
-      const cita = { fechaHoraCita: moment(e.date), tratamientoCliente: this.tratamientoSel };
+    if (this.tratamientoSel != null && this.tratamientoSel.id != null && this.validateCita(e)) {
+      const startCita = moment(e.date);
+      const endCita = moment(e.date).add(1, 'hours');
+      const cita = { fechaHoraCita: startCita, fechaHoraCitaFin: endCita, tratamientoCliente: this.tratamientoSel };
       this.citaService.create(cita).subscribe((response: any) => {
         const citaNew = response.body;
         this.events = [
@@ -103,11 +112,38 @@ export class AgendaComponent implements OnInit, OnDestroy {
     }
   }
 
+  validateCita(e: any): boolean {
+    let isOk = true;
+
+    // Que no se creen dos citas en el mismo
+    const start = moment(e.date).format('YYYYMMDD');
+    const existeDia = this.citas.find(cita => {
+      const fechaHoraCita = moment(cita.fechaHoraCita).format('YYYYMMDD');
+      return start === fechaHoraCita;
+    });
+    if (existeDia != null) {
+      this.messageService.add({ severity: 'info', summary: 'Validación', detail: 'No se puede poner el mismo dia.' });
+      isOk = false;
+    }
+    return isOk;
+  }
+
+
+  handleEventResize(info: any): void {
+    const cita = this.citas.find((citaAux: ICita) => citaAux.id === +info.event.id);
+    if (cita != null) {
+      cita.fechaHoraCita = moment(info.event.start);
+      cita.fechaHoraCitaFin = moment(info.event.end);
+      this.citaService.update(cita).subscribe(() => { });
+    }
+  }
+
   handleEventDragStop(info: any): void {
     const cita = this.citas.find((citaAux: ICita) => citaAux.id === +info.event.id);
     if (cita != null) {
       cita.fechaHoraCita = moment(info.event.start);
-      this.citaService.update(cita).subscribe(() => {});
+      cita.fechaHoraCitaFin = moment(info.event.end);
+      this.citaService.update(cita).subscribe(() => { });
     }
   }
 
@@ -135,8 +171,9 @@ export class AgendaComponent implements OnInit, OnDestroy {
     this.events = elements.map((cita: ICita) => {
       return {
         id: cita.id,
-        title: cita.tratamientoCliente?.numDoc?.cliente?.nombre + ' ' + cita.tratamientoCliente?.numDoc?.cliente?.apellidos,
-        start: cita.fechaHoraCita instanceof moment ? cita.fechaHoraCita.format() : cita.fechaHoraCita
+        title: Utils.formatName(cita.tratamientoCliente?.numDoc?.cliente?.nombre, cita.tratamientoCliente?.numDoc?.cliente?.apellidos) + ' - ' + cita.tratamientoCliente?.tratamiento?.nombre,
+        start: cita.fechaHoraCita instanceof moment ? cita.fechaHoraCita.format() : cita.fechaHoraCita,
+        end: cita.fechaHoraCitaFin instanceof moment ? cita.fechaHoraCitaFin.format() : cita.fechaHoraCitaFin
       };
     });
     if (this.cliente != null) {
@@ -167,4 +204,6 @@ export class AgendaComponent implements OnInit, OnDestroy {
       this.events = [...filterDel];
     });
   }
+
+
 }

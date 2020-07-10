@@ -7,9 +7,6 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { ClienteService } from '../cliente/cliente.service';
 import { MedicionService } from './medicion.service';
-import { MedicionUpdateComponent } from './medicion-update.component';
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 
 @Injectable({ providedIn: 'root' })
 export class MedicionResolve implements Resolve<IMedicion> {

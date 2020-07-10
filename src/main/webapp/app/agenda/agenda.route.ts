@@ -45,7 +45,7 @@ export const AgendaRoute: Routes = [
     path: 'agenda/:id',
     component: AgendaComponent,
     resolve: {
-      cita: AgendaResolve
+      cliente: AgendaResolve
     },
     data: {
       authorities: [Authority.USER],

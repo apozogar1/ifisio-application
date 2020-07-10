@@ -24,6 +24,9 @@ public class Cita implements Serializable {
 	@Column(name = "fecha_hora_cita")
 	private Instant fechaHoraCita;
 
+	@Column(name = "fecha_hora_cita_fin")
+	private Instant fechaHoraCitaFin;
+
 	@Column(name = "comentarios")
 	private String comentarios;
 
@@ -74,6 +77,15 @@ public class Cita implements Serializable {
 	public void setComentarios(String comentarios) {
 		this.comentarios = comentarios;
 	}
+
+	public Instant getFechaHoraCitaFin() {
+		return fechaHoraCitaFin;
+	}
+
+	public void setFechaHoraCitaFin(Instant fechaHoraCitaFin) {
+		this.fechaHoraCitaFin = fechaHoraCitaFin;
+	}
+
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters and
 	// setters here, do not remove
 
