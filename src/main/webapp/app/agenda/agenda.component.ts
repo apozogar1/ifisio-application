@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-// import esLocale *  from '@fullcalendar/core/locales/';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -34,7 +33,7 @@ export class AgendaComponent implements OnInit, OnDestroy {
   options: any;
   cliente: ICliente;
   modalCita = false;
-  numDiasPendientes: Number = 10;
+  numDiasPendientes: any = 10;
 
   modeSel: String = 'timeGridWeek';
 
@@ -94,56 +93,48 @@ export class AgendaComponent implements OnInit, OnDestroy {
   }
 
   handleDateClick(e: any): void {
-    if (this.tratamientoSel != null && this.tratamientoSel.id != null && this.validateCita(e)) {
+    if (this.tratamientoSel != null && this.tratamientoSel.id != null && this.validateCita(e.date, e.id)) {
       const startCita = moment(e.date);
       const endCita = moment(e.date).add(1, 'hours');
       const cita = { fechaHoraCita: startCita, fechaHoraCitaFin: endCita, tratamientoCliente: this.tratamientoSel };
       this.citaService.create(cita).subscribe((response: any) => {
         const citaNew = response.body;
+        this.citas.push(citaNew);
+        this.numDiasPendientes--;
         this.events = [
           ...this.events,
-          {
-            id: citaNew.id,
-            title: citaNew.tratamientoCliente?.numDoc?.cliente?.nombre + ' ' + citaNew.tratamientoCliente?.numDoc?.cliente?.apellidos,
-            start: citaNew.fechaHoraCita instanceof moment ? citaNew.fechaHoraCita.format() : citaNew.fechaHoraCita
-          }
+          this.mapCitaToEvent(citaNew)
         ];
       });
     }
   }
 
-  validateCita(e: any): boolean {
-    let isOk = true;
-
-    // Que no se creen dos citas en el mismo
-    const start = moment(e.date).format('YYYYMMDD');
-    const existeDia = this.citas.find(cita => {
-      const fechaHoraCita = moment(cita.fechaHoraCita).format('YYYYMMDD');
-      return start === fechaHoraCita;
+  updateCita(cita: ICita): void {
+    this.citaService.update(cita).subscribe((citaDb: any) => {
+      this.citas = [...this.citas.filter(citaAux => citaDb.body.id !== citaAux.id)];
+      this.citas.push(citaDb.body);
     });
-    if (existeDia != null) {
-      this.messageService.add({ severity: 'info', summary: 'Validación', detail: 'No se puede poner el mismo dia.' });
-      isOk = false;
-    }
-    return isOk;
   }
-
 
   handleEventResize(info: any): void {
     const cita = this.citas.find((citaAux: ICita) => citaAux.id === +info.event.id);
     if (cita != null) {
       cita.fechaHoraCita = moment(info.event.start);
       cita.fechaHoraCitaFin = moment(info.event.end);
-      this.citaService.update(cita).subscribe(() => { });
+      this.updateCita(cita);
     }
   }
 
   handleEventDragStop(info: any): void {
     const cita = this.citas.find((citaAux: ICita) => citaAux.id === +info.event.id);
-    if (cita != null) {
+    if (cita != null && this.validateCita(info.event.start, +info.event.id)) {
       cita.fechaHoraCita = moment(info.event.start);
       cita.fechaHoraCitaFin = moment(info.event.end);
-      this.citaService.update(cita).subscribe(() => { });
+      this.updateCita(cita);
+    } else {
+      const filterDel = this.events.filter(citaAux => citaAux.id !== cita?.id);
+      filterDel.push(this.mapCitaToEvent(cita));
+      this.events = [...filterDel];
     }
   }
 
@@ -159,7 +150,7 @@ export class AgendaComponent implements OnInit, OnDestroy {
     this.tratamientosClientes = this.tratamientosClientes.concat(
       elements.map((tratamientoCliente: ITratamientoCliente) => {
         return {
-          label: tratamientoCliente.tratamiento?.nombre,
+          label: tratamientoCliente.diagnostico,
           value: tratamientoCliente
         };
       })
@@ -167,14 +158,9 @@ export class AgendaComponent implements OnInit, OnDestroy {
   }
 
   loadCita(elements: ICita[]): void {
-    this.citas = elements;
+    this.citas = [...elements];
     this.events = elements.map((cita: ICita) => {
-      return {
-        id: cita.id,
-        title: Utils.formatName(cita.tratamientoCliente?.numDoc?.cliente?.nombre, cita.tratamientoCliente?.numDoc?.cliente?.apellidos) + ' - ' + cita.tratamientoCliente?.tratamiento?.nombre,
-        start: cita.fechaHoraCita instanceof moment ? cita.fechaHoraCita.format() : cita.fechaHoraCita,
-        end: cita.fechaHoraCitaFin instanceof moment ? cita.fechaHoraCitaFin.format() : cita.fechaHoraCitaFin
-      };
+      return this.mapCitaToEvent(cita);
     });
     if (this.cliente != null) {
       this.modeSel = 'timeGrid';
@@ -182,6 +168,15 @@ export class AgendaComponent implements OnInit, OnDestroy {
       this.modeSel = 'dayGridMonth';
     }
     this.changeMode();
+  }
+
+  private mapCitaToEvent(cita: ICita | undefined): { id: number | undefined; title: string; start: string | moment.Moment | undefined; end: string | moment.Moment | undefined; } {
+    return {
+      id: cita?.id,
+      title: Utils.formatName(cita?.tratamientoCliente?.numDoc?.cliente?.nombre, cita?.tratamientoCliente?.numDoc?.cliente?.apellidos) + ' - ' + cita?.tratamientoCliente?.diagnostico,
+      start: cita?.fechaHoraCita instanceof moment ? cita?.fechaHoraCita.format() : cita?.fechaHoraCita,
+      end: cita?.fechaHoraCitaFin instanceof moment ? cita?.fechaHoraCitaFin.format() : cita?.fechaHoraCitaFin
+    };
   }
 
   ngOnDestroy(): void {
@@ -200,10 +195,46 @@ export class AgendaComponent implements OnInit, OnDestroy {
 
   registerChangeInCitaDelete(): void {
     this.eventSubscriber = this.eventManager.subscribe('citaListModification', () => {
-      const filterDel = this.events.filter(citaAux => citaAux.id !== this.citaSel.id);
-      this.events = [...filterDel];
+      this.citas = [...this.citas.filter(citaAux => citaAux.id !== this.citaSel.id)];
+      this.events = [...this.events.filter(citaAux => citaAux.id !== this.citaSel.id)];
+      this.calcuteDays();
     });
   }
 
+  calcuteDays(): void {
+    if (this.tratamientoSel?.numSesiones != null) {
+      const citasByTratamiento = this.citas.filter(cita => {
+        return cita.tratamientoCliente?.id === this.tratamientoSel.id;
+      });
+      this.numDiasPendientes = this.tratamientoSel.numSesiones - citasByTratamiento.length;
 
+      const filterCitasTratamientos = citasByTratamiento.map(cita => this.mapCitaToEvent(cita));
+      this.events = [...filterCitasTratamientos];
+    } else {
+      const filterCitasTratamientos = this.citas.map(cita => this.mapCitaToEvent(cita));
+      this.events = [...filterCitasTratamientos];
+    }
+  }
+
+  validateCita(dateStr: string | Date, id: any): boolean {
+    let isOk = true;
+
+    // Que no se creen dos citas en el mismo
+    const start = moment(dateStr).format('YYYYMMDD');
+    const existeDia = this.citas.find(cita => {
+      const fechaHoraCita = moment(cita.fechaHoraCita).format('YYYYMMDD');
+      return start === fechaHoraCita && cita.id !== id && cita.tratamientoCliente?.id === this.tratamientoSel.id;
+    });
+    if (existeDia != null) {
+      this.messageService.add({ severity: 'warn', summary: 'Validación', detail: 'No se puede poner el mismo dia.' });
+      isOk = false;
+    }
+
+    // No tienes mas citas
+    if (this.numDiasPendientes < 1) {
+      this.messageService.add({ severity: 'warn', summary: 'Validación', detail: 'Ya no le quedan mas citas.' });
+      isOk = false;
+    }
+    return isOk;
+  }
 }

@@ -146,7 +146,7 @@ public class ClienteResource {
 	@DeleteMapping("/clientes/{id}")
 	public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
 		log.debug("REST request to delete Cliente : {}", id);
-		numDocRepository.findByClienteId(id).stream().forEach(numDoc -> numDocRepository.delete(numDoc));
+		numDocRepository.findByClienteId(id, Pageable.unpaged()).stream().forEach(numDoc -> numDocRepository.delete(numDoc));
 		clienteRepository.deleteById(id);
 		return ResponseEntity.noContent()
 				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

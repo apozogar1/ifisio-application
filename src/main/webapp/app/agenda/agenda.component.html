@@ -13,16 +13,19 @@
     </div>
 </div>
 <div class="p-grid" *ngIf="modeSel === 'timeGrid'">
-    <div class="p-col">
+    <div class="p-col-2">
         <label for="id" jhiTranslate="iFisioApp.agenda.tratamiento">Tratamiento</label>
-        <p-dropdown [options]="tratamientosClientes" [(ngModel)]="tratamientoSel"></p-dropdown>
     </div>
-    <div class="p-col" *ngIf="tratamientoSel?.id != null">
+
+    <div class="p-col-2">
+        <p-dropdown [options]="tratamientosClientes" [(ngModel)]="tratamientoSel" (onChange)="calcuteDays()">
+        </p-dropdown>
+    </div>
+    <div class="p-col-2" *ngIf="tratamientoSel?.id != null">
         <label for="id" jhiTranslate="iFisioApp.agenda.numDias">Numero días</label>
-        <span>
-            {{numDiasPendientes}}
-        </span>
+    </div>
+    <div class="p-col-2" *ngIf="tratamientoSel?.id != null">
+        {{numDiasPendientes}}
     </div>
 </div>
-
 <p-fullCalendar #fc [events]="events" [options]="options"></p-fullCalendar>
