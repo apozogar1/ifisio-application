@@ -1,6 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="iFisioApp.tratamientoCliente.home.title">Tratamiento Clientes</span>
+        <!-- <span jhiTranslate="iFisioApp.tratamientoCliente.home.title">Tratamiento Clientes</span> -->
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-tratamiento-cliente" [routerLink]="['/tratamiento-cliente/new']">
             <fa-icon icon="plus"></fa-icon>
@@ -22,21 +22,21 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="numSesiones"><span jhiTranslate="iFisioApp.tratamientoCliente.numSesiones">Num Sesiones</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="diagnostico"><span jhiTranslate="iFisioApp.tratamientoCliente.diagnostico">Diagnostico</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="tratamiento.id"><span jhiTranslate="iFisioApp.tratamientoCliente.tratamiento">Tratamiento</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="diagnostico"><span jhiTranslate="iFisioApp.tratamientoCliente.diagnostico">Diagnostico</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numSesiones"><span jhiTranslate="iFisioApp.tratamientoCliente.numSesiones">Num Sesiones</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let tratamientoCliente of tratamientoClientes ;trackBy: trackId">
-                    <td>{{ tratamientoCliente.numSesiones }}</td>
-                    <td>{{ tratamientoCliente.diagnostico }}</td>
                     <td>
                         <div *ngIf="tratamientoCliente.tratamiento">
                             <a [routerLink]="['/tratamiento', tratamientoCliente.tratamiento?.id, 'view']" >{{ tratamientoCliente.tratamiento?.nombre }}</a>
                         </div>
                     </td>
+                    <td>{{ tratamientoCliente.diagnostico }}</td>
+                    <td>{{ tratamientoCliente.numSesiones }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

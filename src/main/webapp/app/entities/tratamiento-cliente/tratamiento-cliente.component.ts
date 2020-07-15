@@ -1,14 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { HttpResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ITratamientoCliente } from 'app/shared/model/tratamiento-cliente.model';
-
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { TratamientoClienteService } from './tratamiento-cliente.service';
+import { ITratamientoCliente } from 'app/shared/model/tratamiento-cliente.model';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 import { TratamientoClienteDeleteDialogComponent } from './tratamiento-cliente-delete-dialog.component';
+import { TratamientoClienteService } from './tratamiento-cliente.service';
+
+
 
 @Component({
   selector: 'jhi-tratamiento-cliente',
@@ -27,7 +28,8 @@ export class TratamientoClienteComponent implements OnInit, OnDestroy {
     protected tratamientoClienteService: TratamientoClienteService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+    protected parseLinks: JhiParseLinks,
+    protected activatedRoute: ActivatedRoute
   ) {
     this.tratamientoClientes = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -40,13 +42,15 @@ export class TratamientoClienteComponent implements OnInit, OnDestroy {
   }
 
   loadAll(): void {
-    this.tratamientoClienteService
-      .query({
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe((res: HttpResponse<ITratamientoCliente[]>) => this.paginateTratamientoClientes(res.body, res.headers));
+    this.activatedRoute.data.subscribe(({ cliente }) => {
+      if (cliente != null && cliente.id != null) {
+        this.tratamientoClienteService
+          .findByCliente(cliente.id)
+          .subscribe((res: HttpResponse<ITratamientoCliente[]>) => {
+            this.paginateTratamientoClientes(res.body);
+          });
+      }
+    });
   }
 
   reset(): void {
@@ -93,9 +97,7 @@ export class TratamientoClienteComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected paginateTratamientoClientes(data: ITratamientoCliente[] | null, headers: HttpHeaders): void {
-    const headersLink = headers.get('link');
-    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
+  protected paginateTratamientoClientes(data: ITratamientoCliente[] | null): void {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         this.tratamientoClientes.push(data[i]);

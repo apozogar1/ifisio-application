@@ -115,7 +115,7 @@ public class TratamientoClienteResource {
 	 *         the tratamientoCliente, or with status {@code 404 (Not Found)}.
 	 */
 	@GetMapping("/tratamiento-clientes/cliente/{id}")
-	public ResponseEntity<List<TratamientoCliente>> getTratamientoClienteByCliente(@PathVariable Long id) {
+	public ResponseEntity<List<TratamientoCliente>> getTratamientoClienteByCliente(@PathVariable Long id, Pageable pageable) {
 		log.debug("REST request to get TratamientoCliente : {}", id);
 		List<TratamientoCliente> list = tratamientoClienteRepository.findByNumDocClienteId(id);
 		return ResponseEntity.ok().body(list);
