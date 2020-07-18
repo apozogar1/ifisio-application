@@ -6,6 +6,7 @@ export interface ITratamientoCliente {
   id?: number;
   numSesiones?: number;
   numSesionesDisfrutadas?: number;
+  precioSesion?: number;
   diagnostico?: string;
   citas?: ICita[];
   tratamiento?: ITratamiento;
@@ -17,6 +18,7 @@ export class TratamientoCliente implements ITratamientoCliente {
     public id?: number,
     public numSesiones?: number,
     public numSesionesDisfrutadas?: number,
+    public precioSesion?: number,
     public diagnostico?: string,
     public citas?: ICita[],
     public tratamiento?: ITratamiento,

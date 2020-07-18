@@ -29,6 +29,7 @@ export class TratamientoClienteUpdateComponent implements OnInit {
     numSesiones: [],
     diagnostico: [],
     tratamiento: [],
+    precioSesion: [],
     numDoc: []
   });
 
@@ -56,6 +57,7 @@ export class TratamientoClienteUpdateComponent implements OnInit {
       numSesiones: tratamientoCliente.numSesiones,
       diagnostico: tratamientoCliente.diagnostico,
       tratamiento: tratamientoCliente.tratamiento,
+      precioSesion: tratamientoCliente.precioSesion,
       numDoc: tratamientoCliente.numDoc
     });
   }
@@ -79,6 +81,7 @@ export class TratamientoClienteUpdateComponent implements OnInit {
       ...new TratamientoCliente(),
       id: this.editForm.get(['id'])!.value,
       numSesiones: this.editForm.get(['numSesiones'])!.value,
+      precioSesion: this.editForm.get(['precioSesion'])!.value,
       diagnostico: this.editForm.get(['diagnostico'])!.value,
       tratamiento: this.editForm.get(['tratamiento'])!.value,
       numDoc: this.editForm.get(['numDoc'])!.value
