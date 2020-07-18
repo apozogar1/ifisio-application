@@ -17,6 +17,7 @@
         "title": "Tratamiento Cliente"
       },
       "numSesiones": "Num Sesiones",
+      "precioSesion": "Precio Sesion",
       "diagnostico": "Diagnostico",
       "cita": "Cita",
       "tratamiento": "Tratamiento",

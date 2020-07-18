@@ -7,9 +7,10 @@ import { EdicionClienteComponent } from './edicion-cliente/edicion-cliente.compo
 import { TablaClienteComponent } from './tabla-cliente.component';
 import { tablaClienteRoute } from './tabla-cliente.route';
 import { IFisioClienteModule } from 'app/entities/cliente/cliente.module';
+import { IFisioTratamientoClienteModule } from 'app/entities/tratamiento-cliente/tratamiento-cliente.module';
 
 @NgModule({
-  imports: [IFisioSharedModule, IFisioClienteModule, IFisioNumDocModule, IFisioMedicionModule, RouterModule.forChild(tablaClienteRoute)],
+  imports: [IFisioSharedModule, IFisioClienteModule, IFisioNumDocModule, IFisioMedicionModule, IFisioTratamientoClienteModule, RouterModule.forChild(tablaClienteRoute)],
   declarations: [TablaClienteComponent, EdicionClienteComponent]
 })
 export class IFisioTablaClienteModule { }

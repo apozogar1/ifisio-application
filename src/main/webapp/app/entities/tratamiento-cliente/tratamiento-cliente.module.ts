@@ -16,6 +16,10 @@ import { tratamientoClienteRoute } from './tratamiento-cliente.route';
     TratamientoClienteUpdateComponent,
     TratamientoClienteDeleteDialogComponent
   ],
-  entryComponents: [TratamientoClienteDeleteDialogComponent]
+  entryComponents: [TratamientoClienteDeleteDialogComponent],
+  exports: [TratamientoClienteComponent,
+    TratamientoClienteDetailComponent,
+    TratamientoClienteUpdateComponent,
+    TratamientoClienteDeleteDialogComponent]
 })
-export class IFisioTratamientoClienteModule {}
+export class IFisioTratamientoClienteModule { }

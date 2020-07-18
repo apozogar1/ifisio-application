@@ -22,6 +22,7 @@ export class TratamientoClienteUpdateComponent implements OnInit {
   isSaving = false;
   tratamientos: ITratamiento[] = [];
   numdocs: INumDoc[] = [];
+  tratamientoCliente: TratamientoCliente = {};
 
   editForm = this.fb.group({
     id: [],
@@ -37,7 +38,7 @@ export class TratamientoClienteUpdateComponent implements OnInit {
     protected numDocService: NumDocService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ tratamientoCliente }) => {
@@ -102,5 +103,18 @@ export class TratamientoClienteUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  public selTratamiento(): void {
+    if (this.editForm.get(['tratamiento'])!.value != null) {
+      const tratamiento = this.editForm.get(['tratamiento'])?.value;
+      this.editForm.patchValue({
+        id: this.tratamientoCliente.id,
+        numSesiones: tratamiento?.numSesiones,
+        diagnostico: tratamiento?.nombre,
+        tratamiento: this.editForm.get(['tratamiento'])!.value,
+        numDoc: this.editForm.get(['numDoc'])!.value
+      });
+    }
   }
 }

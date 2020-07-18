@@ -38,7 +38,7 @@ export class AgendaDialogComponent implements OnInit {
     this.editForm.patchValue({
       comentarios: this.cita?.comentarios,
       nombre: this.cita?.tratamientoCliente?.numDoc?.cliente?.nombre + ' ' + this.cita?.tratamientoCliente?.numDoc?.cliente?.apellidos,
-      tratamiento: this.cita?.tratamientoCliente?.tratamiento?.nombre,
+      tratamiento: this.cita?.tratamientoCliente?.diagnostico,
       fecha: moment(this.cita?.fechaHoraCita).format('MMMM Do YYYY, h:mm:ss a')
     });
   }
