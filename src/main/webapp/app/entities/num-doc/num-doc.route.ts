@@ -7,6 +7,9 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { ClienteService } from '../cliente/cliente.service';
 import { NumDocService } from './num-doc.service';
+import { NumDocUpdateComponent } from './num-doc-update.component';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 
 @Injectable({ providedIn: 'root' })
 export class NumDocResolve implements Resolve<INumDoc> {
@@ -53,28 +56,28 @@ export class ClienteResolve implements Resolve<ICliente> {
 }
 
 export const numDocRoute: Routes = [
-  // {
-  //   path: 'cliente/num-doc/new',
-  //   component: NumDocUpdateComponent,
-  //   resolve: {
-  //     numDoc: NumDocResolve
-  //   },
-  //   data: {
-  //     authorities: [Authority.USER],
-  //     pageTitle: 'iFisioApp.numDoc.home.title'
-  //   },
-  //   canActivate: [UserRouteAccessService]
-  // },
-  // {
-  //   path: 'cliente/num-doc/:id/edit',
-  //   component: NumDocUpdateComponent,
-  //   resolve: {
-  //     numDoc: NumDocResolve
-  //   },
-  //   data: {
-  //     authorities: [Authority.USER],
-  //     pageTitle: 'iFisioApp.numDoc.home.title'
-  //   },
-  //   canActivate: [UserRouteAccessService]
-  // }
+  {
+    path: 'clientes/cliente/:id/num-doc/new',
+    component: NumDocUpdateComponent,
+    resolve: {
+      cliente: ClienteResolve
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'iFisioApp.numDoc.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'clientes/num-doc/:id/edit',
+    component: NumDocUpdateComponent,
+    resolve: {
+      numDoc: NumDocResolve
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'iFisioApp.numDoc.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  }
 ];

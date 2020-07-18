@@ -7,6 +7,10 @@ import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { ClienteService } from '../cliente/cliente.service';
 import { MedicionService } from './medicion.service';
+import { MedicionUpdateComponent } from './medicion-update.component';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { TablaClienteComponent } from 'app/tabla-cliente/tabla-cliente.component';
 
 @Injectable({ providedIn: 'root' })
 export class MedicionResolve implements Resolve<IMedicion> {
@@ -53,8 +57,17 @@ export class ClienteResolve implements Resolve<ICliente> {
 }
 
 export const medicionRoute: Routes = [
+  {
+    path: 'clientes',
+    component: TablaClienteComponent,
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'iFisioApp.cliente.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
   // {
-  //   path: '/medicion/:id',
+  //   path: '/clientes/medicion/:id',
   //   resolve: {
   //     cliente: ClienteResolve
   //   },
@@ -66,7 +79,7 @@ export const medicionRoute: Routes = [
   //   canActivate: [UserRouteAccessService]
   // },
   // {
-  //   path: '/medicion/:id/view',
+  //   path: '/clientes/medicion/:id/view',
   //   component: MedicionDetailComponent,
   //   resolve: {
   //     medicion: MedicionResolve
@@ -77,28 +90,25 @@ export const medicionRoute: Routes = [
   //   },
   //   canActivate: [UserRouteAccessService]
   // },
-  // {
-  //   path: '/medicion/new',
-  //   component: MedicionUpdateComponent,
-  //   resolve: {
-  //     medicion: MedicionResolve
-  //   },
-  //   data: {
-  //     authorities: [Authority.USER],
-  //     pageTitle: 'iFisioApp.medicion.home.title'
-  //   },
-  //   canActivate: [UserRouteAccessService]
-  // },
-  // {
-  //   path: '/medicion/:id/edit',
-  //   component: MedicionUpdateComponent,
-  //   resolve: {
-  //     medicion: MedicionResolve
-  //   },
-  //   data: {
-  //     authorities: [Authority.USER],
-  //     pageTitle: 'iFisioApp.medicion.home.title'
-  //   },
-  //   canActivate: [UserRouteAccessService]
-  // }
+  {
+    path: 'clientes/medicion/new',
+    component: MedicionUpdateComponent,
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'iFisioApp.medicion.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'clientes/medicion/:id/edit',
+    component: MedicionUpdateComponent,
+    resolve: {
+      medicion: MedicionResolve
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'iFisioApp.medicion.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  }
 ];

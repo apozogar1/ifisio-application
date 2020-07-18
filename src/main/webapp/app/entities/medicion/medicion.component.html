@@ -3,7 +3,7 @@
         <!-- <span jhiTranslate="iFisioApp.medicion.home.title">Medicions</span> -->
 
         
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-medicion" >
+        <button id="jh-create-entity" [routerLink]="['/clientes/medicion/new']" class="btn btn-primary float-right jh-create-entity create-medicion" >
             <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="iFisioApp.medicion.home.createLabel">
             Create a new Medicion
@@ -38,7 +38,7 @@
                     <td>{{ medicion.fechaMedicion | date:'mediumDate' }}</td>
                     <td class="text-right">
                         <div class="btn-group">                            
-                            <button type="submit" [routerLink]="['/medicion', medicion.id, 'edit']"
+                            <button type="submit" [routerLink]="['/clientes/medicion', medicion.id, 'edit']"
                                     class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
