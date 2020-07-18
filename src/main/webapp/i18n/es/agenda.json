@@ -2,7 +2,7 @@
   "iFisioApp": {
     "agenda": {
       "title": "Agenda",
-      "cliente": "Agenda cliente",
+      "agenda": "Agenda:",
       "modo": "Modo",
       "tratamiento": "Tratamiento",
       "numDias": "Numero citas pendientes",

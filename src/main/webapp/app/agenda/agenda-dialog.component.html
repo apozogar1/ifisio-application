@@ -15,9 +15,11 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="iFisioApp.agenda.tratamiento" for="nombre">Tratamiento</label>
+            <label class="form-control-label" jhiTranslate="iFisioApp.agenda.tratamiento"
+                for="nombre">Tratamiento</label>
             <div class="d-flex">
-                <input type="text" class="form-control" name="tratamiento" id="tratamiento" formControlName="tratamiento" readonly />
+                <input type="text" class="form-control" name="tratamiento" id="tratamiento"
+                    formControlName="tratamiento" readonly />
             </div>
         </div>
 
@@ -48,8 +50,8 @@
             <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="iFisioApp.agenda.eliminar">Delete</span>
         </button>
 
-        <button id="jhi-confirm-delete-cita" type="submit" class="btn btn-primary">
-            <span jhiTranslate="iFisioApp.agenda.guardar">Guardar</span>
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

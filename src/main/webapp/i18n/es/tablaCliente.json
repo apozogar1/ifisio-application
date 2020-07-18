@@ -1,6 +1,7 @@
 {
   "iFisioApp": {
     "tablaCliente": {
+      "cliente": "Cliente:",
       "nombre": "Nombre",
       "apellidos": "Apellidos",
       "companyia": "Compañia",

@@ -2,10 +2,10 @@
     <div class="col-12">
         <div class="col-12">
             <h2 id="jhi-cita-heading" *ngIf="cliente != null">
-                <span jhiTranslate="iFisioApp.agenda.cliente">Agenda cliente</span>
+                <span jhiTranslate="iFisioApp.agenda.agenda" class="font-bold">Agenda</span>
                 {{cliente?.nombre}} {{cliente?.apellidos}}
             </h2>
-            <h2 id="jhi-cita-heading" jhiTranslate="iFisioApp.agenda.title" *ngIf="cliente == null">
+            <h2 id="jhi-cita-heading" class="font-bold" jhiTranslate="iFisioApp.agenda.title" *ngIf="cliente == null">
                 Agenda
             </h2>
         </div>

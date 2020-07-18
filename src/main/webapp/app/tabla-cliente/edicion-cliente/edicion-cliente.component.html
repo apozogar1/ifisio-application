@@ -1,14 +1,26 @@
-<p-tabView>
-    <p-tabPanel header="Datos personales">
-        <jhi-cliente-update></jhi-cliente-update>
-    </p-tabPanel>
-    <p-tabPanel header="Tratamientos">
-        <jhi-tratamiento-cliente></jhi-tratamiento-cliente>
-    </p-tabPanel>
-    <p-tabPanel header="Documentos">
-        <jhi-num-doc></jhi-num-doc>
-    </p-tabPanel>
-    <p-tabPanel header="Mediciones">
-        <jhi-medicion></jhi-medicion>
-    </p-tabPanel>
-</p-tabView>
+<div>
+
+    <h2 id="jhi-tratamiento-cliente-heading">
+        <span jhiTranslate="iFisioApp.tablaCliente.cliente" class="font-bold">
+            Cliente
+        </span>
+        <span>
+            {{cliente.nombre}} {{cliente.apellidos}}
+        </span>
+    </h2>
+
+    <p-tabView>
+        <p-tabPanel header="Datos personales">
+            <jhi-cliente-update></jhi-cliente-update>
+        </p-tabPanel>
+        <p-tabPanel header="Tratamientos">
+            <jhi-tratamiento-cliente></jhi-tratamiento-cliente>
+        </p-tabPanel>
+        <p-tabPanel header="Documentos">
+            <jhi-num-doc></jhi-num-doc>
+        </p-tabPanel>
+        <p-tabPanel header="Mediciones">
+            <jhi-medicion></jhi-medicion>
+        </p-tabPanel>
+    </p-tabView>
+</div>
