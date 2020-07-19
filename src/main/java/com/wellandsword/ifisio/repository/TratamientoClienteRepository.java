@@ -14,5 +14,5 @@ import com.wellandsword.ifisio.domain.TratamientoCliente;
 @Repository
 public interface TratamientoClienteRepository extends JpaRepository<TratamientoCliente, Long> {
 
-	List<TratamientoCliente> findByNumDocClienteId(Long id);
+	List<TratamientoCliente> findByClienteId(Long id);
 }

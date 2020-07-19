@@ -109,8 +109,8 @@ public class CitaResource {
 		log.debug("REST request to get a page of Citas");
 		Page<Cita> page = citaRepository.findAll(pageable);
 		for (Cita cita : page) {
-			if (cita.getTratamientoCliente() != null && cita.getTratamientoCliente().getNumDoc() != null) {
-				cita.getTratamientoCliente().getNumDoc().getCliente();
+			if (cita.getTratamientoCliente() != null && cita.getTratamientoCliente().getCliente() != null) {
+				cita.getTratamientoCliente().getCliente();
 			}
 		}
 		HttpHeaders headers = PaginationUtil

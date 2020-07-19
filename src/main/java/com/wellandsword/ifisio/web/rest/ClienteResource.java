@@ -26,7 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.wellandsword.ifisio.domain.Cliente;
 import com.wellandsword.ifisio.repository.ClienteRepository;
-import com.wellandsword.ifisio.repository.NumDocRepository;
+import com.wellandsword.ifisio.repository.TratamientoClienteRepository;
 import com.wellandsword.ifisio.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -52,7 +52,7 @@ public class ClienteResource {
 	private ClienteRepository clienteRepository;
 
 	@Autowired
-	private NumDocRepository numDocRepository;
+	private TratamientoClienteRepository tratamientoClienteRepository;
 
 	/**
 	 * {@code POST  /clientes} : Create a new cliente.
@@ -111,12 +111,11 @@ public class ClienteResource {
 		log.debug("REST request to get a page of Clientes");
 		Page<Cliente> page = clienteRepository.findAll(pageable);
 		for (Cliente cliente : page) {
-			cliente.getNumDocs().forEach(p -> {
-				p.getTratamientoClientes().stream()
-						.forEach(tratamientos -> tratamientos.getCitas().stream().forEach(cita -> cita.getId()));
-				p.getCompanya();
-			});
+			cliente.getTratamientoClientes()
+					.forEach(tratamientos -> tratamientos.getCitas().stream().forEach(cita -> cita.getId()));
+
 		}
+
 		HttpHeaders headers = PaginationUtil
 				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 		return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -145,8 +144,7 @@ public class ClienteResource {
 	@DeleteMapping("/clientes/{id}")
 	public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
 		log.debug("REST request to delete Cliente : {}", id);
-		numDocRepository.findByClienteId(id, Pageable.unpaged()).stream()
-				.forEach(numDoc -> numDocRepository.delete(numDoc));
+		tratamientoClienteRepository.findByClienteId(id).stream().forEach(tratamientoClienteRepository::delete);
 		clienteRepository.deleteById(id);
 		return ResponseEntity.noContent()
 				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

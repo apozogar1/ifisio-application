@@ -128,7 +128,7 @@ public class TratamientoClienteResource {
 	public ResponseEntity<List<TratamientoCliente>> getTratamientoClienteByCliente(@PathVariable Long id,
 			Pageable pageable) {
 		log.debug("REST request to get TratamientoCliente : {}", id);
-		List<TratamientoCliente> list = tratamientoClienteRepository.findByNumDocClienteId(id);
+		List<TratamientoCliente> list = tratamientoClienteRepository.findByClienteId(id);
 		return ResponseEntity.ok().body(list);
 	}
 
