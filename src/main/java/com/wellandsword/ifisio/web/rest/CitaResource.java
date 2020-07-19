@@ -68,8 +68,10 @@ public class CitaResource {
 			throw new BadRequestAlertException("A new cita cannot already have an ID", ENTITY_NAME, "idexists");
 		}
 		Cita result = citaRepository.save(cita);
-		return ResponseEntity.created(new URI("/api/citas/" + result.getId()))
-				.headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
+		return ResponseEntity
+				.created(new URI("/api/citas/" + result.getId())).headers(HeaderUtil
+						.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+				.body(result);
 	}
 
 	/**
@@ -89,7 +91,9 @@ public class CitaResource {
 			throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
 		}
 		Cita result = citaRepository.save(cita);
-		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cita.getId().toString()))
+		return ResponseEntity.ok()
+				.headers(
+						HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, cita.getId().toString()))
 				.body(result);
 	}
 
@@ -109,7 +113,8 @@ public class CitaResource {
 				cita.getTratamientoCliente().getNumDoc().getCliente();
 			}
 		}
-		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+		HttpHeaders headers = PaginationUtil
+				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 		return ResponseEntity.ok().headers(headers).body(page.getContent());
 	}
 
@@ -151,7 +156,8 @@ public class CitaResource {
 	public ResponseEntity<Void> deleteCita(@PathVariable Long id) {
 		log.debug("REST request to delete Cita : {}", id);
 		citaRepository.deleteById(id);
-		return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+		return ResponseEntity.noContent()
+				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
 				.build();
 	}
 }

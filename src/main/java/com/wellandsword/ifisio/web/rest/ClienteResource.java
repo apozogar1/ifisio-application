@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.wellandsword.ifisio.domain.Cliente;
-import com.wellandsword.ifisio.domain.NumDoc;
 import com.wellandsword.ifisio.repository.ClienteRepository;
 import com.wellandsword.ifisio.repository.NumDocRepository;
 import com.wellandsword.ifisio.web.rest.errors.BadRequestAlertException;
@@ -146,7 +145,8 @@ public class ClienteResource {
 	@DeleteMapping("/clientes/{id}")
 	public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
 		log.debug("REST request to delete Cliente : {}", id);
-		numDocRepository.findByClienteId(id, Pageable.unpaged()).stream().forEach(numDoc -> numDocRepository.delete(numDoc));
+		numDocRepository.findByClienteId(id, Pageable.unpaged()).stream()
+				.forEach(numDoc -> numDocRepository.delete(numDoc));
 		clienteRepository.deleteById(id);
 		return ResponseEntity.noContent()
 				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

@@ -2,7 +2,6 @@
 entity Medicion {
 	peso Float,
     altura Float,
-    imc Float,
     fechaMedicion Instant
 }
 
@@ -13,22 +12,22 @@ entity Cliente {
     fechaNacimiento Instant 
 }
 
-entity NumDoc {
-    numDoc Long,
-    fechaAlta Instant
-}
-
 entity Companya {
-	nombre String
+	nombre String,
+    precioSesion Float
 }
 
 entity Cita {
-	fechaHoraCita Instant  
+	fechaHoraCita Instant,
+	fechaHoraCitaFin Instant,
+    comentarios String
 }
 
 entity TratamientoCliente {
     numSesiones Long,
-    diagnostico String
+    diagnostico String,
+    precioSesion Float,
+    expediente String
 }
 
 entity Tratamiento {
@@ -39,11 +38,9 @@ entity Tratamiento {
 relationship OneToMany {
 	Cliente to Medicion{cliente},
     Tratamiento to TratamientoCliente{tratamiento},
-    Companya to NumDoc{companya},
-    Cliente to NumDoc{cliente},
-    NumDoc to TratamientoCliente{numDoc},
+    Companya to Cliente{companya},
+    Cliente to TratamientoCliente{cliente},
     TratamientoCliente to Cita{tratamientoCliente}
-    
 }
 
 paginate * with infinite-scroll

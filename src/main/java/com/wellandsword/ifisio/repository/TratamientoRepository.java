@@ -1,12 +1,12 @@
 package com.wellandsword.ifisio.repository;
 
-import com.wellandsword.ifisio.domain.Tratamiento;
-
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.wellandsword.ifisio.domain.Tratamiento;
+
 /**
- * Spring Data  repository for the Tratamiento entity.
+ * Spring Data repository for the Tratamiento entity.
  */
 @SuppressWarnings("unused")
 @Repository

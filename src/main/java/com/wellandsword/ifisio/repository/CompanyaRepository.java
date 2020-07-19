@@ -1,12 +1,12 @@
 package com.wellandsword.ifisio.repository;
 
-import com.wellandsword.ifisio.domain.Companya;
-
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.wellandsword.ifisio.domain.Companya;
+
 /**
- * Spring Data  repository for the Companya entity.
+ * Spring Data repository for the Companya entity.
  */
 @SuppressWarnings("unused")
 @Repository

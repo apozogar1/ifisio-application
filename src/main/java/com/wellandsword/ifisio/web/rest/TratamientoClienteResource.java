@@ -1,5 +1,28 @@
 package com.wellandsword.ifisio.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.wellandsword.ifisio.domain.TratamientoCliente;
 import com.wellandsword.ifisio.repository.TratamientoClienteRepository;
 import com.wellandsword.ifisio.web.rest.errors.BadRequestAlertException;
@@ -7,22 +30,6 @@ import com.wellandsword.ifisio.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing
@@ -57,15 +64,18 @@ public class TratamientoClienteResource {
 	 * @throws URISyntaxException if the Location URI syntax is incorrect.
 	 */
 	@PostMapping("/tratamiento-clientes")
-	public ResponseEntity<TratamientoCliente> createTratamientoCliente(@RequestBody TratamientoCliente tratamientoCliente)
-			throws URISyntaxException {
+	public ResponseEntity<TratamientoCliente> createTratamientoCliente(
+			@RequestBody TratamientoCliente tratamientoCliente) throws URISyntaxException {
 		log.debug("REST request to save TratamientoCliente : {}", tratamientoCliente);
 		if (tratamientoCliente.getId() != null) {
-			throw new BadRequestAlertException("A new tratamientoCliente cannot already have an ID", ENTITY_NAME, "idexists");
+			throw new BadRequestAlertException("A new tratamientoCliente cannot already have an ID", ENTITY_NAME,
+					"idexists");
 		}
 		TratamientoCliente result = tratamientoClienteRepository.save(tratamientoCliente);
-		return ResponseEntity.created(new URI("/api/tratamiento-clientes/" + result.getId()))
-				.headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString())).body(result);
+		return ResponseEntity
+				.created(new URI("/api/tratamiento-clientes/" + result.getId())).headers(HeaderUtil
+						.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+				.body(result);
 	}
 
 	/**
@@ -80,16 +90,15 @@ public class TratamientoClienteResource {
 	 * @throws URISyntaxException if the Location URI syntax is incorrect.
 	 */
 	@PutMapping("/tratamiento-clientes")
-	public ResponseEntity<TratamientoCliente> updateTratamientoCliente(@RequestBody TratamientoCliente tratamientoCliente)
-			throws URISyntaxException {
+	public ResponseEntity<TratamientoCliente> updateTratamientoCliente(
+			@RequestBody TratamientoCliente tratamientoCliente) throws URISyntaxException {
 		log.debug("REST request to update TratamientoCliente : {}", tratamientoCliente);
 		if (tratamientoCliente.getId() == null) {
 			throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
 		}
 		TratamientoCliente result = tratamientoClienteRepository.save(tratamientoCliente);
-		return ResponseEntity.ok()
-				.headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, tratamientoCliente.getId().toString()))
-				.body(result);
+		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME,
+				tratamientoCliente.getId().toString())).body(result);
 	}
 
 	/**
@@ -103,7 +112,8 @@ public class TratamientoClienteResource {
 	public ResponseEntity<List<TratamientoCliente>> getAllTratamientoClientes(Pageable pageable) {
 		log.debug("REST request to get a page of TratamientoClientes");
 		Page<TratamientoCliente> page = tratamientoClienteRepository.findAll(pageable);
-		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+		HttpHeaders headers = PaginationUtil
+				.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 		return ResponseEntity.ok().headers(headers).body(page.getContent());
 	}
 
@@ -115,7 +125,8 @@ public class TratamientoClienteResource {
 	 *         the tratamientoCliente, or with status {@code 404 (Not Found)}.
 	 */
 	@GetMapping("/tratamiento-clientes/cliente/{id}")
-	public ResponseEntity<List<TratamientoCliente>> getTratamientoClienteByCliente(@PathVariable Long id, Pageable pageable) {
+	public ResponseEntity<List<TratamientoCliente>> getTratamientoClienteByCliente(@PathVariable Long id,
+			Pageable pageable) {
 		log.debug("REST request to get TratamientoCliente : {}", id);
 		List<TratamientoCliente> list = tratamientoClienteRepository.findByNumDocClienteId(id);
 		return ResponseEntity.ok().body(list);
@@ -146,7 +157,8 @@ public class TratamientoClienteResource {
 	public ResponseEntity<Void> deleteTratamientoCliente(@PathVariable Long id) {
 		log.debug("REST request to delete TratamientoCliente : {}", id);
 		tratamientoClienteRepository.deleteById(id);
-		return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+		return ResponseEntity.noContent()
+				.headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
 				.build();
 	}
 }

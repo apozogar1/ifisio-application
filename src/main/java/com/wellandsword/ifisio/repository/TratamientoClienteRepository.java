@@ -1,19 +1,18 @@
 package com.wellandsword.ifisio.repository;
 
-import com.wellandsword.ifisio.domain.Cita;
-import com.wellandsword.ifisio.domain.TratamientoCliente;
-
 import java.util.List;
 
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.wellandsword.ifisio.domain.TratamientoCliente;
+
 /**
- * Spring Data  repository for the TratamientoCliente entity.
+ * Spring Data repository for the TratamientoCliente entity.
  */
 @SuppressWarnings("unused")
 @Repository
 public interface TratamientoClienteRepository extends JpaRepository<TratamientoCliente, Long> {
-	
+
 	List<TratamientoCliente> findByNumDocClienteId(Long id);
 }

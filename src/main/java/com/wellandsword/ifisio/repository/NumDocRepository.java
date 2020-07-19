@@ -16,6 +16,6 @@ import com.wellandsword.ifisio.domain.NumDoc;
 @Repository
 public interface NumDocRepository extends JpaRepository<NumDoc, Long> {
 	public List<NumDoc> findByClienteId(Long id);
-	
+
 	public Page<NumDoc> findByClienteId(Long id, Pageable pageable);
 }
