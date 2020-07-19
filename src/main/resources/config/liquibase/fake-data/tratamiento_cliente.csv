@@ -1,11 +1,11 @@
-id;num_sesiones;diagnostico
-1;17756;Computers digital blue
-2;85787;Solomon Islands Dollar asymmetric fuchsia
-3;18585;Forward
-4;72260;extensible Small Steel Keyboard payment
-5;48623;Mouse
-6;35269;Guinea Franc Tuna
-7;9415;Future-proofed hack
-8;33263;multi-byte Brand
-9;57862;Bulgaria
-10;73473;Applications Usability holistic
+id;num_sesiones;diagnostico;precio_sesion;expediente
+1;17756;Computers digital blue;85787;Solomon Islands Dollar asymmetric fuchsia
+2;18585;Forward;72260;extensible Small Steel Keyboard payment
+3;48623;Mouse;35269;Guinea Franc Tuna
+4;9415;Future-proofed hack;33263;multi-byte Brand
+5;57862;Bulgaria;73473;Applications Usability holistic
+6;10518;Rue Intelligent;16532;Club
+7;79999;back-end Metal Shirt;69346;JSON
+8;43237;River Kids;29722;ability
+9;84965;Buckinghamshire;84898;Borders Rustic Concrete Fish
+10;75944;Handmade even-keeled Internal;1727;bypass

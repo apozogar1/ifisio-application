@@ -14,11 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="tratamiento"/>
 
-        <addForeignKeyConstraint baseColumnNames="num_doc_id"
+        <addForeignKeyConstraint baseColumnNames="cliente_id"
                                  baseTableName="tratamiento_cliente"
-                                 constraintName="fk_tratamiento_cliente_num_doc_id"
+                                 constraintName="fk_tratamiento_cliente_cliente_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="num_doc"/>
+                                 referencedTableName="cliente"/>
 
     </changeSet>
 </databaseChangeLog>

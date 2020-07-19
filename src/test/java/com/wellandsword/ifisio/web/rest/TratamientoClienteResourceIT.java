@@ -36,6 +36,12 @@ public class TratamientoClienteResourceIT {
     private static final String DEFAULT_DIAGNOSTICO = "AAAAAAAAAA";
     private static final String UPDATED_DIAGNOSTICO = "BBBBBBBBBB";
 
+    private static final Float DEFAULT_PRECIO_SESION = 1F;
+    private static final Float UPDATED_PRECIO_SESION = 2F;
+
+    private static final String DEFAULT_EXPEDIENTE = "AAAAAAAAAA";
+    private static final String UPDATED_EXPEDIENTE = "BBBBBBBBBB";
+
     @Autowired
     private TratamientoClienteRepository tratamientoClienteRepository;
 
@@ -56,7 +62,9 @@ public class TratamientoClienteResourceIT {
     public static TratamientoCliente createEntity(EntityManager em) {
         TratamientoCliente tratamientoCliente = new TratamientoCliente()
             .numSesiones(DEFAULT_NUM_SESIONES)
-            .diagnostico(DEFAULT_DIAGNOSTICO);
+            .diagnostico(DEFAULT_DIAGNOSTICO)
+            .precioSesion(DEFAULT_PRECIO_SESION)
+            .expediente(DEFAULT_EXPEDIENTE);
         return tratamientoCliente;
     }
     /**
@@ -68,7 +76,9 @@ public class TratamientoClienteResourceIT {
     public static TratamientoCliente createUpdatedEntity(EntityManager em) {
         TratamientoCliente tratamientoCliente = new TratamientoCliente()
             .numSesiones(UPDATED_NUM_SESIONES)
-            .diagnostico(UPDATED_DIAGNOSTICO);
+            .diagnostico(UPDATED_DIAGNOSTICO)
+            .precioSesion(UPDATED_PRECIO_SESION)
+            .expediente(UPDATED_EXPEDIENTE);
         return tratamientoCliente;
     }
 
@@ -94,6 +104,8 @@ public class TratamientoClienteResourceIT {
         TratamientoCliente testTratamientoCliente = tratamientoClienteList.get(tratamientoClienteList.size() - 1);
         assertThat(testTratamientoCliente.getNumSesiones()).isEqualTo(DEFAULT_NUM_SESIONES);
         assertThat(testTratamientoCliente.getDiagnostico()).isEqualTo(DEFAULT_DIAGNOSTICO);
+        assertThat(testTratamientoCliente.getPrecioSesion()).isEqualTo(DEFAULT_PRECIO_SESION);
+        assertThat(testTratamientoCliente.getExpediente()).isEqualTo(DEFAULT_EXPEDIENTE);
     }
 
     @Test
@@ -128,7 +140,9 @@ public class TratamientoClienteResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tratamientoCliente.getId().intValue())))
             .andExpect(jsonPath("$.[*].numSesiones").value(hasItem(DEFAULT_NUM_SESIONES.intValue())))
-            .andExpect(jsonPath("$.[*].diagnostico").value(hasItem(DEFAULT_DIAGNOSTICO)));
+            .andExpect(jsonPath("$.[*].diagnostico").value(hasItem(DEFAULT_DIAGNOSTICO)))
+            .andExpect(jsonPath("$.[*].precioSesion").value(hasItem(DEFAULT_PRECIO_SESION.doubleValue())))
+            .andExpect(jsonPath("$.[*].expediente").value(hasItem(DEFAULT_EXPEDIENTE)));
     }
     
     @Test
@@ -143,7 +157,9 @@ public class TratamientoClienteResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(tratamientoCliente.getId().intValue()))
             .andExpect(jsonPath("$.numSesiones").value(DEFAULT_NUM_SESIONES.intValue()))
-            .andExpect(jsonPath("$.diagnostico").value(DEFAULT_DIAGNOSTICO));
+            .andExpect(jsonPath("$.diagnostico").value(DEFAULT_DIAGNOSTICO))
+            .andExpect(jsonPath("$.precioSesion").value(DEFAULT_PRECIO_SESION.doubleValue()))
+            .andExpect(jsonPath("$.expediente").value(DEFAULT_EXPEDIENTE));
     }
 
     @Test
@@ -168,7 +184,9 @@ public class TratamientoClienteResourceIT {
         em.detach(updatedTratamientoCliente);
         updatedTratamientoCliente
             .numSesiones(UPDATED_NUM_SESIONES)
-            .diagnostico(UPDATED_DIAGNOSTICO);
+            .diagnostico(UPDATED_DIAGNOSTICO)
+            .precioSesion(UPDATED_PRECIO_SESION)
+            .expediente(UPDATED_EXPEDIENTE);
 
         restTratamientoClienteMockMvc.perform(put("/api/tratamiento-clientes")
             .contentType(MediaType.APPLICATION_JSON)
@@ -181,6 +199,8 @@ public class TratamientoClienteResourceIT {
         TratamientoCliente testTratamientoCliente = tratamientoClienteList.get(tratamientoClienteList.size() - 1);
         assertThat(testTratamientoCliente.getNumSesiones()).isEqualTo(UPDATED_NUM_SESIONES);
         assertThat(testTratamientoCliente.getDiagnostico()).isEqualTo(UPDATED_DIAGNOSTICO);
+        assertThat(testTratamientoCliente.getPrecioSesion()).isEqualTo(UPDATED_PRECIO_SESION);
+        assertThat(testTratamientoCliente.getExpediente()).isEqualTo(UPDATED_EXPEDIENTE);
     }
 
     @Test

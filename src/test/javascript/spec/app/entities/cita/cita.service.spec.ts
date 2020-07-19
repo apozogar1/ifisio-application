@@ -24,14 +24,15 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Cita(0, currentDate);
+      elemDefault = new Cita(0, currentDate, currentDate, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT)
+            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT),
+            fechaHoraCitaFin: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
@@ -47,14 +48,16 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT)
+            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT),
+            fechaHoraCitaFin: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            fechaHoraCita: currentDate
+            fechaHoraCita: currentDate,
+            fechaHoraCitaFin: currentDate
           },
           returnedFromService
         );
@@ -69,14 +72,17 @@ describe('Service Tests', () => {
       it('should update a Cita', () => {
         const returnedFromService = Object.assign(
           {
-            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT)
+            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT),
+            fechaHoraCitaFin: currentDate.format(DATE_TIME_FORMAT),
+            comentarios: 'BBBBBB'
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            fechaHoraCita: currentDate
+            fechaHoraCita: currentDate,
+            fechaHoraCitaFin: currentDate
           },
           returnedFromService
         );
@@ -91,14 +97,17 @@ describe('Service Tests', () => {
       it('should return a list of Cita', () => {
         const returnedFromService = Object.assign(
           {
-            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT)
+            fechaHoraCita: currentDate.format(DATE_TIME_FORMAT),
+            fechaHoraCitaFin: currentDate.format(DATE_TIME_FORMAT),
+            comentarios: 'BBBBBB'
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            fechaHoraCita: currentDate
+            fechaHoraCita: currentDate,
+            fechaHoraCitaFin: currentDate
           },
           returnedFromService
         );

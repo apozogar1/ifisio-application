@@ -10,8 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A Cliente.
@@ -42,7 +45,11 @@ public class Cliente implements Serializable {
 	private Set<Medicion> medicions = new HashSet<>();
 
 	@OneToMany(mappedBy = "cliente")
-	private Set<NumDoc> numDocs = new HashSet<>();
+	private Set<TratamientoCliente> tratamientoClientes = new HashSet<>();
+
+	@ManyToOne
+	@JsonIgnoreProperties("clientes")
+	private Companya companya;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -131,29 +138,42 @@ public class Cliente implements Serializable {
 		this.medicions = medicions;
 	}
 
-	public Set<NumDoc> getNumDocs() {
-		return numDocs;
+	public Set<TratamientoCliente> getTratamientoClientes() {
+		return tratamientoClientes;
 	}
 
-	public Cliente numDocs(Set<NumDoc> numDocs) {
-		this.numDocs = numDocs;
+	public Cliente tratamientoClientes(Set<TratamientoCliente> tratamientoClientes) {
+		this.tratamientoClientes = tratamientoClientes;
 		return this;
 	}
 
-	public Cliente addNumDoc(NumDoc numDoc) {
-		this.numDocs.add(numDoc);
-		numDoc.setCliente(this);
+	public Cliente addTratamientoCliente(TratamientoCliente tratamientoCliente) {
+		this.tratamientoClientes.add(tratamientoCliente);
+		tratamientoCliente.setCliente(this);
 		return this;
 	}
 
-	public Cliente removeNumDoc(NumDoc numDoc) {
-		this.numDocs.remove(numDoc);
-		numDoc.setCliente(null);
+	public Cliente removeTratamientoCliente(TratamientoCliente tratamientoCliente) {
+		this.tratamientoClientes.remove(tratamientoCliente);
+		tratamientoCliente.setCliente(null);
 		return this;
 	}
 
-	public void setNumDocs(Set<NumDoc> numDocs) {
-		this.numDocs = numDocs;
+	public void setTratamientoClientes(Set<TratamientoCliente> tratamientoClientes) {
+		this.tratamientoClientes = tratamientoClientes;
+	}
+
+	public Companya getCompanya() {
+		return companya;
+	}
+
+	public Cliente companya(Companya companya) {
+		this.companya = companya;
+		return this;
+	}
+
+	public void setCompanya(Companya companya) {
+		this.companya = companya;
 	}
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters and
 	// setters here, do not remove

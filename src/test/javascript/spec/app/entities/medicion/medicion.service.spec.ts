@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Medicion(0, 0, 0, 0, currentDate);
+      elemDefault = new Medicion(0, 0, 0, currentDate);
     });
 
     describe('Service methods', () => {
@@ -71,7 +71,6 @@ describe('Service Tests', () => {
           {
             peso: 1,
             altura: 1,
-            imc: 1,
             fechaMedicion: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -96,7 +95,6 @@ describe('Service Tests', () => {
           {
             peso: 1,
             altura: 1,
-            imc: 1,
             fechaMedicion: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault

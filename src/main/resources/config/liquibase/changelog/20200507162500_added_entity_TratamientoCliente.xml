@@ -22,10 +22,16 @@
             <column name="diagnostico" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="precio_sesion" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="expediente" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="tratamiento_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="num_doc_id" type="bigint">
+            <column name="cliente_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -53,6 +59,8 @@
             <column name="id" type="numeric"/>
             <column name="num_sesiones" type="numeric"/>
             <column name="diagnostico" type="string"/>
+            <column name="precio_sesion" type="numeric"/>
+            <column name="expediente" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

@@ -23,6 +23,8 @@ export class CitaUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     fechaHoraCita: [],
+    fechaHoraCitaFin: [],
+    comentarios: [],
     tratamientoCliente: []
   });
 
@@ -38,6 +40,7 @@ export class CitaUpdateComponent implements OnInit {
       if (!cita.id) {
         const today = moment().startOf('day');
         cita.fechaHoraCita = today;
+        cita.fechaHoraCitaFin = today;
       }
 
       this.updateForm(cita);
@@ -52,6 +55,8 @@ export class CitaUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: cita.id,
       fechaHoraCita: cita.fechaHoraCita ? cita.fechaHoraCita.format(DATE_TIME_FORMAT) : null,
+      fechaHoraCitaFin: cita.fechaHoraCitaFin ? cita.fechaHoraCitaFin.format(DATE_TIME_FORMAT) : null,
+      comentarios: cita.comentarios,
       tratamientoCliente: cita.tratamientoCliente
     });
   }
@@ -77,6 +82,10 @@ export class CitaUpdateComponent implements OnInit {
       fechaHoraCita: this.editForm.get(['fechaHoraCita'])!.value
         ? moment(this.editForm.get(['fechaHoraCita'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      fechaHoraCitaFin: this.editForm.get(['fechaHoraCitaFin'])!.value
+        ? moment(this.editForm.get(['fechaHoraCitaFin'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      comentarios: this.editForm.get(['comentarios'])!.value,
       tratamientoCliente: this.editForm.get(['tratamientoCliente'])!.value
     };
   }

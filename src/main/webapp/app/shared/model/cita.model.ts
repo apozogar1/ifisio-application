@@ -10,5 +10,11 @@ export interface ICita {
 }
 
 export class Cita implements ICita {
-  constructor(public id?: number, public fechaHoraCita?: Moment, public fechaHoraCitaFin?: Moment, public comentarios?: string, public tratamientoCliente?: ITratamientoCliente) { }
+  constructor(
+    public id?: number,
+    public fechaHoraCita?: Moment,
+    public fechaHoraCitaFin?: Moment,
+    public comentarios?: string,
+    public tratamientoCliente?: ITratamientoCliente
+  ) {}
 }

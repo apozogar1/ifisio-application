@@ -10,10 +10,6 @@
             "fieldType": "Float"
         },
         {
-            "fieldName": "imc",
-            "fieldType": "Float"
-        },
-        {
             "fieldName": "fechaMedicion",
             "fieldType": "Instant"
         }

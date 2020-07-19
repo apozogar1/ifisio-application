@@ -28,8 +28,11 @@ public class Companya implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 
+	@Column(name = "precio_sesion")
+	private Float precioSesion;
+
 	@OneToMany(mappedBy = "companya")
-	private Set<NumDoc> numDocs = new HashSet<>();
+	private Set<Cliente> clientes = new HashSet<>();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -54,29 +57,42 @@ public class Companya implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Set<NumDoc> getNumDocs() {
-		return numDocs;
+	public Float getPrecioSesion() {
+		return precioSesion;
 	}
 
-	public Companya numDocs(Set<NumDoc> numDocs) {
-		this.numDocs = numDocs;
+	public Companya precioSesion(Float precioSesion) {
+		this.precioSesion = precioSesion;
 		return this;
 	}
 
-	public Companya addNumDoc(NumDoc numDoc) {
-		this.numDocs.add(numDoc);
-		numDoc.setCompanya(this);
+	public void setPrecioSesion(Float precioSesion) {
+		this.precioSesion = precioSesion;
+	}
+
+	public Set<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public Companya clientes(Set<Cliente> clientes) {
+		this.clientes = clientes;
 		return this;
 	}
 
-	public Companya removeNumDoc(NumDoc numDoc) {
-		this.numDocs.remove(numDoc);
-		numDoc.setCompanya(null);
+	public Companya addCliente(Cliente cliente) {
+		this.clientes.add(cliente);
+		cliente.setCompanya(this);
 		return this;
 	}
 
-	public void setNumDocs(Set<NumDoc> numDocs) {
-		this.numDocs = numDocs;
+	public Companya removeCliente(Cliente cliente) {
+		this.clientes.remove(cliente);
+		cliente.setCompanya(null);
+		return this;
+	}
+
+	public void setClientes(Set<Cliente> clientes) {
+		this.clientes = clientes;
 	}
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters and
 	// setters here, do not remove
@@ -99,6 +115,7 @@ public class Companya implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Companya{" + "id=" + getId() + ", nombre='" + getNombre() + "'" + "}";
+		return "Companya{" + "id=" + getId() + ", nombre='" + getNombre() + "'" + ", precioSesion=" + getPrecioSesion()
+				+ "}";
 	}
 }

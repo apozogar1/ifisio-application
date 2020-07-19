@@ -38,9 +38,6 @@ public class MedicionResourceIT {
     private static final Float DEFAULT_ALTURA = 1F;
     private static final Float UPDATED_ALTURA = 2F;
 
-    private static final Float DEFAULT_IMC = 1F;
-    private static final Float UPDATED_IMC = 2F;
-
     private static final Instant DEFAULT_FECHA_MEDICION = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_FECHA_MEDICION = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -65,7 +62,6 @@ public class MedicionResourceIT {
         Medicion medicion = new Medicion()
             .peso(DEFAULT_PESO)
             .altura(DEFAULT_ALTURA)
-            .imc(DEFAULT_IMC)
             .fechaMedicion(DEFAULT_FECHA_MEDICION);
         return medicion;
     }
@@ -79,7 +75,6 @@ public class MedicionResourceIT {
         Medicion medicion = new Medicion()
             .peso(UPDATED_PESO)
             .altura(UPDATED_ALTURA)
-            .imc(UPDATED_IMC)
             .fechaMedicion(UPDATED_FECHA_MEDICION);
         return medicion;
     }
@@ -106,7 +101,6 @@ public class MedicionResourceIT {
         Medicion testMedicion = medicionList.get(medicionList.size() - 1);
         assertThat(testMedicion.getPeso()).isEqualTo(DEFAULT_PESO);
         assertThat(testMedicion.getAltura()).isEqualTo(DEFAULT_ALTURA);
-        assertThat(testMedicion.getImc()).isEqualTo(DEFAULT_IMC);
         assertThat(testMedicion.getFechaMedicion()).isEqualTo(DEFAULT_FECHA_MEDICION);
     }
 
@@ -143,7 +137,6 @@ public class MedicionResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(medicion.getId().intValue())))
             .andExpect(jsonPath("$.[*].peso").value(hasItem(DEFAULT_PESO.doubleValue())))
             .andExpect(jsonPath("$.[*].altura").value(hasItem(DEFAULT_ALTURA.doubleValue())))
-            .andExpect(jsonPath("$.[*].imc").value(hasItem(DEFAULT_IMC.doubleValue())))
             .andExpect(jsonPath("$.[*].fechaMedicion").value(hasItem(DEFAULT_FECHA_MEDICION.toString())));
     }
     
@@ -160,7 +153,6 @@ public class MedicionResourceIT {
             .andExpect(jsonPath("$.id").value(medicion.getId().intValue()))
             .andExpect(jsonPath("$.peso").value(DEFAULT_PESO.doubleValue()))
             .andExpect(jsonPath("$.altura").value(DEFAULT_ALTURA.doubleValue()))
-            .andExpect(jsonPath("$.imc").value(DEFAULT_IMC.doubleValue()))
             .andExpect(jsonPath("$.fechaMedicion").value(DEFAULT_FECHA_MEDICION.toString()));
     }
 
@@ -187,7 +179,6 @@ public class MedicionResourceIT {
         updatedMedicion
             .peso(UPDATED_PESO)
             .altura(UPDATED_ALTURA)
-            .imc(UPDATED_IMC)
             .fechaMedicion(UPDATED_FECHA_MEDICION);
 
         restMedicionMockMvc.perform(put("/api/medicions")
@@ -201,7 +192,6 @@ public class MedicionResourceIT {
         Medicion testMedicion = medicionList.get(medicionList.size() - 1);
         assertThat(testMedicion.getPeso()).isEqualTo(UPDATED_PESO);
         assertThat(testMedicion.getAltura()).isEqualTo(UPDATED_ALTURA);
-        assertThat(testMedicion.getImc()).isEqualTo(UPDATED_IMC);
         assertThat(testMedicion.getFechaMedicion()).isEqualTo(UPDATED_FECHA_MEDICION);
     }
 

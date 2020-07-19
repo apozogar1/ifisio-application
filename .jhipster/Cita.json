@@ -4,6 +4,14 @@
         {
             "fieldName": "fechaHoraCita",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "fechaHoraCitaFin",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "comentarios",
+            "fieldType": "String"
         }
     ],
     "relationships": [

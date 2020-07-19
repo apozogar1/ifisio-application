@@ -56,7 +56,8 @@ export class CitaService {
 
   protected convertDateFromClient(cita: ICita): ICita {
     const copy: ICita = Object.assign({}, cita, {
-      fechaHoraCita: cita.fechaHoraCita && cita.fechaHoraCita.isValid() ? cita.fechaHoraCita.toJSON() : undefined
+      fechaHoraCita: cita.fechaHoraCita && cita.fechaHoraCita.isValid() ? cita.fechaHoraCita.toJSON() : undefined,
+      fechaHoraCitaFin: cita.fechaHoraCitaFin && cita.fechaHoraCitaFin.isValid() ? cita.fechaHoraCitaFin.toJSON() : undefined
     });
     return copy;
   }
@@ -64,6 +65,7 @@ export class CitaService {
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.fechaHoraCita = res.body.fechaHoraCita ? moment(res.body.fechaHoraCita) : undefined;
+      res.body.fechaHoraCitaFin = res.body.fechaHoraCitaFin ? moment(res.body.fechaHoraCitaFin) : undefined;
     }
     return res;
   }
@@ -72,6 +74,7 @@ export class CitaService {
     if (res.body) {
       res.body.forEach((cita: ICita) => {
         cita.fechaHoraCita = cita.fechaHoraCita ? moment(cita.fechaHoraCita) : undefined;
+        cita.fechaHoraCitaFin = cita.fechaHoraCitaFin ? moment(cita.fechaHoraCitaFin) : undefined;
       });
     }
     return res;

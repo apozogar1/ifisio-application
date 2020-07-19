@@ -9,10 +9,10 @@ import { ITratamientoCliente, TratamientoCliente } from 'app/shared/model/tratam
 import { TratamientoClienteService } from './tratamiento-cliente.service';
 import { ITratamiento } from 'app/shared/model/tratamiento.model';
 import { TratamientoService } from 'app/entities/tratamiento/tratamiento.service';
-import { INumDoc } from 'app/shared/model/num-doc.model';
-import { NumDocService } from 'app/entities/num-doc/num-doc.service';
+import { ICliente } from 'app/shared/model/cliente.model';
+import { ClienteService } from 'app/entities/cliente/cliente.service';
 
-type SelectableEntity = ITratamiento | INumDoc;
+type SelectableEntity = ITratamiento | ICliente;
 
 @Component({
   selector: 'jhi-tratamiento-cliente-update',
@@ -21,25 +21,25 @@ type SelectableEntity = ITratamiento | INumDoc;
 export class TratamientoClienteUpdateComponent implements OnInit {
   isSaving = false;
   tratamientos: ITratamiento[] = [];
-  numdocs: INumDoc[] = [];
-  tratamientoCliente: TratamientoCliente = {};
+  clientes: ICliente[] = [];
 
   editForm = this.fb.group({
     id: [],
     numSesiones: [],
     diagnostico: [],
-    tratamiento: [],
     precioSesion: [],
-    numDoc: []
+    expediente: [],
+    tratamiento: [],
+    cliente: []
   });
 
   constructor(
     protected tratamientoClienteService: TratamientoClienteService,
     protected tratamientoService: TratamientoService,
-    protected numDocService: NumDocService,
+    protected clienteService: ClienteService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ tratamientoCliente }) => {
@@ -47,7 +47,7 @@ export class TratamientoClienteUpdateComponent implements OnInit {
 
       this.tratamientoService.query().subscribe((res: HttpResponse<ITratamiento[]>) => (this.tratamientos = res.body || []));
 
-      this.numDocService.query().subscribe((res: HttpResponse<INumDoc[]>) => (this.numdocs = res.body || []));
+      this.clienteService.query().subscribe((res: HttpResponse<ICliente[]>) => (this.clientes = res.body || []));
     });
   }
 
@@ -56,9 +56,10 @@ export class TratamientoClienteUpdateComponent implements OnInit {
       id: tratamientoCliente.id,
       numSesiones: tratamientoCliente.numSesiones,
       diagnostico: tratamientoCliente.diagnostico,
-      tratamiento: tratamientoCliente.tratamiento,
       precioSesion: tratamientoCliente.precioSesion,
-      numDoc: tratamientoCliente.numDoc
+      expediente: tratamientoCliente.expediente,
+      tratamiento: tratamientoCliente.tratamiento,
+      cliente: tratamientoCliente.cliente
     });
   }
 
@@ -81,10 +82,11 @@ export class TratamientoClienteUpdateComponent implements OnInit {
       ...new TratamientoCliente(),
       id: this.editForm.get(['id'])!.value,
       numSesiones: this.editForm.get(['numSesiones'])!.value,
-      precioSesion: this.editForm.get(['precioSesion'])!.value,
       diagnostico: this.editForm.get(['diagnostico'])!.value,
+      precioSesion: this.editForm.get(['precioSesion'])!.value,
+      expediente: this.editForm.get(['expediente'])!.value,
       tratamiento: this.editForm.get(['tratamiento'])!.value,
-      numDoc: this.editForm.get(['numDoc'])!.value
+      cliente: this.editForm.get(['cliente'])!.value
     };
   }
 
@@ -106,18 +108,5 @@ export class TratamientoClienteUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
-  }
-
-  public selTratamiento(): void {
-    if (this.editForm.get(['tratamiento'])!.value != null) {
-      const tratamiento = this.editForm.get(['tratamiento'])?.value;
-      this.editForm.patchValue({
-        id: this.tratamientoCliente.id,
-        numSesiones: tratamiento?.numSesiones,
-        diagnostico: tratamiento?.nombre,
-        tratamiento: this.editForm.get(['tratamiento'])!.value,
-        numDoc: this.editForm.get(['numDoc'])!.value
-      });
-    }
   }
 }

@@ -19,12 +19,19 @@
             <column name="fecha_hora_cita" type="datetime">
                 <constraints nullable="true" />
             </column>
+            <column name="fecha_hora_cita_fin" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="comentarios" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="tratamiento_cliente_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="cita" columnName="fecha_hora_cita" columnDataType="datetime"/>
+        <dropDefaultValue tableName="cita" columnName="fecha_hora_cita_fin" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20200507162400-1-relations" author="jhipster">
@@ -47,6 +54,8 @@
                   tableName="cita">
             <column name="id" type="numeric"/>
             <column name="fecha_hora_cita" type="datetime"/>
+            <column name="fecha_hora_cita_fin" type="datetime"/>
+            <column name="comentarios" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

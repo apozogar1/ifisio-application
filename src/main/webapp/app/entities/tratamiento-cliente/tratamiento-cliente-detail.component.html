@@ -16,16 +16,24 @@
                 <dd>
                     <span>{{ tratamientoCliente.diagnostico }}</span>
                 </dd>
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.precioSesion">Precio Sesion</span></dt>
+                <dd>
+                    <span>{{ tratamientoCliente.precioSesion }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.expediente">Expediente</span></dt>
+                <dd>
+                    <span>{{ tratamientoCliente.expediente }}</span>
+                </dd>
                 <dt><span jhiTranslate="iFisioApp.tratamientoCliente.tratamiento">Tratamiento</span></dt>
                 <dd>
                     <div *ngIf="tratamientoCliente.tratamiento">
                         <a [routerLink]="['/tratamiento', tratamientoCliente.tratamiento?.id, 'view']">{{ tratamientoCliente.tratamiento?.id }}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.numDoc">Num Doc</span></dt>
+                <dt><span jhiTranslate="iFisioApp.tratamientoCliente.cliente">Cliente</span></dt>
                 <dd>
-                    <div *ngIf="tratamientoCliente.numDoc">
-                        <a [routerLink]="['/num-doc', tratamientoCliente.numDoc?.id, 'view']">{{ tratamientoCliente.numDoc?.id }}</a>
+                    <div *ngIf="tratamientoCliente.cliente">
+                        <a [routerLink]="['/cliente', tratamientoCliente.cliente?.id, 'view']">{{ tratamientoCliente.cliente?.id }}</a>
                     </div>
                 </dd>
             </dl>

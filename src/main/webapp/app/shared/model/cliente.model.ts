@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
 import { IMedicion } from 'app/shared/model/medicion.model';
-import { INumDoc } from 'app/shared/model/num-doc.model';
+import { ITratamientoCliente } from 'app/shared/model/tratamiento-cliente.model';
+import { ICompanya } from 'app/shared/model/companya.model';
 
 export interface ICliente {
   id?: number;
@@ -9,7 +10,8 @@ export interface ICliente {
   telefono?: string;
   fechaNacimiento?: Moment;
   medicions?: IMedicion[];
-  numDocs?: INumDoc[];
+  tratamientoClientes?: ITratamientoCliente[];
+  companya?: ICompanya;
 }
 
 export class Cliente implements ICliente {
@@ -20,6 +22,7 @@ export class Cliente implements ICliente {
     public telefono?: string,
     public fechaNacimiento?: Moment,
     public medicions?: IMedicion[],
-    public numDocs?: INumDoc[]
+    public tratamientoClientes?: ITratamientoCliente[],
+    public companya?: ICompanya
   ) {}
 }

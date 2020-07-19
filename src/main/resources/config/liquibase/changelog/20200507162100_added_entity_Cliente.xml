@@ -28,6 +28,9 @@
             <column name="fecha_nacimiento" type="datetime">
                 <constraints nullable="true" />
             </column>
+            <column name="companya_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="cliente" columnName="fecha_nacimiento" columnDataType="datetime"/>

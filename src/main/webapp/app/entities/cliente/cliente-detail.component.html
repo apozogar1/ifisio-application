@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="cliente">
-            <h2><span jhiTranslate="iFisioApp.cliente.detail.title">Cliente</span> </h2>
+            <h2><span jhiTranslate="iFisioApp.cliente.detail.title">Cliente</span> {{ cliente.id }}</h2>
 
             <hr>
 
@@ -24,6 +24,12 @@
                 <dd>
                     <span>{{ cliente.fechaNacimiento }}</span>
                 </dd>
+                <dt><span jhiTranslate="iFisioApp.cliente.companya">Companya</span></dt>
+                <dd>
+                    <div *ngIf="cliente.companya">
+                        <a [routerLink]="['/companya', cliente.companya?.id, 'view']">{{ cliente.companya?.id }}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"
@@ -32,8 +38,8 @@
                 <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
-            <!-- [routerLink]="['/cliente', cliente.id, 'edit']" -->
             <button type="button"
+                    [routerLink]="['/cliente', cliente.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>

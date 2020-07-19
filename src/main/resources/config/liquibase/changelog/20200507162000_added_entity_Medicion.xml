@@ -22,9 +22,6 @@
             <column name="altura" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="imc" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
             <column name="fecha_medicion" type="datetime">
                 <constraints nullable="true" />
             </column>
@@ -57,7 +54,6 @@
             <column name="id" type="numeric"/>
             <column name="peso" type="numeric"/>
             <column name="altura" type="numeric"/>
-            <column name="imc" type="numeric"/>
             <column name="fecha_medicion" type="datetime"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

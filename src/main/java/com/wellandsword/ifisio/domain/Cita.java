@@ -62,6 +62,32 @@ public class Cita implements Serializable {
 		this.fechaHoraCita = fechaHoraCita;
 	}
 
+	public Instant getFechaHoraCitaFin() {
+		return fechaHoraCitaFin;
+	}
+
+	public Cita fechaHoraCitaFin(Instant fechaHoraCitaFin) {
+		this.fechaHoraCitaFin = fechaHoraCitaFin;
+		return this;
+	}
+
+	public void setFechaHoraCitaFin(Instant fechaHoraCitaFin) {
+		this.fechaHoraCitaFin = fechaHoraCitaFin;
+	}
+
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public Cita comentarios(String comentarios) {
+		this.comentarios = comentarios;
+		return this;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+
 	public TratamientoCliente getTratamientoCliente() {
 		return tratamientoCliente;
 	}
@@ -74,23 +100,6 @@ public class Cita implements Serializable {
 	public void setTratamientoCliente(TratamientoCliente tratamientoCliente) {
 		this.tratamientoCliente = tratamientoCliente;
 	}
-
-	public String getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(String comentarios) {
-		this.comentarios = comentarios;
-	}
-
-	public Instant getFechaHoraCitaFin() {
-		return fechaHoraCitaFin;
-	}
-
-	public void setFechaHoraCitaFin(Instant fechaHoraCitaFin) {
-		this.fechaHoraCitaFin = fechaHoraCitaFin;
-	}
-
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters and
 	// setters here, do not remove
 
@@ -112,6 +121,7 @@ public class Cita implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Cita{" + "id=" + getId() + ", fechaHoraCita='" + getFechaHoraCita() + "'" + "}";
+		return "Cita{" + "id=" + getId() + ", fechaHoraCita='" + getFechaHoraCita() + "'" + ", fechaHoraCitaFin='"
+				+ getFechaHoraCitaFin() + "'" + ", comentarios='" + getComentarios() + "'" + "}";
 	}
 }

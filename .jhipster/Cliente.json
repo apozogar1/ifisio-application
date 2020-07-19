@@ -27,9 +27,16 @@
         },
         {
             "relationshipType": "one-to-many",
-            "otherEntityName": "numDoc",
+            "otherEntityName": "tratamientoCliente",
             "otherEntityRelationshipName": "cliente",
-            "relationshipName": "numDoc"
+            "relationshipName": "tratamientoCliente"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "companya",
+            "otherEntityRelationshipName": "cliente",
+            "relationshipName": "companya",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20200507162100",

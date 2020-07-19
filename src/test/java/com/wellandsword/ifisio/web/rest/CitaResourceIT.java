@@ -35,6 +35,12 @@ public class CitaResourceIT {
     private static final Instant DEFAULT_FECHA_HORA_CITA = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_FECHA_HORA_CITA = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Instant DEFAULT_FECHA_HORA_CITA_FIN = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_FECHA_HORA_CITA_FIN = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final String DEFAULT_COMENTARIOS = "AAAAAAAAAA";
+    private static final String UPDATED_COMENTARIOS = "BBBBBBBBBB";
+
     @Autowired
     private CitaRepository citaRepository;
 
@@ -54,7 +60,9 @@ public class CitaResourceIT {
      */
     public static Cita createEntity(EntityManager em) {
         Cita cita = new Cita()
-            .fechaHoraCita(DEFAULT_FECHA_HORA_CITA);
+            .fechaHoraCita(DEFAULT_FECHA_HORA_CITA)
+            .fechaHoraCitaFin(DEFAULT_FECHA_HORA_CITA_FIN)
+            .comentarios(DEFAULT_COMENTARIOS);
         return cita;
     }
     /**
@@ -65,7 +73,9 @@ public class CitaResourceIT {
      */
     public static Cita createUpdatedEntity(EntityManager em) {
         Cita cita = new Cita()
-            .fechaHoraCita(UPDATED_FECHA_HORA_CITA);
+            .fechaHoraCita(UPDATED_FECHA_HORA_CITA)
+            .fechaHoraCitaFin(UPDATED_FECHA_HORA_CITA_FIN)
+            .comentarios(UPDATED_COMENTARIOS);
         return cita;
     }
 
@@ -90,6 +100,8 @@ public class CitaResourceIT {
         assertThat(citaList).hasSize(databaseSizeBeforeCreate + 1);
         Cita testCita = citaList.get(citaList.size() - 1);
         assertThat(testCita.getFechaHoraCita()).isEqualTo(DEFAULT_FECHA_HORA_CITA);
+        assertThat(testCita.getFechaHoraCitaFin()).isEqualTo(DEFAULT_FECHA_HORA_CITA_FIN);
+        assertThat(testCita.getComentarios()).isEqualTo(DEFAULT_COMENTARIOS);
     }
 
     @Test
@@ -123,7 +135,9 @@ public class CitaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cita.getId().intValue())))
-            .andExpect(jsonPath("$.[*].fechaHoraCita").value(hasItem(DEFAULT_FECHA_HORA_CITA.toString())));
+            .andExpect(jsonPath("$.[*].fechaHoraCita").value(hasItem(DEFAULT_FECHA_HORA_CITA.toString())))
+            .andExpect(jsonPath("$.[*].fechaHoraCitaFin").value(hasItem(DEFAULT_FECHA_HORA_CITA_FIN.toString())))
+            .andExpect(jsonPath("$.[*].comentarios").value(hasItem(DEFAULT_COMENTARIOS)));
     }
     
     @Test
@@ -137,7 +151,9 @@ public class CitaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(cita.getId().intValue()))
-            .andExpect(jsonPath("$.fechaHoraCita").value(DEFAULT_FECHA_HORA_CITA.toString()));
+            .andExpect(jsonPath("$.fechaHoraCita").value(DEFAULT_FECHA_HORA_CITA.toString()))
+            .andExpect(jsonPath("$.fechaHoraCitaFin").value(DEFAULT_FECHA_HORA_CITA_FIN.toString()))
+            .andExpect(jsonPath("$.comentarios").value(DEFAULT_COMENTARIOS));
     }
 
     @Test
@@ -161,7 +177,9 @@ public class CitaResourceIT {
         // Disconnect from session so that the updates on updatedCita are not directly saved in db
         em.detach(updatedCita);
         updatedCita
-            .fechaHoraCita(UPDATED_FECHA_HORA_CITA);
+            .fechaHoraCita(UPDATED_FECHA_HORA_CITA)
+            .fechaHoraCitaFin(UPDATED_FECHA_HORA_CITA_FIN)
+            .comentarios(UPDATED_COMENTARIOS);
 
         restCitaMockMvc.perform(put("/api/citas")
             .contentType(MediaType.APPLICATION_JSON)
@@ -173,6 +191,8 @@ public class CitaResourceIT {
         assertThat(citaList).hasSize(databaseSizeBeforeUpdate);
         Cita testCita = citaList.get(citaList.size() - 1);
         assertThat(testCita.getFechaHoraCita()).isEqualTo(UPDATED_FECHA_HORA_CITA);
+        assertThat(testCita.getFechaHoraCitaFin()).isEqualTo(UPDATED_FECHA_HORA_CITA_FIN);
+        assertThat(testCita.getComentarios()).isEqualTo(UPDATED_COMENTARIOS);
     }
 
     @Test

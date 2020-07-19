@@ -9,6 +9,8 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { ICliente, Cliente } from 'app/shared/model/cliente.model';
 import { ClienteService } from './cliente.service';
+import { ICompanya } from 'app/shared/model/companya.model';
+import { CompanyaService } from 'app/entities/companya/companya.service';
 
 @Component({
   selector: 'jhi-cliente-update',
@@ -16,16 +18,23 @@ import { ClienteService } from './cliente.service';
 })
 export class ClienteUpdateComponent implements OnInit {
   isSaving = false;
+  companyas: ICompanya[] = [];
 
   editForm = this.fb.group({
     id: [],
     nombre: [],
     apellidos: [],
     telefono: [],
-    fechaNacimiento: []
+    fechaNacimiento: [],
+    companya: []
   });
 
-  constructor(protected clienteService: ClienteService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected clienteService: ClienteService,
+    protected companyaService: CompanyaService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ cliente }) => {
@@ -35,6 +44,8 @@ export class ClienteUpdateComponent implements OnInit {
       }
 
       this.updateForm(cliente);
+
+      this.companyaService.query().subscribe((res: HttpResponse<ICompanya[]>) => (this.companyas = res.body || []));
     });
   }
 
@@ -44,7 +55,8 @@ export class ClienteUpdateComponent implements OnInit {
       nombre: cliente.nombre,
       apellidos: cliente.apellidos,
       telefono: cliente.telefono,
-      fechaNacimiento: cliente.fechaNacimiento ? cliente.fechaNacimiento.format(DATE_TIME_FORMAT) : null
+      fechaNacimiento: cliente.fechaNacimiento ? cliente.fechaNacimiento.format(DATE_TIME_FORMAT) : null,
+      companya: cliente.companya
     });
   }
 
@@ -71,7 +83,8 @@ export class ClienteUpdateComponent implements OnInit {
       telefono: this.editForm.get(['telefono'])!.value,
       fechaNacimiento: this.editForm.get(['fechaNacimiento'])!.value
         ? moment(this.editForm.get(['fechaNacimiento'])!.value, DATE_TIME_FORMAT)
-        : undefined
+        : undefined,
+      companya: this.editForm.get(['companya'])!.value
     };
   }
 
@@ -89,5 +102,9 @@ export class ClienteUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: ICompanya): any {
+    return item.id;
   }
 }

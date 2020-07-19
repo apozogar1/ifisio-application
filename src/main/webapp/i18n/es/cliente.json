@@ -21,7 +21,8 @@
       "telefono": "Telefono",
       "fechaNacimiento": "Fecha Nacimiento",
       "medicion": "Medicion",
-      "numDoc": "Num Doc"
+      "tratamientoCliente": "Tratamiento Cliente",
+      "companya": "Companya"
     }
   }
 }

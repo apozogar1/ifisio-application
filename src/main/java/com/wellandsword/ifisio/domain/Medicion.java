@@ -32,9 +32,6 @@ public class Medicion implements Serializable {
 	@Column(name = "altura")
 	private Float altura;
 
-	@Column(name = "imc")
-	private Float imc;
-
 	@Column(name = "fecha_medicion")
 	private Instant fechaMedicion;
 
@@ -76,19 +73,6 @@ public class Medicion implements Serializable {
 
 	public void setAltura(Float altura) {
 		this.altura = altura;
-	}
-
-	public Float getImc() {
-		return imc;
-	}
-
-	public Medicion imc(Float imc) {
-		this.imc = imc;
-		return this;
-	}
-
-	public void setImc(Float imc) {
-		this.imc = imc;
 	}
 
 	public Instant getFechaMedicion() {
@@ -137,7 +121,7 @@ public class Medicion implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Medicion{" + "id=" + getId() + ", peso=" + getPeso() + ", altura=" + getAltura() + ", imc=" + getImc()
-				+ ", fechaMedicion='" + getFechaMedicion() + "'" + "}";
+		return "Medicion{" + "id=" + getId() + ", peso=" + getPeso() + ", altura=" + getAltura() + ", fechaMedicion='"
+				+ getFechaMedicion() + "'" + "}";
 	}
 }

@@ -17,11 +17,12 @@
         "title": "Tratamiento Cliente"
       },
       "numSesiones": "Num Sesiones",
-      "precioSesion": "Precio Sesion",
       "diagnostico": "Diagnostico",
+      "precioSesion": "Precio Sesion",
+      "expediente": "Expediente",
       "cita": "Cita",
       "tratamiento": "Tratamiento",
-      "numDoc": "Num Doc"
+      "cliente": "Cliente"
     }
   }
 }

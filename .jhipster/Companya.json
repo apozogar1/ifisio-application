@@ -4,14 +4,18 @@
         {
             "fieldName": "nombre",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "precioSesion",
+            "fieldType": "Float"
         }
     ],
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "otherEntityName": "numDoc",
+            "otherEntityName": "cliente",
             "otherEntityRelationshipName": "companya",
-            "relationshipName": "numDoc"
+            "relationshipName": "cliente"
         }
     ],
     "changelogDate": "20200507162300",

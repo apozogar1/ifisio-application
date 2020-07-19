@@ -1,7 +1,6 @@
 package com.wellandsword.ifisio.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +35,10 @@ public class TratamientoCliente implements Serializable {
 	private String diagnostico;
 
 	@Column(name = "precio_sesion")
-	private BigDecimal precioSesion;
+	private Float precioSesion;
+
+	@Column(name = "expediente")
+	private String expediente;
 
 	@OneToMany(mappedBy = "tratamientoCliente")
 	private Set<Cita> citas = new HashSet<>();
@@ -47,7 +49,7 @@ public class TratamientoCliente implements Serializable {
 
 	@ManyToOne
 	@JsonIgnoreProperties("tratamientoClientes")
-	private NumDoc numDoc;
+	private Cliente cliente;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -83,6 +85,32 @@ public class TratamientoCliente implements Serializable {
 
 	public void setDiagnostico(String diagnostico) {
 		this.diagnostico = diagnostico;
+	}
+
+	public Float getPrecioSesion() {
+		return precioSesion;
+	}
+
+	public TratamientoCliente precioSesion(Float precioSesion) {
+		this.precioSesion = precioSesion;
+		return this;
+	}
+
+	public void setPrecioSesion(Float precioSesion) {
+		this.precioSesion = precioSesion;
+	}
+
+	public String getExpediente() {
+		return expediente;
+	}
+
+	public TratamientoCliente expediente(String expediente) {
+		this.expediente = expediente;
+		return this;
+	}
+
+	public void setExpediente(String expediente) {
+		this.expediente = expediente;
 	}
 
 	public Set<Cita> getCitas() {
@@ -123,29 +151,20 @@ public class TratamientoCliente implements Serializable {
 		this.tratamiento = tratamiento;
 	}
 
-	public NumDoc getNumDoc() {
-		return numDoc;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public TratamientoCliente numDoc(NumDoc numDoc) {
-		this.numDoc = numDoc;
+	public TratamientoCliente cliente(Cliente cliente) {
+		this.cliente = cliente;
 		return this;
 	}
 
-	public void setNumDoc(NumDoc numDoc) {
-		this.numDoc = numDoc;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
-
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters and
 	// setters here, do not remove
-
-	public BigDecimal getPrecioSesion() {
-		return precioSesion;
-	}
-
-	public void setPrecioSesion(BigDecimal precioSesion) {
-		this.precioSesion = precioSesion;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -166,6 +185,7 @@ public class TratamientoCliente implements Serializable {
 	@Override
 	public String toString() {
 		return "TratamientoCliente{" + "id=" + getId() + ", numSesiones=" + getNumSesiones() + ", diagnostico='"
-				+ getDiagnostico() + "'" + "}";
+				+ getDiagnostico() + "'" + ", precioSesion=" + getPrecioSesion() + ", expediente='" + getExpediente()
+				+ "'" + "}";
 	}
 }

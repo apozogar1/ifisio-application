@@ -33,6 +33,9 @@ public class CompanyaResourceIT {
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
+    private static final Float DEFAULT_PRECIO_SESION = 1F;
+    private static final Float UPDATED_PRECIO_SESION = 2F;
+
     @Autowired
     private CompanyaRepository companyaRepository;
 
@@ -52,7 +55,8 @@ public class CompanyaResourceIT {
      */
     public static Companya createEntity(EntityManager em) {
         Companya companya = new Companya()
-            .nombre(DEFAULT_NOMBRE);
+            .nombre(DEFAULT_NOMBRE)
+            .precioSesion(DEFAULT_PRECIO_SESION);
         return companya;
     }
     /**
@@ -63,7 +67,8 @@ public class CompanyaResourceIT {
      */
     public static Companya createUpdatedEntity(EntityManager em) {
         Companya companya = new Companya()
-            .nombre(UPDATED_NOMBRE);
+            .nombre(UPDATED_NOMBRE)
+            .precioSesion(UPDATED_PRECIO_SESION);
         return companya;
     }
 
@@ -88,6 +93,7 @@ public class CompanyaResourceIT {
         assertThat(companyaList).hasSize(databaseSizeBeforeCreate + 1);
         Companya testCompanya = companyaList.get(companyaList.size() - 1);
         assertThat(testCompanya.getNombre()).isEqualTo(DEFAULT_NOMBRE);
+        assertThat(testCompanya.getPrecioSesion()).isEqualTo(DEFAULT_PRECIO_SESION);
     }
 
     @Test
@@ -121,7 +127,8 @@ public class CompanyaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(companya.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)));
+            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
+            .andExpect(jsonPath("$.[*].precioSesion").value(hasItem(DEFAULT_PRECIO_SESION.doubleValue())));
     }
     
     @Test
@@ -135,7 +142,8 @@ public class CompanyaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(companya.getId().intValue()))
-            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE));
+            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
+            .andExpect(jsonPath("$.precioSesion").value(DEFAULT_PRECIO_SESION.doubleValue()));
     }
 
     @Test
@@ -159,7 +167,8 @@ public class CompanyaResourceIT {
         // Disconnect from session so that the updates on updatedCompanya are not directly saved in db
         em.detach(updatedCompanya);
         updatedCompanya
-            .nombre(UPDATED_NOMBRE);
+            .nombre(UPDATED_NOMBRE)
+            .precioSesion(UPDATED_PRECIO_SESION);
 
         restCompanyaMockMvc.perform(put("/api/companyas")
             .contentType(MediaType.APPLICATION_JSON)
@@ -171,6 +180,7 @@ public class CompanyaResourceIT {
         assertThat(companyaList).hasSize(databaseSizeBeforeUpdate);
         Companya testCompanya = companyaList.get(companyaList.size() - 1);
         assertThat(testCompanya.getNombre()).isEqualTo(UPDATED_NOMBRE);
+        assertThat(testCompanya.getPrecioSesion()).isEqualTo(UPDATED_PRECIO_SESION);
     }
 
     @Test

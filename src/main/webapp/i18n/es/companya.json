@@ -17,7 +17,8 @@
         "title": "Companya"
       },
       "nombre": "Nombre",
-      "numDoc": "Num Doc"
+      "precioSesion": "Precio Sesion",
+      "cliente": "Cliente"
     }
   }
 }

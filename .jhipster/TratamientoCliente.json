@@ -8,6 +8,14 @@
         {
             "fieldName": "diagnostico",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "precioSesion",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "expediente",
+            "fieldType": "String"
         }
     ],
     "relationships": [
@@ -26,9 +34,9 @@
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "numDoc",
+            "otherEntityName": "cliente",
             "otherEntityRelationshipName": "tratamientoCliente",
-            "relationshipName": "numDoc",
+            "relationshipName": "cliente",
             "otherEntityField": "id"
         }
     ],

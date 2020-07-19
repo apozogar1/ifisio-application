@@ -17,6 +17,8 @@
         "title": "Cita"
       },
       "fechaHoraCita": "Fecha Hora Cita",
+      "fechaHoraCitaFin": "Fecha Hora Cita Fin",
+      "comentarios": "Comentarios",
       "tratamientoCliente": "Tratamiento Cliente"
     }
   }

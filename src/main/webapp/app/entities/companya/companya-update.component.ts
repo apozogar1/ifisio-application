@@ -17,7 +17,8 @@ export class CompanyaUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    nombre: []
+    nombre: [],
+    precioSesion: []
   });
 
   constructor(protected companyaService: CompanyaService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -31,7 +32,8 @@ export class CompanyaUpdateComponent implements OnInit {
   updateForm(companya: ICompanya): void {
     this.editForm.patchValue({
       id: companya.id,
-      nombre: companya.nombre
+      nombre: companya.nombre,
+      precioSesion: companya.precioSesion
     });
   }
 
@@ -53,7 +55,8 @@ export class CompanyaUpdateComponent implements OnInit {
     return {
       ...new Companya(),
       id: this.editForm.get(['id'])!.value,
-      nombre: this.editForm.get(['nombre'])!.value
+      nombre: this.editForm.get(['nombre'])!.value,
+      precioSesion: this.editForm.get(['precioSesion'])!.value
     };
   }
 

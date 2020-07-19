@@ -12,6 +12,14 @@
                 <dd>
                     <span>{{ cita.fechaHoraCita }}</span>
                 </dd>
+                <dt><span jhiTranslate="iFisioApp.cita.fechaHoraCitaFin">Fecha Hora Cita Fin</span></dt>
+                <dd>
+                    <span>{{ cita.fechaHoraCitaFin }}</span>
+                </dd>
+                <dt><span jhiTranslate="iFisioApp.cita.comentarios">Comentarios</span></dt>
+                <dd>
+                    <span>{{ cita.comentarios }}</span>
+                </dd>
                 <dt><span jhiTranslate="iFisioApp.cita.tratamientoCliente">Tratamiento Cliente</span></dt>
                 <dd>
                     <div *ngIf="cita.tratamientoCliente">
